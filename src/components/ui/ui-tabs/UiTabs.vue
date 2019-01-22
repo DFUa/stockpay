@@ -8,10 +8,17 @@
 export default {
   name: 'UiTabs',
 
+  props: {
+    items: Array
+  },
+
+  // items structure example
+  // items: [
+  //   { id: 0, title: 'Title', icon: 'icon-class', path: 'route-path' },
+  //   ...
+  // ]
+
   data: () => ({
-    items: [
-      { id: 0, title: 'Title', icon: 'icon-class', path: 'route-path' }
-    ]
   })
 }
 </script>

@@ -33,13 +33,13 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const isAuth = store.getters.isAuth
   if (isAuth && to.path.includes('auth')) {
-      return router.push({ name: 'dashboard' });
+    return router.push({ name: 'dashboard' })
   } else {
     if (!isAuth && to.path.includes('profile')) {
-      return router.push({ name: 'sign-in' });
+      return router.push({ name: 'sign-in' })
     }
   }
-  return next();
+  return next()
 })
 
 export default router
