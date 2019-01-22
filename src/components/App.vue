@@ -19,7 +19,17 @@ export default {
 
   computed: {
     isAuth () {
-      return true
+      return this.$store.getters.isAuth
+    }
+  },
+
+  watch: {
+    isAuth (value) {
+      if (value) {
+        this.$router.push('/profile/dashboard')
+      } else {
+        this.$router.push('/auth/sign-in')
+      }
     }
   }
 }
