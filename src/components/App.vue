@@ -25,12 +25,6 @@ export default {
 }
 </script>
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
-  }
+<style lang="sass">
+  @import '../sass/main.scss'
 </style>

@@ -15,6 +15,16 @@ const router = new Router({
       name: 'dashboard',
       path: '/dashboard',
       component: lazyLoading('dashboard/Dashboard')
+    },
+    {
+      name: 'add-founds',
+      path: '/add-founds',
+      component: lazyLoading('add-founds/AddFounds')
+    },
+    {
+      name: 'transfer',
+      path: '/transfer',
+      component: lazyLoading('transfer/Transfer')
     }
   ]
 })

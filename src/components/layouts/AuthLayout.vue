@@ -27,6 +27,10 @@ export default {
     justify-content: center;
   }
 
+  .auth-layout h1 {
+    font-weight: 600;
+  }
+
   .auth-layout .auth-btn {
     cursor: pointer;
     margin-top: 30px;
