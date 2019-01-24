@@ -21,16 +21,6 @@ export default {
     isAuth () {
       return this.$store.getters.isAuth
     }
-  },
-
-  watch: {
-    isAuth (value) {
-      if (value) {
-        this.$router.push('/profile/dashboard')
-      } else {
-        this.$router.push('/auth/sign-in')
-      }
-    }
   }
 }
 </script>
@@ -41,5 +31,6 @@ export default {
     padding: 0;
     border: none;
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
   }
 </style>

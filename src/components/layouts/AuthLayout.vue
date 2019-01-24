@@ -1,16 +1,20 @@
 <template>
   <div class="auth-layout">
-    <div class="section">
-      <router-view/>
-    </div>
-    <div class="section accent">
-    </div>
+    <h1>Unauthorised</h1>
+    <div @click="login" class="auth-btn">Login</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AuthLayout'
+  name: 'AuthLayout',
+
+  methods: {
+    login () {
+      this.$store.dispatch('login')
+      this.$router.push('/profile')
+    }
+  }
 }
 </script>
 
@@ -18,17 +22,21 @@ export default {
   .auth-layout {
     height: 100vh;
     display: flex;
-  }
-
-  .auth-layout .section {
-    width: 50%;
-    height: 100%;
-    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  .section.accent {
-    background: linear-gradient(#00593D, #00140E);
+  .auth-layout .auth-btn {
+    cursor: pointer;
+    margin-top: 30px;
+    background: #eee;
+    padding: 7px 25px;
+    border-radius: 4px;
+    transition: .5s;
+  }
+
+  .auth-layout .auth-btn:hover {
+    background: #ddd;
   }
 </style>
