@@ -14,12 +14,18 @@ const router = new Router({
     {
       name: 'dashboard',
       path: '/dashboard',
-      component: lazyLoading('dashboard/Dashboard')
+      components: {
+        default: lazyLoading('dashboard/Dashboard'),
+        sidebar: lazyLoading('dashboard/DashboardSidebar')
+      }
     },
     {
       name: 'add-founds',
       path: '/add-founds',
-      component: lazyLoading('add-founds/AddFounds')
+      components: {
+        default: lazyLoading('add-founds/AddFounds'),
+        sidebar: lazyLoading('add-founds/AddFoundsSidebar')
+      }
     },
     {
       name: 'transfer',

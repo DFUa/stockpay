@@ -38,6 +38,7 @@ export default {
   }
 
   .items-wrapper {
+    padding: 0 60px;
     display: flex;
     justify-content: space-between;
   }

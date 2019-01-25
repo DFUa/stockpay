@@ -10,17 +10,25 @@
       </div>
     </div>
 
+    <!-- App sidebar -->
+    <sidebar>
+      <transition name="slide-left" mode="out-in">
+        <router-view name="sidebar"/>
+      </transition>
+    </sidebar>
+
     <!-- Main router-view -->
     <div class="main-wrapper">
-      <div class="container">
+      <transition name="fade" mode="out-in">
         <router-view/>
-      </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
 import AppHeader from './app-header/AppHeader.vue'
+import Sidebar from './sidebar/Sidebar.vue'
 
 import UiTabs from '@/components/ui/ui-tabs/UiTabs.vue'
 
@@ -29,6 +37,7 @@ export default {
 
   components: {
     AppHeader,
+    Sidebar,
     UiTabs
   },
 
@@ -44,6 +53,8 @@ export default {
 
 <style scoped>
   .main-wrapper {
+    margin-left: 320px;
+    padding: 0 20px;
     padding-top: 180px;
     height: 100vh;
     background: #F6F6F6;
@@ -63,5 +74,6 @@ export default {
     height: 60px;
     background: #fff;
     z-index: 10;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.03);
   }
 </style>

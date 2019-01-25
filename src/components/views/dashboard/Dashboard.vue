@@ -1,14 +1,20 @@
 <template>
   <div>
-    <h1>Dashboard</h1>
+    <dashboard-wallets/>
+    <dashboard-transactions/>
   </div>
 </template>
 
 <script>
+import DashboardWallets from './DashboardWallets.vue'
+import DashboardTransactions from './DashboardTransactions.vue'
+
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+
+  components: {
+    DashboardWallets,
+    DashboardTransactions
+  }
 }
 </script>
-
-<style scoped>
-</style>

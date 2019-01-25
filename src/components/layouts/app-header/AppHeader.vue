@@ -11,6 +11,7 @@
       <div class="name">Name Lastname</div>
       <div class="status">Верифицирован</div>
     </div>
+    <div class="logout">Logout</div>
   </div>
 </template>
 
@@ -26,7 +27,7 @@ export default {
     height: 100px;
     width: 100%;
     background: #1D1D1D;
-    padding: 0 35px;
+    padding: 0 50px;
     display: flex;
     align-items: center;
   }
@@ -39,7 +40,7 @@ export default {
   }
 
   .info {
-    margin-left: 120px;
+    margin-left: 150px;
     display: flex;
   }
 
@@ -52,7 +53,7 @@ export default {
 
   .user-profile {
     position: absolute;
-    right: 30px;
+    right: 320px;
   }
 
   .user-profile .name {
@@ -66,5 +67,18 @@ export default {
     color: #fff;
     font-size: 14px;
     font-family: "Open Sans";
+  }
+
+  .logout {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0.5;
+    color: #fff;
+    right: 40px;
+    transition: .5s;
+  }
+
+  .logout:hover {
+    opacity: 0.7;
   }
 </style>
