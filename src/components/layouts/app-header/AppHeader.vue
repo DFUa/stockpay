@@ -8,7 +8,7 @@
       <div class="item">1 EUR - 72.0 RUB</div>
     </div>
     <div class="user-profile">
-      <div class="name">Name Lastname</div>
+      <div @click="openUserProfile" class="name">Name Lastname</div>
       <div class="status">Верифицирован</div>
     </div>
     <div class="logout">Logout</div>
@@ -17,7 +17,13 @@
 
 <script>
 export default {
-  name: 'AppHeader'
+  name: 'AppHeader',
+
+  methods: {
+    openUserProfile () {
+      this.$router.push('/profile')
+    }
+  }
 }
 </script>
 
@@ -30,6 +36,7 @@ export default {
     padding: 0 50px;
     display: flex;
     align-items: center;
+    z-index: 500;
   }
 
   .logo {
@@ -57,10 +64,16 @@ export default {
   }
 
   .user-profile .name {
+    cursor: pointer;
     color: #FFDB00;
     font-size: 18px;
     font-family: "Open Sans";
     margin-bottom: 2px;
+    transition: .2s;
+  }
+
+  .user-profile .name:hover {
+    text-shadow: 2px 1px 10px rgba(255, 219, 0, 1);
   }
 
   .user-profile .status {
