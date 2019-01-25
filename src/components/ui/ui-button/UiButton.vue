@@ -1,7 +1,9 @@
 <template>
-  <div :class="{ 'ui-button': true, 'accent': accent }"
-    @click="onClick">
-    {{ title }}
+  <div class="button-wrapper">
+    <div :class="{ 'ui-button': true, 'accent': accent }"
+      @click="onClick">
+      {{ title }}
+    </div>
   </div>
 </template>
 
@@ -23,11 +25,16 @@ export default {
 </script>
 
 <style scoped>
+  .button-wrapper {
+    display: inline-block;
+  }
+
   .ui-button {
     cursor: pointer;
     border-radius: 8px;
     padding: 10px 20px;
     min-width: 150px;
+    height: 40px;
     display: flex;
     justify-content: center;
     color: #fff;
