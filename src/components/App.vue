@@ -17,6 +17,17 @@ export default {
     MainLayout
   },
 
+  mounted () {
+    let token = ('token')
+    if (token) {
+      this.$store.dispatch('login')
+      this.$router.push('/main/dashboard')
+    }
+  },
+
+  methods: {
+  },
+
   computed: {
     isAuth () {
       return this.$store.getters.isAuth

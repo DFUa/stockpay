@@ -12,8 +12,7 @@ export default {
   methods: {
     login () {
       this.$store.dispatch('login')
-      // this.$router.push('/main/dashboard')
-      this.$router.push('/profile')
+      this.$router.push('/main/dashboard')
     }
   }
 }

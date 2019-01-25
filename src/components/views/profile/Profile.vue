@@ -30,13 +30,21 @@
             <div class="cols">
               <div class="col-6">
                 <div class="title">Безопасность</div>
-                <ui-input title="Nickname"/>
-                <ui-input title="Password"/>
-                <ui-input title="Email"/>
+
+                <ui-input class="field" title="Nickname">
+                  <ui-button class="ui-input-btn" :accent="true" title="Изменить"/>
+                </ui-input>
+
+                <ui-input class="field" title="Password">
+                  <ui-button class="ui-input-btn" :accent="true" title="Изменить"/>
+                </ui-input>
+
+                <ui-input class="field" title="Email"/>
               </div>
               <div class="col-6">
                 <div class="title">Привязать телефон</div>
-                <ui-input title="Phone"/>
+                
+                <ui-input class="field" title="Phone"/>
               </div>
             </div>
           </div>
@@ -87,6 +95,10 @@ export default {
     margin-bottom: 55px;
   }
 
+  .card-inner .section:last-child {
+    margin-bottom: 0;
+  }
+
   .section .cols {
     display: flex;
     margin: 0 -15px;
@@ -100,5 +112,15 @@ export default {
   .section .col-3 {
     width: 25%;
     padding: 0 15px;
+  }
+
+  .field {
+    width: 380px;
+  }
+
+  .ui-input-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
   }
 </style>
