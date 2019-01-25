@@ -6,6 +6,8 @@
 
     <label>{{ title }}</label>
 
+    <slot></slot>
+
   </div>
 </template>
 
