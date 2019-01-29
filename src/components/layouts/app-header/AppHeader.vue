@@ -134,11 +134,25 @@ export default {
 
   @media screen and (max-width: 1300px) {
     .info {
-      margin-left: 60px;
+      margin-left: 40px;
     }
 
     .info .item {
-      margin-right: 30px;
+      margin-right: 23px;
     }
   }
+
+  /* @media screen and (max-width: 1065px) {
+    .info {
+      width: 300px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .info .item {
+      width: 50%;
+      margin: 5px 0;
+      margin-right: 0;
+    }
+  } */
 </style>

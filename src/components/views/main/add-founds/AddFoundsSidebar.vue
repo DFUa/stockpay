@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="item">Создать счет</div>
+    <div class="item">
+      <div class="i-add"></div>
+      <div class="title">Создать счет</div>
+    </div>
   </div>
 </template>
 
