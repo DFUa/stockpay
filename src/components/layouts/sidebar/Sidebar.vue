@@ -14,7 +14,7 @@ export default {
   .sidebar {
     z-index: 500;
     position: fixed;
-    width: 320px;
+    width: 280px;
     background: #fff;
     top: 160px;
     padding-top: 20px;
@@ -28,7 +28,7 @@ export default {
     height: 70px;
     display: flex;
     align-items: center;
-    padding: 0 35px;
+    padding: 0 30px;
     color: #000;
     font-size: 14px;
     font-weight: normal;
@@ -36,7 +36,25 @@ export default {
     transition: .5s;
   }
 
+  .sidebar .item .title {
+    margin-left: 20px;
+  }
+
   .sidebar .item:hover {
     background: rgba(0, 0, 0, 0.03);
+  }
+
+  @media screen and (max-width: 1650px) {
+    .sidebar {
+      width: 80px;
+    }
+
+    .sidebar .item {
+      justify-content: center;
+    }
+
+    .sidebar .item .title {
+      display: none;
+    }
   }
 </style>
