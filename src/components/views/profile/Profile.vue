@@ -10,16 +10,16 @@
 
             <div class="inputs cols">
               <div class="col-3">
-                <ui-input title="Firstname"/>
+                <ui-input title="Firstname" v-model="firstname"/>
               </div>
               <div class="col-3">
-                <ui-input title="Lastname"/>
+                <ui-input title="Lastname" v-model="lastname"/>
               </div>
               <div class="col-3">
-                <ui-input title="Country"/>
+                <ui-input title="Country" v-model="country"/>
               </div>
               <div class="col-3">
-                <ui-input title="Сity"/>
+                <ui-input title="Сity" v-model="city"/>
               </div>
             </div>
 
@@ -31,20 +31,22 @@
               <div class="col-6">
                 <div class="title">Безопасность</div>
 
-                <ui-input class="field" title="Nickname">
+                <ui-input class="field" title="Nickname" :disabled="true" v-model="nickname">
                   <ui-button class="ui-input-btn" :accent="true" title="Изменить"/>
                 </ui-input>
 
-                <ui-input class="field" title="Password">
+                <ui-input class="field" title="Password" :disabled="true" v-model="password">
                   <ui-button class="ui-input-btn" :accent="true" title="Изменить"/>
                 </ui-input>
 
-                <ui-input class="field" title="Email"/>
+                <ui-input class="field" title="Email" :disabled="true" v-model="email"/>
               </div>
               <div class="col-6">
                 <div class="title">Привязать телефон</div>
-                
-                <ui-input class="field" title="Phone"/>
+
+                <ui-input class="field" title="Phone" :disabled="true" v-model="phone">
+                  <ui-button class="ui-input-btn" :accent="true" title="Привязать"/>
+                </ui-input>
               </div>
             </div>
           </div>
@@ -67,7 +69,18 @@ export default {
     UiCard,
     UiInput,
     UiButton
-  }
+  },
+
+  data: () => ({
+    firstname: 'Vlad',
+    lastname: 'Podolsky',
+    country: 'Country',
+    city: 'City',
+    nickname: 'justnick',
+    password: 'xxxxxxxxxxxxx',
+    email: 'mail@mail.com',
+    phone: '+790 009 9999 999'
+  })
 }
 </script>
 
@@ -101,6 +114,7 @@ export default {
 
   .section .cols {
     display: flex;
+    flex-wrap: wrap;
     margin: 0 -15px;
   }
 
@@ -123,4 +137,24 @@ export default {
     right: 5px;
     top: 5px;
   }
+
+  @media screen and (max-width: 1185px) {
+    .section .col-3 {
+      width: 50%;
+    }
+  }
+
+   @media screen and (max-width: 925px) {
+     .section .col-3 {
+        width: 100%;
+      }
+
+      .section .col-6 {
+        width: 100%;
+      }
+
+      .field {
+        width: 100%;
+      }
+   }
 </style>

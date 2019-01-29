@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div class="item">Создать счет</div>
+    <div class="item">
+      <span class="i-add"></span>
+      <div class="title">Создать счет</div>
+    </div>
+    <div class="item">
+      <span class="i-delete"></span>
+      <div class="title">Удалить счет</div>
+    </div>
   </div>
 </template>
 

@@ -32,7 +32,13 @@ export default {
 
 <style scoped>
   .main-wrapper {
-    margin-left: 320px;
+    margin-left: 280px;
     padding: 0 20px;
+  }
+
+  @media screen and (max-width: 1650px) {
+    .main-wrapper {
+      margin-left: 80px;
+    }
   }
 </style>

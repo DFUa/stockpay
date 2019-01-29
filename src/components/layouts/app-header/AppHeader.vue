@@ -8,6 +8,9 @@
       <div class="item">1 EUR - 72.0 RUB</div>
     </div>
     <div class="user-profile">
+      <div @click="openUserProfile" class="icon">
+        <span class="i-user"></span>
+      </div>
       <div @click="openUserProfile" class="name">Name Lastname</div>
       <div class="status">Верифицирован</div>
     </div>
@@ -63,6 +66,10 @@ export default {
     right: 320px;
   }
 
+  .user-profile .icon {
+    display: none;
+  }
+
   .user-profile .name {
     cursor: pointer;
     color: #FFDB00;
@@ -93,5 +100,45 @@ export default {
 
   .logout:hover {
     opacity: 0.7;
+  }
+
+  @media screen and (max-width: 1650px) {
+    .user-profile .name {
+      display: none;
+    }
+
+    .user-profile .status {
+      display: none;
+    }
+
+    .user-profile {
+      right: 140px;
+    }
+
+    .user-profile .icon {
+      cursor: pointer;
+      height: 34px;
+      width: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: .5s;
+    }
+
+    .user-profile .icon:hover {
+      background: rgba(255, 255, 255, 0.17);
+    }
+  }
+
+  @media screen and (max-width: 1300px) {
+    .info {
+      margin-left: 60px;
+    }
+
+    .info .item {
+      margin-right: 30px;
+    }
   }
 </style>

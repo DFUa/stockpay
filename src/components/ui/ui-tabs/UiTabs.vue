@@ -72,4 +72,16 @@ export default {
     font-weight: 600;
     font-family: "Open Sans";
   }
+
+  @media screen and (max-width: 925px) {
+    .items-wrapper .item .title {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 735px) {
+    .items-wrapper .item .title {
+      display: none;
+    }
+  }
 </style>

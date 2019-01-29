@@ -79,4 +79,35 @@ export default {
   .wallets .item .info-item:last-child {
     margin-bottom: 0;
   }
+
+  @media screen and (max-width: 1460px) {
+    .wallets .item {
+      width: 33.3333%;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .wallets .item:last-child {
+      border-right: 1px solid rgba(0, 0, 0, 0.03);
+    }
+  }
+
+  @media screen and (max-width: 925px) {
+    .wallets .item {
+      width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 735px) {
+    .wallets .item {
+      width: 100%;
+    }
+
+    .wallets .item {
+      border-right: none;
+    }
+
+    .wallets .item:last-child {
+      border-bottom: none;
+    }
+  }
 </style>
