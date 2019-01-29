@@ -1,8 +1,12 @@
 <template>
-  <div class="group">
+  <div :class="{ 'group': true, 'disabled': disabled }">
 
     <input @input="onUpdate" @keyup.enter="onEnter" v-model="currentValue"
-      :type="type ? type : 'text'" :class="{ 'offset': icon }" required>
+      :type="type ? type : 'text'" required>
+
+    <div v-if="disabled" class="disabled-title">
+      {{ currentValue }}
+    </div>
 
     <label>{{ title }}</label>
 
@@ -18,7 +22,8 @@ export default {
   props: {
     type: String,
     title: String,
-    value: String
+    value: String,
+    disabled: Boolean
   },
 
   mounted () {
@@ -96,5 +101,15 @@ export default {
   input:focus,
   input:valid {
     border: 1px solid #006344;
+  }
+
+  .disabled input {
+    color: transparent;
+  }
+
+  .disabled-title {
+    position: absolute;
+    top: 15px;
+    left: 16px;
   }
 </style>
