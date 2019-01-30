@@ -34,6 +34,7 @@ export default {
   .main-wrapper {
     margin-left: 280px;
     padding: 0 20px;
+    padding-bottom: 20px;
   }
 
   @media screen and (max-width: 1650px) {

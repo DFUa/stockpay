@@ -87,6 +87,7 @@ export default {
 <style scoped>
   .profile-wrapper {
     padding: 0 20px;
+    padding-bottom: 20px;
   }
 
   .card-inner {

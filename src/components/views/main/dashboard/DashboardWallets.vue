@@ -70,7 +70,7 @@ export default {
   }
 
   .wallets .item .info-item {
-    opacity: 0.5;
+    color: rgba(0, 0, 0, 0.5);
     font-size: 16px;
     font-family: "Open Sans";
     margin-bottom: 10px;

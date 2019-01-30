@@ -16,14 +16,16 @@ export default {
     position: fixed;
     width: 280px;
     background: #fff;
-    top: 160px;
+    top: 195px;
     padding-top: 20px;
     height: calc(100vh - 160px);
     border-top: 1px solid #F6F6F6;
     box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
   }
 
   .sidebar .item {
+    width: 280px;
     cursor: pointer;
     height: 70px;
     display: flex;
@@ -47,14 +49,21 @@ export default {
   @media screen and (max-width: 1650px) {
     .sidebar {
       width: 80px;
-    }
-
-    .sidebar .item {
-      justify-content: center;
+      transition: .5s;
     }
 
     .sidebar .item .title {
-      display: none;
+      opacity: 0;
+      transition-delay: .5s;
+      transition: .5s;
+    }
+
+    .sidebar:hover {
+      width: 280px;
+    }
+
+    .sidebar:hover .item .title {
+      opacity: 1;
     }
   }
 </style>

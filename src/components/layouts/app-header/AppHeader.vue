@@ -1,26 +1,54 @@
 <template>
   <div class="app-header">
-    <div class="logo">StocksPay</div>
-    <div class="info">
-      <div class="item">1 USD - 66.0 RUB</div>
-      <div class="item">1 UAH - 4.323 RUB</div>
-      <div class="item">1 KZT - 0.18 RUB</div>
-      <div class="item">1 EUR - 72.0 RUB</div>
+
+    <div class="dev-alert">
+      <p>сайт находится в разработке</p>
     </div>
-    <div class="user-profile">
-      <div @click="openUserProfile" class="icon">
-        <span class="i-user"></span>
+
+    <div class="top-bar">
+      <div class="logo">StocksPay</div>
+        <div class="info">
+          <div class="item">1 USD - 66.0 RUB</div>
+          <div class="item">1 UAH - 4.323 RUB</div>
+          <div class="item">1 KZT - 0.18 RUB</div>
+          <div class="item">1 EUR - 72.0 RUB</div>
+        </div>
+        <div class="user-profile">
+          <div @click="openUserProfile" class="icon">
+            <span class="i-user"></span>
+          </div>
+          <div @click="openUserProfile" class="name">Name Lastname</div>
+          <div class="status">Верифицирован</div>
+        </div>
+        <div class="logout">Logout</div>
+    </div>
+
+    <div class="tabs-wrapper">
+      <div class="container">
+        <ui-tabs :items="tabs"/>
       </div>
-      <div @click="openUserProfile" class="name">Name Lastname</div>
-      <div class="status">Верифицирован</div>
     </div>
-    <div class="logout">Logout</div>
+
   </div>
 </template>
 
 <script>
+import UiTabs from '@/components/ui/ui-tabs/UiTabs.vue'
+
 export default {
   name: 'AppHeader',
+
+  components: {
+    UiTabs
+  },
+
+  data: () => ({
+    tabs: [
+      { id: 0, title: 'Счета и транзакции', icon: 'i-tab-transaction', path: '/main/dashboard' },
+      { id: 1, title: 'Пополнить', icon: 'i-tab-add-founds', path: '/main/add-founds' },
+      { id: 2, title: 'Перевести', icon: 'i-tab-transfer', path: '/main/transfer' }
+    ]
+  }),
 
   methods: {
     openUserProfile () {
@@ -33,13 +61,16 @@ export default {
 <style scoped>
   .app-header {
     position: fixed;
-    height: 100px;
     width: 100%;
+    z-index: 1000;
+  }
+
+  .top-bar {
+    height: 100px;
     background: #1D1D1D;
     padding: 0 50px;
     display: flex;
     align-items: center;
-    z-index: 500;
   }
 
   .logo {
@@ -102,6 +133,26 @@ export default {
     opacity: 0.7;
   }
 
+  .tabs-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.03);
+  }
+
+  .dev-alert {
+    height: 35px;
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    background: #ec1919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media screen and (max-width: 1650px) {
     .user-profile .name {
       display: none;
@@ -141,18 +192,4 @@ export default {
       margin-right: 23px;
     }
   }
-
-  /* @media screen and (max-width: 1065px) {
-    .info {
-      width: 300px;
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .info .item {
-      width: 50%;
-      margin: 5px 0;
-      margin-right: 0;
-    }
-  } */
 </style>
