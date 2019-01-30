@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Transfer</h1>
+    <h1>Находится в разработке</h1>
   </div>
 </template>
 
