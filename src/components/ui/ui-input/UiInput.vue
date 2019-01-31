@@ -2,13 +2,14 @@
   <div :class="{ 'group': true, 'disabled': disabled }">
 
     <input @input="onUpdate" @keyup.enter="onEnter" v-model="currentValue"
+      :style="{ background: background ? background : '#fff' }"
       :type="type ? type : 'text'" required>
 
     <div v-if="disabled" class="disabled-title">
       {{ currentValue }}
     </div>
 
-    <label>{{ title }}</label>
+    <label :style="{ background: background ? background : '#fff' }">{{ title }}</label>
 
     <slot></slot>
 
@@ -23,7 +24,8 @@ export default {
     type: String,
     title: String,
     value: String,
-    disabled: Boolean
+    disabled: Boolean,
+    background: String
   },
 
   mounted () {
@@ -67,7 +69,6 @@ export default {
     border: 1px solid #DFDFDF;
     padding: 15px 22px;
     display: block;
-    background: transparent;
   }
 
   input:focus {
