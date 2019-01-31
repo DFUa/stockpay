@@ -80,8 +80,12 @@ export default {
   }
 
   @media screen and (max-width: 735px) {
-    .items-wrapper .item .title {
+    .items-wrapper .item span {
       display: none;
+    }
+
+    .items-wrapper .item span {
+      margin: 0;
     }
   }
 </style>

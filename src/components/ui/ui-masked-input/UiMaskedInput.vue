@@ -73,6 +73,7 @@ export default {
   }
 
   input {
+    width: 100%;
     font-size: 14px;
     font-weight: 600;
     font-family: "Open Sans";

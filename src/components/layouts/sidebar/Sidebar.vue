@@ -14,7 +14,7 @@ export default {
   .sidebar {
     z-index: 500;
     position: fixed;
-    width: 280px;
+    width: 320px;
     background: #fff;
     top: 195px;
     padding-top: 20px;
@@ -25,7 +25,7 @@ export default {
   }
 
   .sidebar .item {
-    width: 280px;
+    width: 320px;
     cursor: pointer;
     height: 70px;
     display: flex;
@@ -33,9 +33,13 @@ export default {
     padding: 0 30px;
     color: #000;
     font-size: 14px;
-    font-weight: normal;
+    font-weight: 600;
     font-family: "Open Sans";
     transition: .5s;
+  }
+
+  .sidebar .item span {
+    min-width: 20px;
   }
 
   .sidebar .item .title {
@@ -46,7 +50,15 @@ export default {
     background: rgba(0, 0, 0, 0.03);
   }
 
-  @media screen and (max-width: 1650px) {
+  .sidebar .item.active {
+    background: #006344;
+  }
+
+  .sidebar .item.active * {
+    filter: invert(1);
+  }
+
+  @media screen and (max-width: 1680px) {
     .sidebar {
       width: 80px;
       transition: .5s;
@@ -59,7 +71,7 @@ export default {
     }
 
     .sidebar:hover {
-      width: 280px;
+      width: 320px;
     }
 
     .sidebar:hover .item .title {

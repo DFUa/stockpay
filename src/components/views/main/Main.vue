@@ -32,12 +32,12 @@ export default {
 
 <style scoped>
   .main-wrapper {
-    margin-left: 280px;
+    margin-left: 320px;
     padding: 0 20px;
     padding-bottom: 20px;
   }
 
-  @media screen and (max-width: 1650px) {
+  @media screen and (max-width: 1680px) {
     .main-wrapper {
       margin-left: 80px;
     }

@@ -2,7 +2,7 @@
   <div class="app-header">
 
     <div class="dev-alert">
-      <p>сайт находится в разработке</p>
+      <p>сервис находится в разработке</p>
     </div>
 
     <div class="top-bar">
@@ -190,6 +190,12 @@ export default {
 
     .info .item {
       margin-right: 23px;
+    }
+  }
+
+  @media screen and (max-width: 985px) {
+    .info {
+      display: none;
     }
   }
 </style>
