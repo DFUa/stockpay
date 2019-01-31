@@ -2,7 +2,7 @@
   <div class="group" :style="{ borderColor: borderColor ? borderColor : '#E7E7E7',
     background: backgroundColor ? backgroundColor : '#fff' }">
 
-    <the-mask :mask="mask"/>
+    <the-mask :mask="mask" v-model="currentValue"/>
 
     <label :style="{ background: backgroundColor ? backgroundColor : '#fff' }">{{ title }}</label>
 
@@ -36,19 +36,13 @@ export default {
     currentValue: ''
   }),
 
-  methods: {
-    onUpdate () {
-      this.$emit('input', this.currentValue)
-    },
-
-    onEnter () {
-      this.$emit('on-enter')
-    }
-  },
-
   watch: {
     value () {
       this.currentValue = this.value
+    },
+
+    currentValue () {
+      this.$emit('input', this.currentValue)
     }
   }
 }
