@@ -25,9 +25,6 @@ export default {
     }
   },
 
-  methods: {
-  },
-
   computed: {
     isAuth () {
       return this.$store.getters.isAuth

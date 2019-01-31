@@ -6,11 +6,11 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    {
-      name: 'not-found-redirect',
-      path: '*',
-      redirect: '/main/dashboard'
-    },
+    // {
+    //   name: 'not-found-redirect',
+    //   path: '*',
+    //   redirect: '/main/dashboard'
+    // },
     {
       name: 'main',
       path: '/main',
@@ -28,10 +28,15 @@ const router = new Router({
         {
           name: 'add-founds',
           path: 'add-founds',
+          redirect: 'add-founds/cards',
           components: {
             default: lazyLoading('main/add-founds/AddFounds'),
             sidebar: lazyLoading('main/add-founds/AddFoundsSidebar')
-          }
+          },
+          children: [
+            { path: 'cards', component: lazyLoading('main/add-founds/cards/Cards') },
+            { path: 'adv', component: lazyLoading('main/add-founds/adv/Adv') }
+          ]
         },
         {
           name: 'transfer',

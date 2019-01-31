@@ -39,7 +39,7 @@ export default {
   }
 
   .sidebar .item span {
-    min-width: 20px;
+    min-width: 24px;
   }
 
   .sidebar .item .title {
@@ -54,8 +54,17 @@ export default {
     background: #006344;
   }
 
-  .sidebar .item.active * {
+  .sidebar .item.active:not(.disabled) * {
     filter: invert(1);
+  }
+
+  .sidebar .item.disabled {
+    cursor: default;
+    background: #fff;
+  }
+
+  .sidebar .item.disabled * {
+    opacity: 0.3;
   }
 
   @media screen and (max-width: 1680px) {
