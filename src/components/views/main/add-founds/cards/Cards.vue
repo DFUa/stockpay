@@ -28,9 +28,9 @@
       </div>
     </div>
     <div class="footer">
-      <div class="info-title">Для подтверждения перевода нажмите <br>
-        на кнопку “Перевести”</div>
-      <ui-button :accent="true" title="Перевести"/>
+      <div class="info-title">Для подтверждения пополнения нажмите <br>
+        на кнопку "Пополнить"</div>
+      <ui-button :accent="true" title="Пополнить"/>
     </div>
   </ui-card>
 </template>
