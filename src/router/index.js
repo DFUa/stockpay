@@ -41,7 +41,15 @@ const router = new Router({
         {
           name: 'transfer',
           path: 'transfer',
-          component: lazyLoading('main/transfer/Transfer')
+          redirect: 'transfer/cards',
+          components: {
+            default: lazyLoading('main/transfer/Transfer'),
+            sidebar: lazyLoading('main/transfer/TransferSidebar')
+          },
+          children: [
+            { path: 'cards', component: lazyLoading('main/transfer/cards/Cards') },
+            { path: 'person', component: lazyLoading('main/transfer/person/Person') }
+          ]
         }
       ]
     },
