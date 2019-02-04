@@ -1,6 +1,6 @@
 <template>
   <div @click="toggle" class="ui-toggle-arrow">
-    <div :class="{ 'toggled': toggled }">
+    <div :class="{ 'centered': true, 'toggled': toggled }">
       <span class="i-arrow"></span>
     </div>
   </div>
@@ -41,6 +41,12 @@ export default {
   .ui-toggle-arrow {
     cursor: pointer;
     position: relative;
+    transform: rotate(180deg);
+  }
+
+  .ui-toggle-arrow .centered {
+    display: flex;
+    align-items: center;
   }
 
   .ui-toggle-arrow span {
