@@ -3,9 +3,10 @@
     :style="{ borderColor: borderColor ? borderColor : '#E7E7E7',
     background: backgroundColor ? backgroundColor : '#fff' }">
 
-    <the-mask :mask="mask" v-model="currentValue"/>
+    <the-mask v-if="!disabled" :mask="mask" v-model="currentValue"/>
+    <div v-else class="input-value">{{ currentValue }}</div>
 
-    <label :style="{ background: backgroundColor ? backgroundColor : '#fff' }">{{ title }}</label>
+    <label v-if="!disabled" :style="{ background: backgroundColor ? backgroundColor : '#fff' }">{{ title }}</label>
 
     <ui-toggle-arrow class="arrow" v-model="showDropDown"/>
 
@@ -42,7 +43,8 @@ export default {
     value: Object,
     mask: String,
     backgroundColor: String,
-    borderColor: String
+    borderColor: String,
+    disabled: Boolean
   },
 
   mounted () {
@@ -144,12 +146,17 @@ export default {
     font-family: "Open Sans";
   }
 
-  input {
+  input,
+  .input-value {
     width: 100%;
     font-size: 14px;
     font-weight: 600;
     font-family: "Open Sans";
     background: transparent;
+  }
+
+  .input-value {
+    opacity: .5;
   }
 
   input:focus {
