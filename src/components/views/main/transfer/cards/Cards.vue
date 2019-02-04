@@ -66,7 +66,9 @@ export default {
   }
 
   .inner {
-    padding: 25px 40px;
+    padding: 25px 35px;
+    padding-bottom: 30px;
+    transition: .5s;
   }
 
   .title {

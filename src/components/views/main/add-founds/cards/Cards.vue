@@ -63,6 +63,7 @@ export default {
 <style scoped>
   .add-founds-cards {
     padding: 25px 35px;
+    padding-bottom: 30px;
   }
 
   .title {
@@ -135,7 +136,6 @@ export default {
 
   .footer {
     padding-top: 35px;
-    margin-bottom: 40px;
   }
 
   .footer .info-title {
