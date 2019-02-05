@@ -86,5 +86,9 @@ export default {
     .sidebar:hover .item .title {
       opacity: 1;
     }
+
+    .sidebar:hover .item.disabled * {
+      opacity: 0.3;
+    }
   }
 </style>
