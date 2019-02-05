@@ -4,27 +4,27 @@
       <div class="item">
         <div class="title">Рубль</div>
         <div class="info-item">14 000 RUB</div>
-        <div class="info-item">Ru 7948 4954 0495 0459</div>
+        <div class="info-item">RUB 0099 2344 8484 3454</div>
       </div>
       <div class="item">
         <div class="title">Доллар</div>
         <div class="info-item">100 USD</div>
-        <div class="info-item">Ru 5465 4954 0495 9089</div>
+        <div class="info-item">USD 0303 9549 7344 5455</div>
       </div>
       <div class="item">
         <div class="title">Гривны</div>
         <div class="info-item">0 UAH</div>
-        <div class="info-item">Ru 1234 4954 0495 3453</div>
+        <div class="info-item">UAH 6463 7747 7377 8484</div>
       </div>
       <div class="item">
         <div class="title">Тенге</div>
         <div class="info-item">30 000 KZT</div>
-        <div class="info-item">Ru 4543 4954 0495 1235</div>
+        <div class="info-item">KZT 8994 4354 3321 1122</div>
       </div>
       <div class="item">
         <div class="title">Евро</div>
         <div class="info-item">3 500 000 EUR</div>
-        <div class="info-item">Ru 9223 4954 0495 9235</div>
+        <div class="info-item">EUR 6632 4323 4343 34545</div>
       </div>
     </div>
   </ui-card>
@@ -91,7 +91,7 @@ export default {
     }
   }
 
-  @media screen and (max-width: 925px) {
+  @media screen and (max-width: 1080px) {
     .wallets .item {
       width: 50%;
     }

@@ -16,7 +16,7 @@ export default {
 
   data: () => ({
     items: [
-      { id: 0, title: 'Между своими счетами', icon: 'i-tr-cards', path: 'cards' },
+      { id: 0, title: 'Между своими счетами', icon: 'i-tr-cards', path: 'wallets' },
       { id: 1, title: 'Другому человеку', icon: 'i-tr-person', path: 'person' },
       { id: 2, title: 'На банковскую карту', icon: 'i-tr-bank', path: 'bank-card' },
       { id: 3, title: 'На банковский счет', icon: 'i-tr-building', path: 'bank-account' },

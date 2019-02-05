@@ -7,12 +7,12 @@
     <div class="inputs-wrapper">
       <div class="from">
         <ui-currency-input title="Сумма" v-model="inValue" mask="### ### ### ###"/>
-        <div class="wallet-label">Us 0490 4094 2342 0454</div>
+        <div class="wallet-label">{{ wallets[inValue.key] }}</div>
       </div>
       <div @click="toggleCurrencys" :class="{ 'toggler i-arrows': true, 'togged': isCurrencyToggled }"></div>
       <div class="to">
         <ui-currency-input :disabled="true" v-model="outValue" mask="### ### ### ###"/>
-        <div class="wallet-label">Ru 0490 4094 2342 0454</div>
+        <div class="wallet-label">{{ wallets[outValue.key] }}</div>
       </div>
     </div>
 
@@ -45,6 +45,13 @@ export default {
     outValue: {
       value: 0,
       key: 'usd'
+    },
+    wallets: {
+      usd: 'USD 0303 9549 7344 5455',
+      uah: 'UAH 6463 7747 7377 8484',
+      eur: 'EUR 6632 4323 4343 3454',
+      kzt: 'KZT 8994 4354 3321 1122',
+      rub: 'RUB 0099 2344 8484 3454'
     },
     isCurrencyToggled: false
   }),

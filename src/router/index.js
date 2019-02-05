@@ -6,11 +6,6 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    // {
-    //   name: 'not-found-redirect',
-    //   path: '*',
-    //   redirect: '/main/dashboard'
-    // },
     {
       name: 'main',
       path: '/main',
@@ -41,14 +36,16 @@ const router = new Router({
         {
           name: 'transfer',
           path: 'transfer',
-          redirect: 'transfer/cards',
+          redirect: 'transfer/wallets',
           components: {
             default: lazyLoading('main/transfer/Transfer'),
             sidebar: lazyLoading('main/transfer/TransferSidebar')
           },
           children: [
-            { path: 'cards', component: lazyLoading('main/transfer/cards/Cards') },
-            { path: 'person', component: lazyLoading('main/transfer/person/Person') }
+            { path: 'wallets', component: lazyLoading('main/transfer/wallets/Wallets') },
+            { path: 'person', component: lazyLoading('main/transfer/person/Person') },
+            { path: 'bank-card', component: lazyLoading('main/transfer/bank-card/BankCard') },
+            { path: 'bank-account', component: lazyLoading('main/transfer/bank-account/BankAccount') }
           ]
         }
       ]
