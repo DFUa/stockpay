@@ -2,12 +2,11 @@
   <div class="profile-wrapper">
     <div class="container">
       <ui-card>
-
         <div class="card-inner">
 
+          <!-- Personal information -->
           <div class="section">
             <div class="title">Личные данные</div>
-
             <div class="inputs cols">
               <div class="col-3">
                 <ui-input title="Firstname" v-model="firstname"/>
@@ -22,31 +21,26 @@
                 <ui-input title="Сity" v-model="city"/>
               </div>
             </div>
-
             <ui-button :accent="true" title="Применить"/>
           </div>
 
+          <!-- Security section -->
           <div class="section">
             <div class="cols">
               <div class="col-6">
                 <div class="title">Безопасность</div>
-
-                <ui-input class="field" title="Nickname" :disabled="true" v-model="nickname">
-                  <ui-button class="ui-input-btn" :accent="true" title="Изменить"/>
-                </ui-input>
-
-                <ui-input class="field" title="Password" :disabled="true" v-model="password">
-                  <ui-button class="ui-input-btn" :accent="true" title="Изменить"/>
-                </ui-input>
-
-                <ui-input class="field" title="Email" :disabled="true" v-model="email"/>
+                <div class="fields-wrapper">
+                  <security-nickname/>
+                  <security-password/>
+                  <ui-input class="field" title="Email"
+                    :disabled="true" v-model="email"/>
+                </div>
               </div>
               <div class="col-6">
                 <div class="title">Привязать телефон</div>
-
-                <ui-input class="field" title="Phone" :disabled="true" v-model="phone">
-                  <ui-button class="ui-input-btn" :accent="true" title="Привязать"/>
-                </ui-input>
+                <div class="fields-wrapper">
+                  <security-phone/>
+                </div>
               </div>
             </div>
           </div>
@@ -62,13 +56,20 @@ import UiCard from '@/components/ui/ui-card/UiCard.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 
+import SecurityPhone from './security/Phone.vue'
+import SecurityNickname from './security/Nickname.vue'
+import SecurityPassword from './security/Password.vue'
+
 export default {
   name: 'Profile',
 
   components: {
     UiCard,
     UiInput,
-    UiButton
+    UiButton,
+    SecurityPhone,
+    SecurityNickname,
+    SecurityPassword
   },
 
   data: () => ({
@@ -76,10 +77,7 @@ export default {
     lastname: 'Podolsky',
     country: 'Country',
     city: 'City',
-    nickname: 'justnick',
-    password: 'xxxxxxxxxxxxx',
-    email: 'mail@mail.com',
-    phone: '+790 009 9999 999'
+    email: 'mail@mail.com'
   })
 }
 </script>
@@ -129,14 +127,8 @@ export default {
     padding: 0 15px;
   }
 
-  .field {
+  .fields-wrapper {
     width: 380px;
-  }
-
-  .ui-input-btn {
-    position: absolute;
-    right: 5px;
-    top: 5px;
   }
 
   @media screen and (max-width: 1185px) {
@@ -154,7 +146,7 @@ export default {
         width: 100%;
       }
 
-      .field {
+      .fields-wrapper {
         width: 100%;
       }
    }
