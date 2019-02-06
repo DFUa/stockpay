@@ -38,7 +38,6 @@ export default {
   },
 
   props: {
-    type: String,
     title: String,
     value: Object,
     mask: String,
@@ -150,7 +149,6 @@ export default {
   .input-value {
     width: 100%;
     font-size: 14px;
-    font-weight: 600;
     font-family: "Open Sans";
     background: transparent;
   }
@@ -172,27 +170,31 @@ export default {
 
   .items-wrapper {
     position: absolute;
-    top: 4px;
-    right: 5px;
+    top: 5px;
+    right: 3px;
     padding: 5px 0;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 2;
   }
 
   .selected-wrapper {
     cursor: pointer;
     position: absolute;
-    right: 47.5px;
+    top: 15px;
+    right: 45px;
     color: #006344;
+    font-size: 14px;
     font-weight: 600;
   }
 
   .items-wrapper .item {
-    width: 90px;
+    width: 85.5px;
     padding: 5px 15px;
     cursor: pointer;
     transition: .5s;
+    font-size: 14px;
     font-weight: 600;
   }
 

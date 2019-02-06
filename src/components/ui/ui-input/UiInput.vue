@@ -11,7 +11,9 @@
 
     <label :style="{ background: background ? background : '#fff' }">{{ title }}</label>
 
-    <slot></slot>
+    <div class="slot-wrapper">
+      <slot></slot>
+    </div>
 
   </div>
 </template>
@@ -63,7 +65,6 @@ export default {
   input {
     width: 100%;
     font-size: 14px;
-    font-weight: 600;
     font-family: "Open Sans";
     border-radius: 8px;
     border: 1px solid #DFDFDF;
@@ -102,6 +103,12 @@ export default {
   input:focus,
   input:valid {
     border: 1px solid #006344;
+  }
+
+  .slot-wrapper {
+    position: absolute;
+    right: 5px;
+    top: 5px;
   }
 
   .disabled input {
