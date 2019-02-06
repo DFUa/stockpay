@@ -12,7 +12,7 @@
             </div>
             <div class="date-wrapper">
               <ui-masked-input title="Дата" class="date-input"
-                background-color="#f4f4f4" mask="## / ##" v-model="cardDate"/>
+                background-color="#f8f8f8" mask="## / ##" v-model="cardDate"/>
             </div>
           </div>
 
@@ -24,7 +24,10 @@
 
       </div>
       <div class="col-6">
-        <ui-input title="Сумма пополнения" v-model="amount"/>
+        <div class="inputs-wrapper">
+          <ui-currency-input title="Сумма пополнения" mask="### ### ###" v-model="amount"/>
+          <ui-select title="Кошелек" v-model="value" mask="### ### ###"/>
+        </div>
       </div>
     </div>
     <div class="footer">
@@ -37,25 +40,34 @@
 
 <script>
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
-import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
 import UiMaskedInput from '@/components/ui/ui-masked-input/UiMaskedInput.vue'
+import UiCurrencyInput from '@/components/ui/ui-currency-input/UiCurrencyInput.vue'
 
 export default {
   name: 'AddFoundsCards',
 
   components: {
     UiCard,
-    UiInput,
     UiButton,
-    UiMaskedInput
+    UiSelect,
+    UiMaskedInput,
+    UiCurrencyInput
   },
 
   data: () => ({
     cardNumber: '',
     cardDate: '',
     cardCVV: '',
-    amount: ''
+    amount: {
+      value: 10,
+      key: 'usd'
+    },
+    value: {
+      value: 13,
+      key: 'usd'
+    }
   })
 }
 </script>
@@ -109,7 +121,7 @@ export default {
 
   .card-front .date-wrapper {
     padding: 15px 20px;
-    background: #f4f4f4;
+    background: #f8f8f8;
   }
 
   .card-back {
@@ -125,6 +137,21 @@ export default {
 
   .date-input {
     width: 100px;
+  }
+
+  .inputs-wrapper {
+    width: 300px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inputs-wrapper > div {
+    margin-bottom: 30px;
+  }
+
+  .inputs-wrapper > div:last-child {
+    margin-bottom: 0;
   }
 
   .cvv-input {
