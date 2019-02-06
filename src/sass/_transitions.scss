@@ -18,3 +18,14 @@
   opacity: 0;
   transform: translateX(-10px);
 }
+
+.fade-up-enter-active,
+.fade-up-leave-active {
+  transition: .2s;
+}
+
+.fade-up-enter,
+.fade-up-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
