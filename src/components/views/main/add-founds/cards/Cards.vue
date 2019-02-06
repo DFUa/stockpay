@@ -26,7 +26,7 @@
       <div class="col-6">
         <div class="inputs-wrapper">
           <ui-currency-input title="Сумма пополнения" mask="### ### ###" v-model="amount"/>
-          <ui-select title="Кошелек" v-model="value" mask="### ### ###"/>
+          <ui-wallet-select title="Кошелек" v-model="value" mask="### ### ###"/>
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
 <script>
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
-import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
+import UiWalletSelect from '@/components/ui/ui-wallet-select/UiWalletSelect.vue'
 import UiMaskedInput from '@/components/ui/ui-masked-input/UiMaskedInput.vue'
 import UiCurrencyInput from '@/components/ui/ui-currency-input/UiCurrencyInput.vue'
 
@@ -51,7 +51,7 @@ export default {
   components: {
     UiCard,
     UiButton,
-    UiSelect,
+    UiWalletSelect,
     UiMaskedInput,
     UiCurrencyInput
   },
