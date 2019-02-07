@@ -29,3 +29,14 @@
   opacity: 0;
   transform: translateY(-30px);
 }
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: .25s;
+}
+
+.slide-right-enter,
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
