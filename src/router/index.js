@@ -54,6 +54,16 @@ const router = new Router({
       name: 'Profile',
       path: '/profile',
       component: lazyLoading('profile/Profile')
+    },
+    {
+      name: 'Auth',
+      path: '/auth',
+      redirect: 'auth/sign-in',
+      component: lazyLoading('auth/Auth'),
+      children: [
+        { path: 'sign-in', component: lazyLoading('auth/sign-in/SignIn') },
+        { path: 'sign-up', component: lazyLoading('auth/sign-up/SignUp') }
+      ]
     }
   ]
 })

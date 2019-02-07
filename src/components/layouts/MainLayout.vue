@@ -1,20 +1,16 @@
 <template>
-  <div>
+  <div class="app-wrapper">
 
-    <div class="app-wrapper">
+    <!-- Just header =) -->
+    <app-header/>
 
-      <!-- Just header =) -->
-      <app-header/>
-
-      <div class="main-wrapper">
-        <vue-scroll :ops="ops">
-          <transition name="fade" mode="out-in">
-            <router-view/>
-          </transition>
-        </vue-scroll>
-      </div>
+    <div class="main-wrapper">
+      <vue-scroll :ops="ops">
+        <transition name="fade" mode="out-in">
+          <router-view/>
+        </transition>
+      </vue-scroll>
     </div>
-
   </div>
 </template>
 
