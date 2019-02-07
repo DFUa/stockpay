@@ -29,7 +29,7 @@ export default {
       { id: 1, title: 'Доллар', value: '100', symbol: 'USD', icon: 'i-c-usd', number: '0303 9549 7344 5455' },
       { id: 2, title: 'Гривны', value: '0', symbol: 'UAH', icon: 'i-c-uah', number: '6463 7747 7377 8484' },
       { id: 3, title: 'Тенге', value: '30 000', symbol: 'KZT', icon: 'i-c-kzt', number: '8994 4354 3321 1122' },
-      { id: 4, title: 'Евро', value: '14 000', symbol: 'EUR', icon: 'i-c-eur', number: '6632 4323 4343 3445' },
+      { id: 4, title: 'Евро', value: '14 000', symbol: 'EUR', icon: 'i-c-eur', number: '6632 4323 4343 3445' }
     ]
   })
 }
