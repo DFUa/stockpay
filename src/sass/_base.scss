@@ -6,6 +6,10 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+*:focus {
+  outline: none;
+}
+
 .container {
   width: 100%;
   max-width: 1280px;
