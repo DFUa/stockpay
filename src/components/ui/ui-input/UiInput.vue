@@ -59,7 +59,8 @@ export default {
 <style scoped>
   .group {
     position: relative;
-    margin-bottom: 23px;
+    height: 50px;
+    margin-bottom: 20px;
   }
 
   input {
