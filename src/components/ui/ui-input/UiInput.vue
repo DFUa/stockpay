@@ -3,13 +3,20 @@
 
     <input @input="onUpdate" @keyup.enter="onEnter" v-model="currentValue"
       :style="{ background: background ? background : '#fff' }"
-      :type="type ? type : 'text'" required>
+      :type="(type && !showPassword) ? type : 'text'" required>
 
     <div v-if="disabled" class="disabled-title">
       {{ currentValue }}
     </div>
 
     <label :style="{ background: background ? background : '#fff' }">{{ title }}</label>
+
+    <div v-if="type === 'password'" class="eye-wrapper">
+      <transition name="fade" mode="out-in">
+        <div v-if="!showPassword" @click="togglePassword" key="key1" class="btn i-eye-closed"></div>
+        <div v-else @click="togglePassword" key="key2" class="btn i-eye-show"></div>
+      </transition>
+    </div>
 
     <div class="slot-wrapper">
       <slot></slot>
@@ -35,7 +42,8 @@ export default {
   },
 
   data: () => ({
-    currentValue: ''
+    currentValue: '',
+    showPassword: false
   }),
 
   methods: {
@@ -45,6 +53,10 @@ export default {
 
     onEnter () {
       this.$emit('on-enter')
+    },
+
+    togglePassword () {
+      this.showPassword = !this.showPassword
     }
   },
 
@@ -120,5 +132,18 @@ export default {
     position: absolute;
     top: 15px;
     left: 16px;
+  }
+
+  .eye-wrapper {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+  }
+
+  .eye-wrapper .btn {
+    cursor: pointer;
   }
 </style>
