@@ -77,12 +77,14 @@ export default {
 
   input {
     width: 100%;
+    height: 50px;
     font-size: 14px;
     font-family: "Open Sans";
     border-radius: 8px;
     border: 1px solid #DFDFDF;
-    padding: 15px 22px;
-    display: block;
+    padding: 0px 21px;
+    display: flex;
+    align-items: center;
   }
 
   input:focus {
@@ -131,7 +133,8 @@ export default {
   .disabled-title {
     position: absolute;
     top: 15px;
-    left: 16px;
+    left: 22px;
+    font-size: 14px;
   }
 
   .eye-wrapper {
