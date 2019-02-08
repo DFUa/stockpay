@@ -3,7 +3,7 @@
     v-click-outside="closeDropDown" @click="openDropDown">
 
     <input v-if="showDropDown" v-focus type="text" v-model="searchValue">
-    <div v-else class="value">{{ selectedItem ? selectedItem.title : '' }}</div>
+    <div v-else class="value">{{ selectedItem ? selectedItem[field] : '' }}</div>
 
     <label :class="{ 'toggled': showDropDown }">{{ title }}</label>
 
@@ -15,7 +15,7 @@
           <div v-if="filteredItems.length">
             <div v-for="item in filteredItems" :key="item.id"
               @click="selectItem(item)" class="item">
-                {{ item.title }}</div>
+                {{ item[field] }}</div>
           </div>
           <div v-else class="no-options">Нет подходящих элементов</div>
         </vue-scroll>
@@ -38,6 +38,7 @@ export default {
   name: 'UiSelect',
 
   props: {
+    field: String,
     title: String,
     options: Array,
     value: Object
@@ -97,7 +98,7 @@ export default {
 
     searchValue (value) {
       this.filteredItems = this.options.filter((item) => {
-        return item.title.toLowerCase().includes(value.toLowerCase())
+        return item[this.field].toLowerCase().includes(value.toLowerCase())
       })
     }
   }
