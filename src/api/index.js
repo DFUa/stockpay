@@ -47,5 +47,14 @@ export default {
 
   getCities (data) {
     return this.execute('get', addFilters('cities', data))
+  },
+
+  // ACCOUNT
+  getProfile () {
+    return this.execute('get', 'site/me')
+  },
+
+  updateProfile (data) {
+    return this.execute('put', 'site/me', data)
   }
 }
