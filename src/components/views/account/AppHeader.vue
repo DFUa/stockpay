@@ -7,17 +7,17 @@
 
     <div class="top-bar">
       <div class="logo">StocksPay</div>
-        <div class="info">
-          <div class="item">1 USD - 66.0 RUB</div>
-          <div class="item">1 UAH - 4.323 RUB</div>
-          <div class="item">1 KZT - 0.18 RUB</div>
-          <div class="item">1 EUR - 72.0 RUB</div>
+        <div v-if="cources.loaded" class="info">
+          <div class="item">1 USD - {{ cources.usd.toFixed(2) }} RUB</div>
+          <div class="item">1 UAH - {{ cources.uah.toFixed(2) }} RUB</div>
+          <div class="item">1 KZT - {{ cources.kzt.toFixed(2) }} RUB</div>
+          <div class="item">1 EUR - {{ cources.eur.toFixed(2) }} RUB</div>
         </div>
         <div class="user-profile">
           <div @click="openUserProfile" class="icon">
             <span class="i-user"></span>
           </div>
-          <div @click="openUserProfile" class="name">Name Lastname</div>
+          <div @click="openUserProfile" class="name">{{ username }}</div>
           <div class="status">Верифицирован</div>
         </div>
         <div @click="logout" class="logout">Выход</div>
@@ -44,15 +44,47 @@ export default {
     UiTabs
   },
 
+  mounted () {
+    this.loadCources()
+    this.loadProfile()
+    this.cources.loaded = true
+    this.runCourcesUpdating()
+  },
+
   data: () => ({
     tabs: [
       { id: 0, title: 'Счета и транзакции', icon: 'i-tab-transaction', path: '/account/main/dashboard' },
       { id: 1, title: 'Пополнить', icon: 'i-tab-add-founds', path: '/account/main/add-founds' },
       { id: 2, title: 'Перевести', icon: 'i-tab-transfer', path: '/account/main/transfer' }
-    ]
+    ],
+    cources: {
+      usd: 0,
+      uah: 0,
+      kzt: 0,
+      eur: 0,
+      loaded: false
+    },
+    username: ''
   }),
 
   methods: {
+    async loadCources () {
+      let res = await api.getCources()
+      this.cources.usd = res.Valute.USD.Value / res.Valute.USD.Nominal
+      this.cources.uah = res.Valute.UAH.Value / res.Valute.UAH.Nominal
+      this.cources.kzt = res.Valute.KZT.Value / res.Valute.KZT.Nominal
+      this.cources.eur = res.Valute.EUR.Value / res.Valute.EUR.Nominal
+    },
+
+    async loadProfile () {
+      let res = await api.getProfile()
+      this.username = res.first_name + ' ' + res.last_name
+    },
+
+    runCourcesUpdating () {
+      setInterval(() => { this.loadCources() }, 10 * 1000)
+    },
+
     openUserProfile () {
       this.$router.push('/account/profile')
     },
