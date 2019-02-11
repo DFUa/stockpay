@@ -21,12 +21,8 @@ export default new Vuex.Store({
   },
 
   actions: {
-    login ({ commit }) {
-      commit('setAuth', true)
-    },
-
-    logout ({ commit }) {
-      commit('setAuth', false)
+    setAuth ({ commit }, value) {
+      commit('setAuth', value)
     }
   }
 })

@@ -32,6 +32,7 @@ export default {
   }
 
   .auth-wrapper .right-part {
+    min-width: 675px;
     height: 100vh;
     display: flex;
     align-items: center;

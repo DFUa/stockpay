@@ -20,7 +20,7 @@
           <div @click="openUserProfile" class="name">Name Lastname</div>
           <div class="status">Верифицирован</div>
         </div>
-        <div class="logout">Logout</div>
+        <div @click="logout" class="logout">Logout</div>
     </div>
 
     <div class="tabs-wrapper">
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import api from '@/api'
+
 import UiTabs from '@/components/ui/ui-tabs/UiTabs.vue'
 
 export default {
@@ -53,6 +55,10 @@ export default {
   methods: {
     openUserProfile () {
       this.$router.push('/profile')
+    },
+
+    logout () {
+      api.logout()
     }
   }
 }

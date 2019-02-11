@@ -6,8 +6,8 @@
       <div class="col">
         <ui-input title="Имя" v-model="firstname"/>
         <ui-input title="Фамилия" v-model="lastname"/>
-        <ui-select title="Страна" :options="options.countrys" v-model="country"/>
-        <ui-select title="Город" :options="options.cities" v-model="city"/>
+        <ui-select title="Страна" field="toponymName" :options="options.countries" v-model="country"/>
+        <ui-select title="Город" field="toponymName" :options="options.cities" v-model="city"/>
       </div>
       <div class="col">
         <ui-input title="Никнейм" v-model="nickname"/>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import api from '@/api'
+
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
@@ -38,6 +40,10 @@ export default {
     UiSelect
   },
 
+  mounted () {
+    this.loadCountries()
+  },
+
   data: () => ({
     nickname: '',
     email: '',
@@ -48,25 +54,53 @@ export default {
     country: null,
     city: null,
     options: {
-      countrys: [
-        { id: 0, title: 'Ukraine' },
-        { id: 1, title: 'France' },
-        { id: 2, title: 'German' }
-      ],
-      cities: [
-        { id: 0, title: 'Kyiv' },
-        { id: 1, title: 'Lviv' },
-        { id: 2, title: 'Vinnitsya' }
-      ]
+      countries: [],
+      cities: []
     }
   }),
 
   methods: {
-    signUp () {
+    async loadCountries () {
+      let res = await api.getCountries()
+      this.options.countries = res.countries
+    },
+
+    async signUp () {
+      if (this.validateData) {
+        let data = {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.email,
+          password: this.password_0,
+          nickname: this.nickname,
+          country: this.country.toponymName,
+          city: this.city.toponymName
+        }
+        let res = await api.registration(data)
+        if (res.message === 'OK') {
+          this.$router.push('/auth/email-confirm')
+        }
+      }
+    },
+
+    validateData () {
+      return this.password_0 === this.password_1
     },
 
     openSignIn () {
       this.$router.push('/auth/sign-in')
+    }
+  },
+
+  watch: {
+    async country (value) {
+      this.city = null
+      this.options.cities = []
+      let filters = {
+        country: { value: value.code }
+      }
+      let res = await api.getCities(filters)
+      this.options.cities = res.cities
     }
   }
 }

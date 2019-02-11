@@ -2,10 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import lazyLoading from './lazyLoading'
 
+import store from '@/store'
+
 Vue.use(Router)
 
 const router = new Router({
   routes: [
+    {
+      name: 'redirect',
+      path: '*',
+      redirect: '/auth'
+    },
     {
       name: 'main',
       path: '/main',
@@ -62,10 +69,23 @@ const router = new Router({
       component: lazyLoading('auth/Auth'),
       children: [
         { path: 'sign-in', component: lazyLoading('auth/sign-in/SignIn') },
-        { path: 'sign-up', component: lazyLoading('auth/sign-up/SignUp') }
+        { path: 'sign-up', component: lazyLoading('auth/sign-up/SignUp') },
+        { path: 'email-confirm', component: lazyLoading('auth/sign-up/ActivationCode') }
       ]
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (store.getters.isAuth && to.path.includes('auth')) {
+    next(false)
+  } else {
+    if (!store.getters.isAuth && !to.path.includes('auth')) {
+      next(false)
+    } else {
+      next()
+    }
+  }
 })
 
 export default router

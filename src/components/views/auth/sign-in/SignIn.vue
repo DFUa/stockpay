@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import api from '@/api'
+
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 
@@ -34,7 +36,14 @@ export default {
   }),
 
   methods: {
-    signIn () {
+    async signIn () {
+      let data = {
+        email: this.email,
+        password: this.password
+      }
+      if (await api.login(data)) {
+        this.$router.push('/main/dashboard')
+      }
     },
 
     openRegistration () {
