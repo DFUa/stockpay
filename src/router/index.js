@@ -78,7 +78,9 @@ const router = new Router({
       children: [
         { path: 'sign-in', component: lazyLoading('auth/sign-in/SignIn') },
         { path: 'sign-up', component: lazyLoading('auth/sign-up/SignUp') },
-        { path: 'email-confirm', component: lazyLoading('auth/sign-up/ActivationCode') }
+        { path: 'email-confirm', component: lazyLoading('auth/sign-up/ActivationCode') },
+        { path: 'password-reset', component: lazyLoading('auth/password-reset/PasswordReset') },
+        { path: 'password-setup', component: lazyLoading('auth/password-reset/PasswordSetup') }
       ]
     }
   ]

@@ -1,14 +1,16 @@
 <template>
   <div>
     <div v-if="loaded">
-      <h1>Введите код который пришел вам на почту</h1>
+      <h1>Ведите код с почты и создайте новый пароль</h1>
 
       <div class="fields">
         <ui-input title="Код" v-model="code"/>
+        <ui-input type="password" title="Новый пароль" v-model="password_0"/>
+        <ui-input type="password" title="Подтвердите пароль" v-model="password_1"/>
       </div>
 
       <div class="btns">
-        <ui-button accent title="Подтвердить" @click="confirmEmail"/>
+        <ui-button accent title="Применить" @click="resetPassword"/>
       </div>
     </div>
     <div class="spinner-wrapper" v-else>
@@ -25,7 +27,7 @@ import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSpinner from '@/components/ui/ui-spinner/UiSpinner.vue'
 
 export default {
-  name: 'ActivationCode',
+  name: 'PasswordSetup',
 
   components: {
     UiInput,
@@ -35,26 +37,28 @@ export default {
 
   data: () => ({
     code: '',
+    password_0: '',
+    password_1: '',
     loaded: true
   }),
 
   methods: {
-    async confirmEmail () {
+    async resetPassword () {
       this.loaded = false
+      let email = localStorage.getItem('email')
       let data = {
-        code: this.code
+        password: this.password_0,
+        code: this.code,
+        email: email
       }
-      let res = await api.confirmEmail(data)
+      let res = await api.setupPassword(data)
       if (!res.error) {
-        this.openSignIn()
+        localStorage.removeItem('email')
+        this.$router.push('/auth/sign-in')
       } else {
         this.code = ''
         this.loaded = true
       }
-    },
-
-    openSignIn () {
-      this.$router.push('/auth/sign-in')
     }
   }
 }

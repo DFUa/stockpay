@@ -39,6 +39,10 @@ export default {
     padding: 0 90px;
   }
 
+  .auth-wrapper .right-part > div {
+    width: 100%;
+  }
+
   .auth-wrapper .fields {
     width: 340px;
   }
@@ -90,5 +94,11 @@ export default {
 
   .auth-wrapper .btns > div:last-child {
     margin-right: 0;
+  }
+
+  .auth-wrapper .spinner-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 </style>

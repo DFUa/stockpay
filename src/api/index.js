@@ -28,12 +28,21 @@ export default {
     })
   },
 
+  // ACCOUNT
   async registration (data) {
     return this.execute('post', 'site/registration', data)
   },
 
   async confirmEmail (data) {
     return this.execute('post', 'code/registration', data)
+  },
+
+  async passwordReset (data) {
+    return this.execute('post', 'code/reset_password', data)
+  },
+
+  async setupPassword (data) {
+    return this.execute('post', 'code/change_password', data)
   },
 
   async login (data) {
@@ -71,7 +80,11 @@ export default {
     return this.execute('get', addFilters('cities', data))
   },
 
-  // ACCOUNT
+  getCources () {
+    return this.execute('get', 'site/course')
+  },
+
+  // PROFILE
   getProfile () {
     return this.execute('get', 'site/me')
   },

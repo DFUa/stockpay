@@ -17,6 +17,7 @@ export default {
     if (token && await api.refresh()) {
       this.$store.dispatch('setAuth', true)
       this.$router.push('/account/main/dashboard')
+      setInterval(async () => { await api.refresh() }, 1000 * 60 * 15)
     } else {
       this.$store.dispatch('setAuth', false)
       this.$router.push('/auth')
