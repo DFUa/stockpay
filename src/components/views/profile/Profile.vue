@@ -10,17 +10,17 @@
               <div class="title">Личные данные</div>
               <div class="inputs cols">
                 <div class="col-3">
-                  <ui-input title="Firstname" v-model="firstname"/>
+                  <ui-input title="Имя" v-model="firstname"/>
                 </div>
                 <div class="col-3">
-                  <ui-input title="Lastname" v-model="lastname"/>
+                  <ui-input title="Фамилия" v-model="lastname"/>
                 </div>
                 <div class="col-3">
                   <ui-select title="Страна" :options="options.countries"
                     field="toponymName" v-model="country"/>
                 </div>
                 <div class="col-3">
-                  <ui-select title="Сity" :options="options.cities"
+                  <ui-select title="Город" :options="options.cities"
                     field="toponymName" v-model="city"/>
                 </div>
               </div>
@@ -37,7 +37,7 @@
                     <security-nickname :nickname="nickname"/>
                     <security-password/>
 
-                    <ui-input class="field" title="Email"
+                    <ui-input class="field" title="Почта"
                       :disabled="true" v-model="email"/>
                   </div>
                 </div>
@@ -162,8 +162,7 @@ export default {
         first_name: this.firstname,
         email: this.email
       }
-      let res = await api.updateProfile(data)
-      console.log(res)
+      await api.updateProfile(data)
     }
   },
 

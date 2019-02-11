@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ui-input title="Password"
+    <ui-input title="Пароль"
       :disabled="true" v-model="password">
 
       <ui-button @click="openChangePasswordModal"
@@ -9,14 +9,14 @@
     </ui-input>
 
     <ui-modal v-model="showChangePasswordModal"
-      title="Here you can change your password"
-      button-title="Change"
+      title="Здесь вы можете изменить свой пароль"
+      button-title="Изменить"
       @on-apply="updateChanges"
       @on-close="closeChangePasswordModal">
 
-      <ui-input type="password" title="Enter current password" v-model="currpassword"/>
-      <ui-input type="password" title="Enter new password" v-model="newpassword_0"/>
-      <ui-input type="password" title="Confirm new password" v-model="newpassword_1"/>
+      <ui-input type="password" title="Введите текущий пароль" v-model="currpassword"/>
+      <ui-input type="password" title="Введите новый пароль" v-model="newpassword_0"/>
+      <ui-input type="password" title="Подтвердите новый пароль" v-model="newpassword_1"/>
 
     </ui-modal>
   </div>

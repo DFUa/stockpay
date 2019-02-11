@@ -1,20 +1,20 @@
 <template>
   <div>
-    <ui-input title="Nickname"
-      :disabled="true" v-model="nickname">
+    <ui-input title="Никнейм"
+      :disabled="true" :value="nickname">
 
       <ui-button @click="openChangeNicknameModal" :accent="true" title="Изменить"/>
 
     </ui-input>
 
     <ui-modal v-model="showChangeNicknameModal"
-      title="Here you can change your nickname"
-      button-title="Change"
+      title="Здесь вы можете изменить свой никнейм"
+      button-title="Изменить"
       @on-apply="updateChanges"
       @on-close="closeChangeNicknameModal">
 
-      <ui-input type="password" title="Enter current password" v-model="password"/>
-      <ui-input title="Enter new nickname" v-model="newnickname"/>
+      <ui-input type="password" title="Введите ваш текущий пароль" v-model="password"/>
+      <ui-input title="Введите новый никнейм" v-model="newnickname"/>
 
     </ui-modal>
   </div>
@@ -28,28 +28,23 @@ import UiButton from '@/components/ui/ui-button/UiButton.vue'
 export default {
   name: 'Nickname',
 
+  props: {
+    nickname: String
+  },
+
   components: {
     UiModal,
     UiInput,
     UiButton
   },
 
-  mounted () {
-    this.loadData()
-  },
-
   data: () => ({
     password: '',
-    nickname: '',
     newnickname: '',
     showChangeNicknameModal: false
   }),
 
   methods: {
-    loadData () {
-      this.nickname = 'justnick'
-    },
-
     updateChanges () {
       this.closeChangeNicknameModal()
     },
