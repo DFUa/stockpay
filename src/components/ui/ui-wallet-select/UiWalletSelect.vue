@@ -151,7 +151,7 @@ export default {
     border-radius: 0 0 8px 8px;
     border: 1px solid #E8E8E8;
     border-top: 0;
-    z-index: 1;
+    z-index: 100;
   }
 
   .ui-wallet-select .items-wrapper .item {

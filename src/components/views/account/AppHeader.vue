@@ -69,11 +69,13 @@ export default {
 
   methods: {
     async loadCources () {
-      let res = await api.getCources()
-      this.cources.usd = res.Valute.USD.Value / res.Valute.USD.Nominal
-      this.cources.uah = res.Valute.UAH.Value / res.Valute.UAH.Nominal
-      this.cources.kzt = res.Valute.KZT.Value / res.Valute.KZT.Nominal
-      this.cources.eur = res.Valute.EUR.Value / res.Valute.EUR.Nominal
+      if (this.isAuth) {
+        let res = await api.getCources()
+        this.cources.usd = res.Valute.USD.Value / res.Valute.USD.Nominal
+        this.cources.uah = res.Valute.UAH.Value / res.Valute.UAH.Nominal
+        this.cources.kzt = res.Valute.KZT.Value / res.Valute.KZT.Nominal
+        this.cources.eur = res.Valute.EUR.Value / res.Valute.EUR.Nominal
+      }
     },
 
     async loadProfile () {
@@ -91,6 +93,12 @@ export default {
 
     logout () {
       api.logout()
+    }
+  },
+
+  computed: {
+    isAuth () {
+      return this.$store.getters.isAuth
     }
   }
 }

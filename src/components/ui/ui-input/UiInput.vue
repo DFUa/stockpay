@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'group': true, 'disabled': disabled }">
 
-    <input @input="onUpdate" @keyup.enter="onEnter" v-model="currentValue"
+    <input @input="onUpdate" @keyup.enter="onEnter" :maxlength="type === 'password' ? 35 : 100" v-model="currentValue"
       :style="{ background: background ? background : '#fff' }"
       :type="(type && !showPassword) ? type : 'text'" required>
 
