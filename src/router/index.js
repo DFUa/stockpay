@@ -11,56 +11,64 @@ const router = new Router({
     {
       name: 'redirect',
       path: '*',
-      redirect: '/auth'
+      redirect: '/account'
     },
     {
-      name: 'main',
-      path: '/main',
-      redirect: '/main/dashboard',
-      component: lazyLoading('main/Main'),
+      name: 'account',
+      path: '/account',
+      redirect: '/account/main',
+      component: lazyLoading('account/Account'),
       children: [
         {
-          name: 'dashboard',
-          path: 'dashboard',
-          components: {
-            default: lazyLoading('main/dashboard/Dashboard'),
-            sidebar: lazyLoading('main/dashboard/DashboardSidebar')
-          }
-        },
-        {
-          name: 'add-founds',
-          path: 'add-founds',
-          redirect: 'add-founds/cards',
-          components: {
-            default: lazyLoading('main/add-founds/AddFounds'),
-            sidebar: lazyLoading('main/add-founds/AddFoundsSidebar')
-          },
+          name: 'main',
+          path: 'main',
+          redirect: 'main/dashboard',
+          component: lazyLoading('account/main/Main'),
           children: [
-            { path: 'cards', component: lazyLoading('main/add-founds/cards/Cards') },
-            { path: 'adv', component: lazyLoading('main/add-founds/adv/Adv') }
+            {
+              name: 'dashboard',
+              path: 'dashboard',
+              components: {
+                default: lazyLoading('account/main/dashboard/Dashboard'),
+                sidebar: lazyLoading('account/main/dashboard/DashboardSidebar')
+              }
+            },
+            {
+              name: 'add-founds',
+              path: 'add-founds',
+              redirect: 'add-founds/cards',
+              components: {
+                default: lazyLoading('account/main/add-founds/AddFounds'),
+                sidebar: lazyLoading('account/main/add-founds/AddFoundsSidebar')
+              },
+              children: [
+                { path: 'cards', component: lazyLoading('account/main/add-founds/cards/Cards') },
+                { path: 'adv', component: lazyLoading('account/main/add-founds/adv/Adv') }
+              ]
+            },
+            {
+              name: 'transfer',
+              path: 'transfer',
+              redirect: 'transfer/wallets',
+              components: {
+                default: lazyLoading('account/main/transfer/Transfer'),
+                sidebar: lazyLoading('account/main/transfer/TransferSidebar')
+              },
+              children: [
+                { path: 'wallets', component: lazyLoading('account/main/transfer/wallets/Wallets') },
+                { path: 'person', component: lazyLoading('account/main/transfer/person/Person') },
+                { path: 'bank-card', component: lazyLoading('account/main/transfer/bank-card/BankCard') },
+                { path: 'bank-account', component: lazyLoading('account/main/transfer/bank-account/BankAccount') }
+              ]
+            }
           ]
         },
         {
-          name: 'transfer',
-          path: 'transfer',
-          redirect: 'transfer/wallets',
-          components: {
-            default: lazyLoading('main/transfer/Transfer'),
-            sidebar: lazyLoading('main/transfer/TransferSidebar')
-          },
-          children: [
-            { path: 'wallets', component: lazyLoading('main/transfer/wallets/Wallets') },
-            { path: 'person', component: lazyLoading('main/transfer/person/Person') },
-            { path: 'bank-card', component: lazyLoading('main/transfer/bank-card/BankCard') },
-            { path: 'bank-account', component: lazyLoading('main/transfer/bank-account/BankAccount') }
-          ]
+          name: 'Profile',
+          path: 'profile',
+          component: lazyLoading('account/profile/Profile')
         }
       ]
-    },
-    {
-      name: 'Profile',
-      path: '/profile',
-      component: lazyLoading('profile/Profile')
     },
     {
       name: 'Auth',

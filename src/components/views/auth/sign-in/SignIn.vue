@@ -42,7 +42,7 @@ export default {
         password: this.password
       }
       if (await api.login(data)) {
-        this.$router.push('/main/dashboard')
+        this.$router.push('/account/main/dashboard')
       }
     },
 

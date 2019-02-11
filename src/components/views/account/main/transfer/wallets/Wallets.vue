@@ -19,7 +19,7 @@
     <div class="sub-title">Для подтверждения перевода нажмите <br>
       на кнопку “Перевести”</div>
 
-    <ui-button :accent="true" title="Перевести"/>
+    <ui-button :accent="true" title="Обмен"/>
   </ui-card>
 </template>
 

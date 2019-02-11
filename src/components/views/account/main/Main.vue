@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Sidebar from '@/components/layouts/sidebar/Sidebar.vue'
+import Sidebar from './Sidebar.vue'
 
 export default {
   name: 'Main',

@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import AppHeader from './app-header/AppHeader.vue'
+import AppHeader from './AppHeader.vue'
 
 export default {
-  name: 'MainLayout',
+  name: 'Account',
 
   components: {
     AppHeader

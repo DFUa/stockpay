@@ -20,7 +20,7 @@
           <div @click="openUserProfile" class="name">Name Lastname</div>
           <div class="status">Верифицирован</div>
         </div>
-        <div @click="logout" class="logout">Logout</div>
+        <div @click="logout" class="logout">Выход</div>
     </div>
 
     <div class="tabs-wrapper">
@@ -46,15 +46,15 @@ export default {
 
   data: () => ({
     tabs: [
-      { id: 0, title: 'Счета и транзакции', icon: 'i-tab-transaction', path: '/main/dashboard' },
-      { id: 1, title: 'Пополнить', icon: 'i-tab-add-founds', path: '/main/add-founds' },
-      { id: 2, title: 'Перевести', icon: 'i-tab-transfer', path: '/main/transfer' }
+      { id: 0, title: 'Счета и транзакции', icon: 'i-tab-transaction', path: '/account/main/dashboard' },
+      { id: 1, title: 'Пополнить', icon: 'i-tab-add-founds', path: '/account/main/add-founds' },
+      { id: 2, title: 'Перевести', icon: 'i-tab-transfer', path: '/account/main/transfer' }
     ]
   }),
 
   methods: {
     openUserProfile () {
-      this.$router.push('/profile')
+      this.$router.push('/account/profile')
     },
 
     logout () {
