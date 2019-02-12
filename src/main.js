@@ -3,6 +3,14 @@ import App from './components/App.vue'
 import router from './router'
 import store from './store'
 
+import vuescroll from 'vuescroll'
+import vClickOutside from 'v-click-outside'
+
+import 'vuescroll/dist/vuescroll.css'
+
+Vue.use(vuescroll)
+Vue.use(vClickOutside)
+
 Vue.config.productionTip = false
 
 new Vue({

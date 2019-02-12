@@ -1,21 +1,33 @@
 <template>
-  <div>
-    <MainLayout v-if="isAuth"/>
-    <AuthLayout v-else/>
+  <div v-if="loaded">
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
 <script>
-import AuthLayout from '@/components/layouts/AuthLayout.vue'
-import MainLayout from '@/components/layouts/MainLayout.vue'
+import api from '@/api'
 
 export default {
   name: 'App',
 
-  components: {
-    AuthLayout,
-    MainLayout
+  async mounted () {
+    let token = localStorage.getItem('t')
+    if (token && await api.refresh()) {
+      this.$store.dispatch('setAuth', true)
+      this.$router.push('/account/main/dashboard')
+      setInterval(async () => { await api.refresh() }, 1000 * 60 * 15)
+    } else {
+      this.$store.dispatch('setAuth', false)
+      this.$router.push('/auth')
+    }
+    this.loaded = true
   },
+
+  data: () => ({
+    loaded: false
+  }),
 
   computed: {
     isAuth () {
@@ -26,20 +38,15 @@ export default {
   watch: {
     isAuth (value) {
       if (value) {
-        this.$router.push('/profile/dashboard')
+        this.$router.push('/account/main/dashboard')
       } else {
-        this.$router.push('/auth/sign-in')
+        this.$router.push('/auth')
       }
     }
   }
 }
 </script>
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-sizing: border-box;
-  }
+<style lang="sass">
+  @import '../sass/main.scss'
 </style>
