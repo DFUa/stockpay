@@ -1,12 +1,13 @@
 <template>
-  <div class="group" v-click-outside="closeDropDown"
+  <div class="ui-currency-input group" v-click-outside="closeDropDown"
     :style="{ borderColor: borderColor ? borderColor : '#E7E7E7',
     background: backgroundColor ? backgroundColor : '#fff' }">
 
     <the-mask v-if="!disabled" :mask="mask" v-model="currentValue"/>
     <div v-else class="input-value">{{ currentValue }}</div>
 
-    <label v-if="!disabled" :style="{ background: backgroundColor ? backgroundColor : '#fff' }">{{ title }}</label>
+    <label v-if="!disabled" :style="{ background: backgroundColor ? backgroundColor : '#fff' }">
+      {{ title }}</label>
 
     <ui-toggle-arrow class="arrow" v-model="showDropDown"/>
 
@@ -122,7 +123,7 @@ export default {
 </script>
 
 <style scoped>
-  .group {
+  .ui-currency-input.group {
     position: relative;
     width: 100%;
     height: 50px;
@@ -161,7 +162,7 @@ export default {
     outline: none;
   }
 
-  .arrow {
+  .ui-currency-input .arrow {
     position: absolute;
     top: 20px;
     right: 15px;

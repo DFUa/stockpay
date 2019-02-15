@@ -74,7 +74,6 @@ export default {
     height: 50px;
     margin-bottom: 20px;
   }
-
   input {
     width: 100%;
     height: 50px;

@@ -1,0 +1,15 @@
+{
+  "indent_size": 2,
+  "end_with_newline": true,
+  "html": {
+    "extra_liners": ["/template", "/style", "/script"]
+  },
+  "css": {
+    "newline_between_rules": true
+  },
+  "js": {
+    "keep_function_indentation": true,
+    "space_after_anon_function": true,
+    "space_after_named_function": true
+  }
+}
