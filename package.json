@@ -14,6 +14,7 @@
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
     "vue-the-mask": "^0.11.1",
+    "vue-toasted": "^1.1.26",
     "vuescroll": "^4.9.6",
     "vuex": "^3.0.1"
   },

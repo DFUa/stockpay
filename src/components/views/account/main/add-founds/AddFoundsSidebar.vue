@@ -16,8 +16,8 @@ export default {
 
   data: () => ({
     items: [
-      { id: 0, title: 'Создать счет', icon: 'i-af-cards', path: 'cards' },
-      { id: 1, title: 'С помощью электронного кошелька ADV Cash', icon: 'i-af-adv', path: 'adv', disabled: true },
+      { id: 0, title: 'С помощью карты', icon: 'i-af-cards', path: 'cards' },
+      { id: 1, title: 'С помощью электронного кошелька Epayments', icon: 'i-af-epay', key: 'go-to-epayment', path: 'adv' },
       { id: 2, title: 'С помощью криптовалютного кошелька', icon: 'i-af-coin', path: 'crypto', disabled: true },
       { id: 3, title: 'С помощью кошелька Яндекс. Деньги', icon: 'i-af-yandex', path: 'crypto', disabled: true },
       { id: 4, title: 'С помощью кошелька QIWI VISA Wallet', icon: 'i-af-visa', path: 'crypto', disabled: true }
@@ -27,7 +27,19 @@ export default {
   methods: {
     navigate (item) {
       if (!item.disabled) {
-        this.$router.push(item.path)
+        if (!item.key) {
+          this.$router.push(item.path)
+        } else {
+          this.itemLogic(item.key)
+        }
+      }
+    },
+
+    itemLogic (key) {
+      switch (key) {
+        case 'go-to-epayment':
+          window.location.replace('https://www.epayments.com/ru/')
+          break
       }
     },
 

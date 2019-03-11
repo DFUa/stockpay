@@ -1,10 +1,11 @@
 <template>
-  <div :class="{ 'ui-select': true, 'selected': (showDropDown || selectedItem) }"
+  <div :class="{ 'ui-select': true, 'invalid': !isValid, 'selected': (showDropDown || selectedItem) }"
     v-click-outside="closeDropDown" @click="openDropDown">
 
     <input v-if="showDropDown" v-focus type="text" v-model="searchValue">
     <div v-else class="value">{{ selectedItem ? selectedItem[field] : '' }}</div>
 
+    <span v-if="!isValid" class="error-text">{{errorText}}</span>
     <label :class="{ 'toggled': showDropDown }">{{ title }}</label>
 
     <ui-toggle-arrow class="arrow" :value="showDropDown"/>
@@ -41,7 +42,8 @@ export default {
     field: String,
     title: String,
     options: Array,
-    value: Object
+    value: Object,
+    rules: [Array, Object]
   },
 
   directives: { focus },
@@ -60,6 +62,8 @@ export default {
     selectedItem: null,
     showDropDown: false,
     filteredItems: [],
+    isValid: true,
+    errorText: '',
     ops: {
       bar: {
         size: '3px',
@@ -74,6 +78,46 @@ export default {
       this.selectedItem = item
       this.$emit('input', this.selectedItem)
       this.searchValue = ''
+    },
+
+    // add required as rule (add error text to this rule)
+    validate () {
+      this.isValid = true
+      const result = []
+      if (this.rules) {
+        this.rules.forEach(element => {
+          switch (element.name) {
+            case 'required':
+              if (!this.value) {
+                result.push({
+                  result: false,
+                  text: element.text
+                    ? this.errorText = element.text
+                    : this.errorText = 'Это поле не должно быть пустым'
+                })
+              } else {
+                result.push({
+                  result: true
+                })
+                this.isValid = true
+              }
+              break
+            default:
+              this.isValid = false
+              this.errorText = 'чото пішло не так'
+              break
+          }
+        })
+      }
+      for (let element of result) {
+        if (!element.result) {
+          this.isValid = false
+          this.errorText = element.text
+        }
+      }
+      return result.every(res => {
+        return res.result
+      })
     },
 
     openDropDown () {
@@ -111,7 +155,7 @@ export default {
     height: 50px;
     border-radius: 8px;
     border: 1px solid #DFDFDF;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 0 20px;
     display: flex;
     align-items: center;
@@ -165,6 +209,18 @@ export default {
     right: 20px;
   }
 
+  .ui-select.invalid {
+    border-color: red;
+  }
+
+  .error-text{
+    font-size: 11px;
+    color: red;
+    position: absolute;
+    top: 50px;
+    left: 0;
+  }
+
   label {
     color: #000;
     font-size: 14px;
@@ -179,6 +235,10 @@ export default {
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;
+  }
+
+  .invalid label{
+    color: red;
   }
 
   .ui-select.selected label,

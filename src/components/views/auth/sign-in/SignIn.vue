@@ -3,8 +3,17 @@
     <div v-if="loaded" class="inner">
       <h1>Вход</h1>
       <div class="fields">
-        <ui-input title="Почта" v-model="email"/>
-        <ui-input type="password" title="Пароль" v-model="password"/>
+        <ui-form ref="signIn">
+          <ui-input
+          type="email"
+          title="Почта"
+          v-model="email"/>
+          <ui-input
+          type="password"
+          title="Пароль"
+          v-model="password"
+          :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
+        </ui-form>
         <div class="tips">
           <div @click="openPasswordReset" class="item">Забыли пароль?</div>
           <div class="item">Лицензионное соглашение</div>
@@ -27,6 +36,7 @@ import api from '@/api'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSpinner from '@/components/ui/ui-spinner/UiSpinner.vue'
+import UiForm from '@/components/ui/ui-form/UiForm.vue'
 
 export default {
   name: 'SignIn',
@@ -34,7 +44,8 @@ export default {
   components: {
     UiInput,
     UiButton,
-    UiSpinner
+    UiSpinner,
+    UiForm
   },
 
   data: () => ({
@@ -45,15 +56,24 @@ export default {
 
   methods: {
     async signIn () {
-      this.loaded = false
-      let data = {
-        email: this.email,
-        password: this.password
-      }
-      if (await api.login(data)) {
-        this.$router.push('/account/main/dashboard')
-      } else {
-        this.loaded = true
+      if (this.$refs.signIn.validate()) {
+        this.loaded = false
+        let data = {
+          email: this.email,
+          password: this.password
+        }
+        await api.login(data).then(res => {
+          if (!res.error) {
+            this.$router.push('/account/main/dashboard')
+          } else {
+            this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+              theme: 'toasted-primary',
+              position: 'bottom-center',
+              duration: 5000
+            })
+            this.loaded = true
+          }
+        })
       }
     },
 

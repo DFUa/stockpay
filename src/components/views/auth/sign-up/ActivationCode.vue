@@ -45,9 +45,15 @@ export default {
         code: this.code
       }
       let res = await api.confirmEmail(data)
+      console.log(res)
       if (!res.error) {
         this.openSignIn()
       } else {
+        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
         this.code = ''
         this.loaded = true
       }

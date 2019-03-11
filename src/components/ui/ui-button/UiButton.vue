@@ -1,9 +1,11 @@
 <template>
   <div class="button-wrapper">
-    <div :class="{ 'ui-button': true, 'accent': accent, 'air': air }"
-      @click="onClick">
+    <button :class="{ 'ui-button': true, 'accent': accent, 'air': air, 'submit': submit }"
+      @click="onClick"
+      :type="submit ? 'submit': 'button'"
+      :form="form ? form : ''">
       {{ title }}
-    </div>
+    </button>
   </div>
 </template>
 
@@ -14,11 +16,14 @@ export default {
   props: {
     title: String,
     accent: Boolean,
-    air: Boolean
+    air: Boolean,
+    submit: Boolean,
+    form: String
   },
 
   methods: {
-    onClick () {
+    onClick (event) {
+      event.preventDefault()
       this.$emit('click')
     }
   }

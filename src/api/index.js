@@ -24,7 +24,10 @@ export default {
       }
       return resp.data
     }).catch(resp => {
-      return { error: true }
+      return {
+        error: true,
+        message: resp.response.data.error
+      }
     })
   },
 
@@ -42,7 +45,19 @@ export default {
   },
 
   async setupPassword (data) {
-    return this.execute('post', 'code/change_password', data)
+    return this.execute('post', 'site/change_password', data)
+  },
+
+  async changeNickname (data) {
+    return this.execute('post', '/site/change_nickname', data)
+  },
+
+  async setPhone (data) {
+    return this.execute('post', '/site/set_number', data)
+  },
+
+  async confirmPhone (data) {
+    return this.execute('post', '/site/confirm_number', data)
   },
 
   async login (data) {
@@ -50,9 +65,9 @@ export default {
     if (res.token) {
       localStorage.setItem('t', res.token)
       store.dispatch('setAuth', true)
-      return true
+      return { error: false }
     }
-    return false
+    return res
   },
 
   async refresh () {

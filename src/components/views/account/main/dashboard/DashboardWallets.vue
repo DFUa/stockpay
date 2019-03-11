@@ -1,7 +1,7 @@
 <template>
   <ui-card class="wallets-wrapper">
     <div class="wallets">
-      <div v-for="item in wallets" :key="item.id" class="item">
+      <div v-for="item in wallets" :key="item.id" class="item" :class="{disabled: item.disabled}">
         <div class="title">
           <span :class="item.icon"></span>
           <div>{{ item.title }}</div>
@@ -27,9 +27,9 @@ export default {
     wallets: [
       { id: 0, title: 'Рубль', value: '14 000', symbol: 'RUB', icon: 'i-c-rub', number: '0099 2344 8484 3454' },
       { id: 1, title: 'Доллар', value: '100', symbol: 'USD', icon: 'i-c-usd', number: '0303 9549 7344 5455' },
-      { id: 2, title: 'Гривны', value: '0', symbol: 'UAH', icon: 'i-c-uah', number: '6463 7747 7377 8484' },
-      { id: 3, title: 'Тенге', value: '30 000', symbol: 'KZT', icon: 'i-c-kzt', number: '8994 4354 3321 1122' },
-      { id: 4, title: 'Евро', value: '14 000', symbol: 'EUR', icon: 'i-c-eur', number: '6632 4323 4343 3445' }
+      { id: 4, title: 'Евро', value: '14 000', symbol: 'EUR', icon: 'i-c-eur', number: '6632 4323 4343 3445' },
+      { id: 2, title: 'Гривны', value: '0', symbol: 'UAH', icon: 'i-c-uah', number: '6463 7747 7377 8484', disabled: true },
+      { id: 3, title: 'Тенге', value: '30 000', symbol: 'KZT', icon: 'i-c-kzt', number: '8994 4354 3321 1122', disabled: true }
     ]
   })
 }
@@ -63,8 +63,17 @@ export default {
     display: flex;
   }
 
+  .wallets .item.disabled .title{
+    color: grey;
+  }
+
   .wallets .item .title span {
     margin-right: 10px;
+  }
+
+  .wallets .item.disabled .title span {
+    filter: grayscale(1);
+    opacity: .75;
   }
 
   .wallets .item .info-item {

@@ -18,7 +18,7 @@ export default {
 <style>
   .auth-wrapper {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
   }
 
@@ -27,16 +27,16 @@ export default {
   }
 
   .auth-wrapper .left-part {
-    height: 100vh;
+    min-height: 100vh;
     background: url('../../../assets/imgs/bg.jpg') no-repeat center center;
   }
 
   .auth-wrapper .right-part {
     min-width: 675px;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 0 90px;
+    padding: 30px 90px;
   }
 
   .auth-wrapper .right-part > div {

@@ -8,22 +8,35 @@
             <!-- Personal information -->
             <div class="section">
               <div class="title">Личные данные</div>
-              <div class="inputs cols">
+              <ui-form form="profile-form" class="inputs cols" ref="profile">
                 <div class="col-3">
-                  <ui-input title="Имя" v-model="firstname"/>
+                  <ui-input
+                    title="Имя"
+                    v-model="firstname"
+                    :rules="[{ name: 'required' }]"/>
                 </div>
                 <div class="col-3">
-                  <ui-input title="Фамилия" v-model="lastname"/>
+                  <ui-input
+                    title="Фамилия"
+                    v-model="lastname"
+                    :rules="[{ name: 'required' }]"/>
                 </div>
                 <div class="col-3">
-                  <ui-select title="Страна" :options="options.countries"
-                    field="toponymName" v-model="country"/>
+                  <ui-select title="Страна"
+                    :options="options.countries"
+                    field="toponymName"
+                    v-model="country"
+                    :rules="[{ name: 'required', text: 'Выберите страну' }]"/>
                 </div>
                 <div class="col-3">
-                  <ui-select title="Город" :options="options.cities"
-                    field="toponymName" v-model="city"/>
+                  <ui-select
+                    title="Город"
+                    :options="options.cities"
+                    field="toponymName"
+                    v-model="city"
+                    :rules="[{ name: 'required', text: 'Выберите город' }]"/>
                 </div>
-              </div>
+              </ui-form>
               <ui-button @click="updateData" :accent="true" title="Применить"/>
             </div>
 
@@ -44,7 +57,7 @@
                 <div class="col-6">
                   <div class="title">Привязать телефон</div>
                   <div class="fields-wrapper">
-                    <security-phone/>
+                    <security-phone :phone="phone"/>
                   </div>
                 </div>
               </div>
@@ -64,6 +77,7 @@ import UiCard from '@/components/ui/ui-card/UiCard.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
+import UiForm from '@/components/ui/ui-form/UiForm.vue'
 import UiViewPreloader from '@/components/ui/ui-view-preloader/UiViewPreloader.vue'
 
 import SecurityPhone from './security/Phone.vue'
@@ -81,7 +95,8 @@ export default {
     UiViewPreloader,
     SecurityPhone,
     SecurityNickname,
-    SecurityPassword
+    SecurityPassword,
+    UiForm
   },
 
   mounted () {
@@ -95,6 +110,7 @@ export default {
     city: null,
     email: '',
     nickname: '',
+    phone: '',
     options: {
       countries: [],
       cities: []
@@ -109,6 +125,7 @@ export default {
       this.lastname = res.last_name
       this.email = res.email
       this.nickname = res.nickname
+      this.phone = res.phone
 
       await this.loadCountries()
       this.selectCountry(res.country)
@@ -154,15 +171,22 @@ export default {
     },
 
     async updateData () {
-      let data = {
-        country: this.country ? this.country.toponymName : '',
-        city: this.city ? this.city.toponymName : '',
-        nickname: this.nickname,
-        last_name: this.lastname,
-        first_name: this.firstname,
-        email: this.email
+      if (this.$refs.profile.validate()) {
+        let data = {
+          country: this.country,
+          city: this.city,
+          nickname: this.nickname,
+          last_name: this.lastname,
+          first_name: this.firstname,
+          email: this.email
+        }
+        await api.updateProfile(data)
+        this.$toasted.show('Данные изменены', {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
       }
-      await api.updateProfile(data)
     }
   },
 

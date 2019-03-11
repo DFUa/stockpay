@@ -11,18 +11,35 @@
     <ui-modal v-model="showChangePasswordModal"
       title="Здесь вы можете изменить свой пароль"
       button-title="Изменить"
+      form="change-password"
       @on-apply="updateChanges"
       @on-close="closeChangePasswordModal">
 
-      <ui-input type="password" title="Введите текущий пароль" v-model="currpassword"/>
-      <ui-input type="password" title="Введите новый пароль" v-model="newpassword_0"/>
-      <ui-input type="password" title="Подтвердите новый пароль" v-model="newpassword_1"/>
+      <template slot="form">
+        <ui-input
+          type="password"
+          title="Введите текущий пароль"
+          v-model="currpassword"
+          :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
+        <ui-input
+          type="password"
+          title="Введите новый пароль"
+          v-model="newpassword_0"
+          :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
+        <ui-input
+          type="password"
+          title="Подтвердите новый пароль"
+          v-model="newpassword_1"
+          :rules="[{ name: 'compare', value: newpassword_0, text: 'Пароли не совпадают' }, { name: 'required' }]"/>
+      </template>
 
     </ui-modal>
   </div>
 </template>
 
 <script>
+import api from '@/api'
+
 import UiModal from '@/components/ui/ui-modal/UiModal.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
@@ -53,8 +70,27 @@ export default {
       this.password = '*************'
     },
 
-    updateChanges () {
-      this.closeChangePasswordModal()
+    async updateChanges () {
+      let data = {
+        new_password: this.newpassword_0,
+        password: this.currpassword
+      }
+      let res = await api.setupPassword(data)
+
+      if (!res.error) {
+        this.$toasted.show('Пароль был изменен', {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
+        this.showChangePasswordModal = false
+      } else {
+        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
+      }
     },
 
     openChangePasswordModal () {

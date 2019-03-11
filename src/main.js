@@ -5,11 +5,13 @@ import store from './store'
 
 import vuescroll from 'vuescroll'
 import vClickOutside from 'v-click-outside'
+import Toasted from 'vue-toasted'
 
 import 'vuescroll/dist/vuescroll.css'
 
 Vue.use(vuescroll)
 Vue.use(vClickOutside)
+Vue.use(Toasted)
 
 Vue.config.productionTip = false
 

@@ -1,3 +1,11 @@
 @import "base";
 @import "icons";
 @import "transitions";
+
+.toasted-container{
+    .toasted.toasted-primary {
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}

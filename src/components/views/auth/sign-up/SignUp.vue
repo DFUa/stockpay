@@ -3,20 +3,20 @@
     <div v-if="loaded">
       <h1>Регистрация</h1>
 
-      <div class="fields-col-2">
+      <ui-form class="fields-col-2" ref="signUp">
         <div class="col">
-          <ui-input title="Имя" v-model="firstname"/>
-          <ui-input title="Фамилия" v-model="lastname"/>
-          <ui-select title="Страна" field="toponymName" :options="options.countries" v-model="country"/>
-          <ui-select title="Город" field="toponymName" :options="options.cities" v-model="city"/>
+          <ui-input type="text" title="Имя" v-model="firstname" :rules="[{ name: 'required' }]"/>
+          <ui-input type="text" title="Фамилия" v-model="lastname" :rules="[{ name: 'required' }]"/>
+          <ui-select title="Страна" field="toponymName" :options="options.countries" v-model="country" :rules="[{ name: 'required', text: 'Выберите страну' }]"/>
+          <ui-select title="Город" field="toponymName" :options="options.cities" v-model="city" :rules="[{ name: 'required', text: 'Выберите город' }]"/>
         </div>
         <div class="col">
-          <ui-input title="Никнейм" v-model="nickname"/>
-          <ui-input title="Почта" v-model="email"/>
-          <ui-input type="password" title="Пароль" v-model="password_0"/>
-          <ui-input type="password" title="Повторите пароль" v-model="password_1"/>
+          <ui-input type="text" title="Никнейм" v-model="nickname" :rules="[{ name: 'min', value: 3 }, { name: 'required' }]"/>
+          <ui-input type="email" title="Почта" v-model="email"/>
+          <ui-input type="password" title="Пароль" v-model="password_0" :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
+          <ui-input type="password" title="Повторите пароль" v-model="password_1" :rules="[{ name: 'compare', value: password_0, text: 'Пароли не совпадают' }, { name: 'required' }]"/>
         </div>
-      </div>
+      </ui-form>
 
       <div class="btns">
         <ui-button accent title="Регистрация" @click="signUp"/>
@@ -32,6 +32,7 @@
 <script>
 import api from '@/api'
 
+import UiForm from '@/components/ui/ui-form/UiForm.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
@@ -44,7 +45,8 @@ export default {
     UiInput,
     UiButton,
     UiSelect,
-    UiSpinner
+    UiSpinner,
+    UiForm
   },
 
   mounted () {
@@ -74,8 +76,8 @@ export default {
     },
 
     async signUp () {
-      this.loaded = false
-      if (this.validateData) {
+      if (this.$refs.signUp.validate()) {
+        this.loaded = false
         let data = {
           firstname: this.firstname,
           lastname: this.lastname,
@@ -86,16 +88,17 @@ export default {
           city: this.city ? this.city.toponymName : ''
         }
         let res = await api.registration(data)
-        if (res.message === 'OK') {
+        if (!res.error) {
           this.$router.push('/auth/email-confirm')
         } else {
+          this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
           this.loaded = true
         }
       }
-    },
-
-    validateData () {
-      return this.password_0 === this.password_1
     },
 
     openSignIn () {

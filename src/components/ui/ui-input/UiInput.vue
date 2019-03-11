@@ -1,14 +1,19 @@
 <template>
-  <div :class="{ 'group': true, 'disabled': disabled }">
+  <div :class="{ 'group': true, 'disabled': disabled, 'has-text' : currentValue, 'invalid': !isValid }">
 
-    <input @input="onUpdate" @keyup.enter="onEnter" :maxlength="type === 'password' ? 35 : 100" v-model="currentValue"
-      :style="{ background: background ? background : '#fff' }"
-      :type="(type && !showPassword) ? type : 'text'" required>
+    <input
+    @input="onUpdate"
+    @keyup.enter="onEnter"
+    v-model="currentValue"
+    :maxlength="type === 'password' ? 35 : 100"
+    :style="{ background: background ? background : '#fff' }"
+    :type="(type && !showPassword) ? type : 'text'" required>
 
     <div v-if="disabled" class="disabled-title">
       {{ currentValue }}
     </div>
 
+    <span v-if="!isValid" class="error-text">{{errorText}}</span>
     <label :style="{ background: background ? background : '#fff' }">{{ title }}</label>
 
     <div v-if="type === 'password'" class="eye-wrapper">
@@ -34,16 +39,20 @@ export default {
     title: String,
     value: String,
     disabled: Boolean,
-    background: String
+    background: String,
+    rules: [Array, Object]
   },
 
   mounted () {
     this.currentValue = this.value
+    this.$on('validate', this.validate)
   },
 
   data: () => ({
     currentValue: '',
-    showPassword: false
+    isValid: true,
+    showPassword: false,
+    errorText: 'error text'
   }),
 
   methods: {
@@ -57,6 +66,106 @@ export default {
 
     togglePassword () {
       this.showPassword = !this.showPassword
+    },
+
+    /*
+    ToDo: compare inputs (return true/false)
+    remove required from email
+    */
+    validate () {
+      this.isValid = true
+      this.errorText = ''
+      const result = []
+      if (this.rules) {
+        this.rules.forEach(element => {
+          switch (element.name) {
+            case 'required':
+              if (!this.currentValue) {
+                result.push({
+                  result: false,
+                  text: element.text
+                    ? this.errorText = element.text
+                    : this.errorText = 'Это поле не должно быть пустым'
+                })
+              } else {
+                result.push({
+                  result: true
+                })
+                this.isValid = true
+              }
+              break
+            case 'min':
+              if (this.currentValue.length < element.value) {
+                result.push({
+                  result: false,
+                  text: element.text
+                    ? this.errorText = element.text
+                    : this.errorText = `Это поле должно иметь ${element.value} или более символов`
+                })
+              } else {
+                result.push({
+                  result: true
+                })
+                this.isValid = true
+              }
+              break
+            case 'max':
+              if (this.currentValue.length > element.value) {
+                result.push({
+                  result: false,
+                  text: element.text
+                    ? this.errorText = element.text
+                    : this.errorText = `Это поле должно иметь ${element.value} или менее символов`
+                })
+              } else {
+                result.push({
+                  result: true
+                })
+                this.isValid = true
+              }
+              break
+            case 'compare':
+              if (this.currentValue !== element.value) {
+                result.push({
+                  result: false,
+                  text: element.text
+                    ? this.errorText = element.text
+                    : this.errorText = `Поля не совпадают`
+                })
+              } else {
+                result.push({
+                  result: true
+                })
+                this.isValid = true
+              }
+              break
+            default:
+              this.isValid = false
+              this.errorText = 'чото пішло не так'
+              break
+          }
+        })
+        for (let element of result) {
+          if (!element.result) {
+            this.isValid = false
+            this.errorText = element.text
+          }
+        }
+        return result.every(res => {
+          return res.result
+        })
+      } else if (this.type === 'email') {
+        const testMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if (!(testMail.test(this.currentValue))) {
+          this.isValid = false
+          this.errorText = 'Почта не валидна'
+          return false
+        }
+        return true
+      } else {
+        this.isValid = true
+        return true
+      }
     }
   },
 
@@ -71,9 +180,9 @@ export default {
 <style scoped>
   .group {
     position: relative;
-    height: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
+
   input {
     width: 100%;
     height: 50px;
@@ -107,16 +216,31 @@ export default {
   }
 
   input:focus ~ label,
-  input:valid ~ label {
+  .has-text input ~ label {
     top: -10px;
     opacity: 1;
     color: #006344;
     font-weight: 600;
   }
 
-  input:focus,
-  input:valid {
+  .invalid input ~ label{
+    color: red;
+  }
+
+  input:focus{
     border: 1px solid #006344;
+  }
+
+  .invalid input{
+    border-color: red;
+  }
+
+  .error-text{
+    font-size: 11px;
+    color: red;
+    position: absolute;
+    top: 50px;
+    left: 0;
   }
 
   .slot-wrapper {

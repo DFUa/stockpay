@@ -6,9 +6,19 @@
       <span @click="closeModal" class="close-icon i-close-modal"></span>
       <div class="title">{{ title }}</div>
       <div class="inner">
+
+        <ui-form v-if="form" :form="form" ref="form">
+          <slot name="form"></slot>
+        </ui-form>
         <slot></slot>
+
       </div>
-      <ui-button @click="apply" :accent="true" :title="buttonTitle"/>
+      <ui-button
+      @click="apply"
+      :accent="true"
+      :submit="true"
+      :title="buttonTitle"
+      :form="form"/>
     </div>
   </ui-modal-overlay>
 </template>
@@ -16,6 +26,7 @@
 <script>
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiModalOverlay from '@/components/ui/ui-modal-overlay/UiModalOverlay.vue'
+import UiForm from '@/components/ui/ui-form/UiForm.vue'
 
 export default {
   name: 'UiModal',
@@ -23,12 +34,14 @@ export default {
   props: {
     value: Boolean,
     title: String,
-    buttonTitle: String
+    buttonTitle: String,
+    form: String
   },
 
   components: {
     UiButton,
-    UiModalOverlay
+    UiModalOverlay,
+    UiForm
   },
 
   mounted () {
@@ -41,7 +54,13 @@ export default {
 
   methods: {
     apply () {
-      this.$emit('on-apply')
+      if (this.form) {
+        if (this.$refs.form.validate()) {
+          this.$emit('on-apply')
+        }
+      } else {
+        this.$emit('on-apply')
+      }
     },
 
     closeModal () {

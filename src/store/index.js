@@ -5,12 +5,43 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isAuth: false
+    isAuth: false,
+    errors: {
+      wrong_json: 'Неправильный формат запроса ',
+      email_busy: 'Этот адрес электронной почты уже используется. Пожалуйста, введите другой адрес электронной почты.',
+      nickname_busy: 'Этот никнейм уже используется',
+      short_password: 'Пароль должен иметь 8 или более символов',
+      no_username: 'Пользователь не аутентифицирован',
+      no_user: 'Неверная электронная почта',
+      wrong_password: ' Вы ввели не верный пароль',
+      no_link: 'Ссылка не может быть найдена',
+      link_expired: 'Время дейтвия ссылки истекло',
+      invalid_auth_data: 'Данные введены не верно. Пожалуйста, проверьте свои учетные данные',
+      JWTDecodeException: 'Ссылку не возможно декодировать',
+      AddressException: 'Адресс электронной почты введён некорректно',
+      MessagingException: 'Ошибка при отправке электронной почты',
+      JSONException: 'Невозможно обработать данные',
+      SignatureVerificationException: 'Не могу проверить ссылку',
+      no_code: 'Код не верен',
+      code_expired: 'Код устарел',
+      number_busy: 'Номер уже используется',
+      not_number: 'Вы используете недоступные символы',
+      wallet_from_not_exists: 'Даного кошелька не существует',
+      foreign_wallet: 'Данный кошелек не пренадлежит вам',
+      wallet_to_not_exists: 'Даного кошелька не существует',
+      currency_conflict: 'Валюта кошелька указана не верно',
+      bad_amount: 'Недопустимая сумма',
+      no_money: 'Недостаточно средств на кошельке'
+    }
   },
 
   getters: {
     isAuth (state) {
       return state.isAuth
+    },
+
+    errorsList (state) {
+      return state.errors
     }
   },
 
@@ -21,7 +52,9 @@ export default new Vuex.Store({
   },
 
   actions: {
-    setAuth ({ commit }, value) {
+    setAuth ({
+      commit
+    }, value) {
       commit('setAuth', value)
     }
   }
