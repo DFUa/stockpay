@@ -6,6 +6,7 @@
     @keyup.enter="onEnter"
     v-model="currentValue"
     :maxlength="type === 'password' ? 35 : 100"
+    :disabled="disabled"
     :style="{ background: background ? background : '#fff' }"
     :type="(type && !showPassword) ? type : 'text'" required>
 
@@ -14,6 +15,7 @@
     </div>
 
     <span v-if="!isValid" class="error-text">{{errorText}}</span>
+    <span v-if="desc" class="input-desc">{{desc}}</span>
     <label :style="{ background: background ? background : '#fff' }">{{ title }}</label>
 
     <div v-if="type === 'password'" class="eye-wrapper">
@@ -37,9 +39,10 @@ export default {
   props: {
     type: String,
     title: String,
-    value: String,
+    value: [String, Number],
     disabled: Boolean,
     background: String,
+    desc: String,
     rules: [Array, Object]
   },
 
@@ -158,7 +161,7 @@ export default {
         const testMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!(testMail.test(this.currentValue))) {
           this.isValid = false
-          this.errorText = 'Почта не валидна'
+          this.errorText = 'Не верный формат почты'
           return false
         }
         return true
@@ -187,7 +190,7 @@ export default {
     width: 100%;
     height: 50px;
     font-size: 14px;
-    font-family: "Open Sans";
+    font-family: 'Montserrat';
     border-radius: 8px;
     border: 1px solid #DFDFDF;
     padding: 0px 21px;
@@ -203,7 +206,7 @@ export default {
     color: #000;
     font-size: 14px;
     background: #fff;
-    font-family: "Open Sans";
+    font-family: 'Montserrat';
     position: absolute;
     pointer-events: none;
     left: 16px;
@@ -221,6 +224,10 @@ export default {
     opacity: 1;
     color: #006344;
     font-weight: 600;
+  }
+
+  .has-text.disabled input ~ label {
+    color: #000;
   }
 
   .invalid input ~ label{
@@ -245,15 +252,26 @@ export default {
 
   .slot-wrapper {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    font-size: 14px;
+    font-weight: 600;
   }
 
   .disabled input {
     color: transparent;
   }
 
+  .input-desc{
+    position: absolute;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Montserrat';
+  }
+
   .disabled-title {
+    font-family: 'Montserrat';
     position: absolute;
     top: 15px;
     left: 22px;

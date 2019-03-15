@@ -177,8 +177,7 @@ export default {
           city: this.city,
           nickname: this.nickname,
           last_name: this.lastname,
-          first_name: this.firstname,
-          email: this.email
+          first_name: this.firstname
         }
         await api.updateProfile(data)
         this.$toasted.show('Данные изменены', {

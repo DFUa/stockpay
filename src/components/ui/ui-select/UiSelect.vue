@@ -161,7 +161,12 @@ export default {
     align-items: center;
     font-size: 14px;
     font-weight: normal;
+    font-family: 'Montserrat';
     cursor: pointer;
+  }
+
+  .ui-select .value {
+    font-family: 'Montserrat';
   }
 
   .ui-select .drop-down {
@@ -225,7 +230,7 @@ export default {
     color: #000;
     font-size: 14px;
     background: #fff;
-    font-family: "Open Sans";
+    font-family: 'Montserrat';
     position: absolute;
     pointer-events: none;
     left: 16px;

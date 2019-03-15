@@ -15,6 +15,24 @@ const router = new Router({
       redirect: '/account'
     },
     {
+      name: 'admin',
+      path: '/admin',
+      redirect: '/admin/user-table',
+      component: lazyLoading('admin/Admin'),
+      children: [
+        {
+          name: 'user-table',
+          path: 'user-table',
+          component: lazyLoading('admin/view/UserTable')
+        },
+        {
+          name: 'user-info',
+          path: 'user-info/:email/:nickname',
+          component: lazyLoading('admin/view/UserInfo')
+        }
+      ]
+    },
+    {
       name: 'account',
       path: '/account',
       redirect: '/account/main',
@@ -65,14 +83,14 @@ const router = new Router({
           ]
         },
         {
-          name: 'Profile',
+          name: 'profile',
           path: 'profile',
           component: lazyLoading('account/profile/Profile')
         }
       ]
     },
     {
-      name: 'Auth',
+      name: 'auth',
       path: '/auth',
       redirect: 'auth/sign-in',
       component: lazyLoading('auth/Auth'),
@@ -88,11 +106,23 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (store.getters.isAuth && to.path.includes('auth')) {
-    next(false)
+  if (store.getters.isAuth) {
+    if (to.path.includes('auth')) {
+      next(false) // Не пускаємо авторизовани користувачів на сторінку авторизації
+    } else {
+      if (!store.getters.isAdmin && to.path.includes('account')) {
+        next() // Пускаємо юзера в профіль
+      } else if (store.getters.isAdmin && to.path.includes('account')) {
+        next(false) // Не пускаємо адміна в профіль
+      } else if (store.getters.isAdmin && to.path.includes('admin')) {
+        next() // Пускаємо адміна в адмінку
+      } else if (!store.getters.isAdmin && to.path.includes('admin')) {
+        next(false) // Не пускаємо юзера в адмінку
+      }
+    }
   } else {
-    if (!store.getters.isAuth && !to.path.includes('auth')) {
-      next(false)
+    if (!to.path.includes('auth')) {
+      next(false) // Непускаємо неавторизованих користувачів нікуди крім сторінки авторизації
     } else {
       next()
     }

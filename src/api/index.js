@@ -5,8 +5,7 @@ import store from '@/store'
 import { addFilters } from '@/utils'
 
 const client = axios.create({
-  baseURL: 'http://stockpay-api.winstars.tech:9696/api',
-  json: true
+  baseURL: 'http://stockpay-web.winstars.tech/api'
 })
 
 export default {
@@ -65,6 +64,10 @@ export default {
     if (res.token) {
       localStorage.setItem('t', res.token)
       store.dispatch('setAuth', true)
+      if (res.role === 2) {
+        store.dispatch('setAdmin', true)
+        console.log(store)
+      }
       return { error: false }
     }
     return res
@@ -106,5 +109,26 @@ export default {
 
   updateProfile (data) {
     return this.execute('put', 'site/me', data)
+  },
+
+  // ADMIN
+  getUserList () {
+    return this.execute('get', '/admin/users')
+  },
+
+  getUserInfo (filters) {
+    return this.execute('get', addFilters('/admin/users', filters))
+  },
+
+  changeUserInfo (data) {
+    return this.execute('put', '/admin/change_user_info', data)
+  },
+
+  changeUserPassword (data) {
+    return this.execute('put', '/admin/change_user_password', data)
+  },
+
+  getUserTransactions (filters) {
+    return this.execute('get', addFilters('/admin/users_transactions', filters))
   }
 }

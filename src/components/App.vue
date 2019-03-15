@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loaded">
+  <div class="app">
     <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
@@ -16,7 +16,11 @@ export default {
     let token = localStorage.getItem('t')
     if (token && await api.refresh()) {
       this.$store.dispatch('setAuth', true)
-      this.$router.push('/account/main/dashboard')
+      if (this.isAdmin) {
+        this.$router.push('/admin')
+      } else {
+        this.$router.push('/account/dashboard')
+      }
       setInterval(async () => { await api.refresh() }, 1000 * 60 * 15)
     } else {
       this.$store.dispatch('setAuth', false)
@@ -32,13 +36,21 @@ export default {
   computed: {
     isAuth () {
       return this.$store.getters.isAuth
+    },
+
+    isAdmin () {
+      return this.$store.getters.isAdmin
     }
   },
 
   watch: {
     isAuth (value) {
       if (value) {
-        this.$router.push('/account/main/dashboard')
+        if (this.isAdmin) {
+          this.$router.push('/admin')
+        } else {
+          this.$router.push('/account/dashboard')
+        }
       } else {
         this.$router.push('/auth')
       }
@@ -47,6 +59,6 @@ export default {
 }
 </script>
 
-<style lang="sass">
-  @import '../sass/main.scss'
+<style lang="scss">
+  @import '../sass/main.scss';
 </style>

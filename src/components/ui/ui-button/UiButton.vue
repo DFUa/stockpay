@@ -40,6 +40,7 @@ export default {
     border-radius: 8px;
     padding: 0 10px;
     min-width: 140px;
+    width: 100%;
     height: 40px;
     display: flex;
     align-items: center;

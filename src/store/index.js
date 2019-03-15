@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isAuth: false,
+    isAdmin: false,
     errors: {
       wrong_json: 'Неправильный формат запроса ',
       email_busy: 'Этот адрес электронной почты уже используется. Пожалуйста, введите другой адрес электронной почты.',
@@ -31,13 +32,18 @@ export default new Vuex.Store({
       wallet_to_not_exists: 'Даного кошелька не существует',
       currency_conflict: 'Валюта кошелька указана не верно',
       bad_amount: 'Недопустимая сумма',
-      no_money: 'Недостаточно средств на кошельке'
+      no_money: 'Недостаточно средств на кошельке',
+      forbidden_symbols: 'Недопустимые символы'
     }
   },
 
   getters: {
     isAuth (state) {
       return state.isAuth
+    },
+
+    isAdmin (state) {
+      return state.isAdmin
     },
 
     errorsList (state) {
@@ -48,14 +54,20 @@ export default new Vuex.Store({
   mutations: {
     setAuth (state, value) {
       state.isAuth = value
+    },
+
+    setAdmin (state, value) {
+      state.isAdmin = value
     }
   },
 
   actions: {
-    setAuth ({
-      commit
-    }, value) {
+    setAuth ({ commit }, value) {
       commit('setAuth', value)
+    },
+
+    setAdmin ({ commit }, value) {
+      commit('setAdmin', value)
     }
   }
 })

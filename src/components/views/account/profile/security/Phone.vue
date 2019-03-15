@@ -3,7 +3,6 @@
     <ui-input
       type="phone"
       title="Phone"
-      :disabled="true"
       v-model="currentPhone">
 
       <ui-button v-if="!phone" @click="setPhone" :accent="true" title="Привязать"/>

@@ -2,10 +2,45 @@
 @import "icons";
 @import "transitions";
 
-.toasted-container{
+* {
+    box-sizing: border-box;
+}
+
+.toasted-container {
     .toasted.toasted-primary {
         text-align: center;
         padding-top: 10px;
         padding-bottom: 10px;
     }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    tr {
+      td {
+        font-family: 'Montserrat';
+        font-weight: 600;
+        font-size: 20px;
+        color: #1D1D1D;
+        padding: 20px 30px;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      cursor: pointer;
+
+      td {
+        padding: 20px 30px;
+      }
+
+      &:nth-child(2n) {
+        background-color: rgba(#E5E5E5, .5);
+      }
+    }
+  }
 }

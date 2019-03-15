@@ -40,7 +40,7 @@ export default {
 
   props: {
     title: String,
-    value: Object,
+    value: [Object, Number],
     mask: String,
     backgroundColor: String,
     borderColor: String,

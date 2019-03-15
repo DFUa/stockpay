@@ -2,7 +2,7 @@
   <div classs="ui-tabs">
     <div class="items-wrapper">
       <div v-for="item in items" :key="item.id" @click="onClick(item)"
-        :class="{ 'item': true, 'active': isActive(item) }">
+        :class="{ 'item': true, 'active': isActive(item) || item.activeTab }">
         <span :class="item.icon"></span>
         <div class="title">{{ item.title }}</div>
       </div>
@@ -18,9 +18,22 @@ export default {
     items: Array
   },
 
+  // if there is no path - click return item's id (u should check @active)
   methods: {
     onClick (item) {
-      this.$router.push(item.path)
+      if (item.path) {
+        this.$router.push(item.path)
+      } else {
+        for (let i = 0; i < this.items.length; i++) {
+          let element = this.items[i]
+          if (element.id === item.id) {
+            element.activeTab = true
+          } else {
+            element.activeTab = false
+          }
+        }
+        this.$emit('active', item.id)
+      }
     },
 
     isActive (item) {
