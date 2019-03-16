@@ -108,6 +108,10 @@ export default {
       }
     },
 
+    openChangePhoneModal () {
+      this.showChangePhoneModal = true
+    },
+
     closeChangePhoneModal () {
       this.showChangePhoneModal = false
     }

@@ -59,6 +59,10 @@ export default {
     return this.execute('post', '/site/confirm_number', data)
   },
 
+  async getTransactions () {
+    return this.execute('get', 'site/transactions')
+  },
+
   async login (data) {
     let res = await this.execute('post', 'site/login', data)
     if (res.token) {
@@ -66,7 +70,6 @@ export default {
       store.dispatch('setAuth', true)
       if (res.role === 2) {
         store.dispatch('setAdmin', true)
-        console.log(store)
       }
       return { error: false }
     }
@@ -86,6 +89,7 @@ export default {
 
   logout () {
     store.dispatch('setAuth', false)
+    store.dispatch('setAdmin', false)
     localStorage.removeItem('t')
   },
 

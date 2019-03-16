@@ -14,8 +14,9 @@ export default {
 
   async mounted () {
     let token = localStorage.getItem('t')
-    if (token && await api.refresh()) {
+    if (token) {
       this.$store.dispatch('setAuth', true)
+      console.log(this.isAdmin)
       if (this.isAdmin) {
         this.$router.push('/admin')
       } else {

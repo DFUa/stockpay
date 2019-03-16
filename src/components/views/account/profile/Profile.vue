@@ -121,11 +121,12 @@ export default {
   methods: {
     async loadData () {
       let res = await api.getProfile()
+      console.log(res)
       this.firstname = res.first_name
       this.lastname = res.last_name
       this.email = res.email
       this.nickname = res.nickname
-      this.phone = res.phone
+      this.phone = res.number
 
       await this.loadCountries()
       this.selectCountry(res.country)
