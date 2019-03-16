@@ -107,6 +107,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (store.getters.isAuth) {
+    console.log(store.getters.isAuth, store.getters.isAdmin)
     if (to.path.includes('auth')) {
       next(false) // Не пускаємо авторизовани користувачів на сторінку авторизації
     } else {

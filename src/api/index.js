@@ -69,6 +69,7 @@ export default {
       localStorage.setItem('t', res.token)
       store.dispatch('setAuth', true)
       if (res.role === 2) {
+        console.log('ADMIN!!!')
         store.dispatch('setAdmin', true)
       }
       return { error: false }
@@ -84,6 +85,7 @@ export default {
     }
     localStorage.removeItem('t')
     store.dispatch('setAuth', false)
+    store.dispatch('setAdmin', false)
     return false
   },
 

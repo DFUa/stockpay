@@ -25,9 +25,9 @@ export default {
       setInterval(async () => { await api.refresh() }, 1000 * 60 * 15)
     } else {
       this.$store.dispatch('setAuth', false)
+      this.$store.dispatch('setAdmin', false)
       this.$router.push('/auth')
     }
-    this.loaded = true
   },
 
   data: () => ({
@@ -47,15 +47,19 @@ export default {
   watch: {
     isAuth (value) {
       if (value) {
-        if (this.isAdmin) {
-          this.$router.push('/admin')
-        } else {
-          this.$router.push('/account/dashboard')
-        }
+        this.$router.push('/account/dashboard')
       } else {
         this.$router.push('/auth')
       }
-    }
+    },
+
+    isAdmin (value) {
+      if (value) {
+        this.$router.push('/admin')
+      } else {
+        this.$router.push('/auth')
+      }
+    },
   }
 }
 </script>
