@@ -64,7 +64,11 @@ export default {
         }
         await api.login(data).then(res => {
           if (!res.error) {
-            this.$router.push('/account/main/dashboard')
+            if (!this.$store.getters.isAdmin) {
+              this.$router.push('/account/main/dashboard')
+            } else {
+              this.$router.push('/admin')
+            }
           } else {
             this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
               theme: 'toasted-primary',

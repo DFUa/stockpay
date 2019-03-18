@@ -107,11 +107,15 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (store.getters.isAuth) {
-    console.log(store.getters.isAuth, store.getters.isAdmin)
+    console.log(store.getters.isAuth, store.getters.isAdmin, to.path.includes('admin'), to.path.includes('account'))
     if (to.path.includes('auth')) {
       next(false) // Не пускаємо авторизовани користувачів на сторінку авторизації
     } else {
-      if (!store.getters.isAdmin && to.path.includes('account')) {
+      if (store.getters.isAdmin && to.path.includes('admin')) {
+        next() // Пускаємо адміна в адмінку
+      } else if (!store.getters.isAdmin && to.path.includes('admin')) {
+        next(false) // Не пускаємо юзера в адмінку
+      } else if (!store.getters.isAdmin && to.path.includes('account')) {
         next() // Пускаємо юзера в профіль
       } else if (store.getters.isAdmin && to.path.includes('account')) {
         next(false) // Не пускаємо адміна в профіль

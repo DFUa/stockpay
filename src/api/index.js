@@ -25,7 +25,7 @@ export default {
     }).catch(resp => {
       return {
         error: true,
-        message: resp.response.data.error
+        message: resp.response.data ? resp.response.data.error : resp
       }
     })
   },
@@ -69,7 +69,6 @@ export default {
       localStorage.setItem('t', res.token)
       store.dispatch('setAuth', true)
       if (res.role === 2) {
-        console.log('ADMIN!!!')
         store.dispatch('setAdmin', true)
       }
       return { error: false }

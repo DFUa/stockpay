@@ -16,7 +16,6 @@ export default {
     let token = localStorage.getItem('t')
     if (token) {
       this.$store.dispatch('setAuth', true)
-      console.log(this.isAdmin)
       if (this.isAdmin) {
         this.$router.push('/admin')
       } else {
@@ -28,6 +27,7 @@ export default {
       this.$store.dispatch('setAdmin', false)
       this.$router.push('/auth')
     }
+    this.loaded = true
   },
 
   data: () => ({
@@ -59,7 +59,7 @@ export default {
       } else {
         this.$router.push('/auth')
       }
-    },
+    }
   }
 }
 </script>
