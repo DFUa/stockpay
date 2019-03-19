@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'group': true, 'disabled': disabled, 'has-text' : currentValue, 'invalid': !isValid }">
+  <div :class="{ 'group': true, 'disabled': disabled, 'has-text' : (currentValue || currentValue === 0), 'invalid': !isValid }">
 
     <input
     @input="onUpdate"

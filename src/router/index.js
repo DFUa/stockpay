@@ -12,7 +12,7 @@ const router = new Router({
     {
       name: 'redirect',
       path: '*',
-      redirect: '/account'
+      redirect: store.getters.isAdmin ? '/admin' : '/account'
     },
     {
       name: 'admin',

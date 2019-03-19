@@ -28,7 +28,8 @@ export default {
 
   .auth-wrapper .left-part {
     min-height: 100vh;
-    background: url('../../../assets/imgs/bg.jpg') no-repeat center center;
+    background: url('../../../assets/imgs/bg2.png') no-repeat center center;
+    background-size: cover;
   }
 
   .auth-wrapper .right-part {

@@ -81,7 +81,8 @@
       </div>
     </div>
     <div v-if="currentTab === 1" class="user-info-content">
-      <table>
+      <div v-if="!transactions.transactions.length" class="empty-text">You havent transactions</div>
+      <table v-if="transactions.transactions.length">
         <thead>
           <tr>
             <td v-for="header in transactionsHeader" :key="header.id">{{ header.text }}</td>
@@ -334,5 +335,11 @@ export default {
     width: 250px;
     margin: 0 10px;
   }
+}
+.empty-text{
+  text-align: center;
+  font-weight: 700;
+  font-family: 'Montserrat';
+  font-size: 18px;
 }
 </style>
