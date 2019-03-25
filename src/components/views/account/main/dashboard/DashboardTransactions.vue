@@ -4,22 +4,24 @@
       <div class="section">
         <h2>Транзакции</h2>
       </div>
-      <div class="section">
+      <!-- <div class="section">
         <ui-button class="right-offset" title="Пополнение"/>
         <ui-button :accent="true" title="Перевод"/>
-      </div>
+      </div> -->
     </div>
     <div v-if="!transactions.length" class="empty-stub">
       <h3>У вас пока не было транзакций</h3>
     </div>
-    <table v-if="transactions.length">
+    <table v-if="transactions.length" class="dashboard-table">
       <tbody>
-        <tr v-for="(transaction, index) in transactions" :key="index">
+        <tr
+        v-for="(transaction, index) in transactions"
+        :key="index"
+        @click="getMoreInfo($event, transaction)">
           <td>{{index}}</td>
-          <!-- <td>{{user.nickname}}</td>
-          <td>{{user.email}}</td>
-          <td>{{user.country}}</td>
-          <td>{{user.first_name}} {{user.last_name}}</td> -->
+          <td>Дата перевода: {{transaction.date}}</td>
+          <td>Источник: Карта</td>
+          <td>Статус: Завершено</td>
         </tr>
       </tbody>
     </table>
@@ -44,7 +46,7 @@ export default {
     transactions: []
   }),
 
-  created() {
+  created () {
     this.init()
   },
 
@@ -53,8 +55,26 @@ export default {
       let res = await api.getTransactions()
       this.transactions = res.transactions
       console.log(this.transactions)
+    },
+
+    getMoreInfo ($event, data) {
+      // el.parentNode.removeChild(el);
+      if (document.getElementById('extend')){
+        document.getElementById('extend').outerHTML = ""
+      }
+      let tr = $event.path[1]
+      let extendTr = document.createElement('tr')
+      let markup = `
+        <td>Изначальный перевод: ${data.original_amount} ${data.currency}</td>
+        <td>Комиссия: ${data.fee_percent * 100 + '%'} (${Math.round(data.fee_amount * 100) / 100} ${data.currency})</td>
+        <td>Зачислены средства на: ${data.wallet_to}</td>
+        <td></td>
+      `
+      extendTr.id = 'extend'
+      extendTr.innerHTML = markup
+      tr.after(extendTr)
     }
-  },
+  }
 }
 </script>
 

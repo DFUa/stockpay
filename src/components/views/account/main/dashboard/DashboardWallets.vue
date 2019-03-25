@@ -7,13 +7,15 @@
           <div>{{ item.title }}</div>
         </div>
         <div class="info-item">{{ item.value }} {{ item.symbol }}</div>
-        <div class="info-item">{{ item.symbol }} {{ item.number }}</div>
+        <div class="info-item">{{ item.number }}</div>
       </div>
     </div>
   </ui-card>
 </template>
 
 <script>
+import api from '@/api'
+
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
 
 export default {
@@ -25,13 +27,31 @@ export default {
 
   data: () => ({
     wallets: [
-      { id: 0, title: 'Рубль', value: '14 000', symbol: 'RUB', icon: 'i-c-rub', number: '0099 2344 8484 3454' },
-      { id: 1, title: 'Доллар', value: '100', symbol: 'USD', icon: 'i-c-usd', number: '0303 9549 7344 5455' },
-      { id: 4, title: 'Евро', value: '14 000', symbol: 'EUR', icon: 'i-c-eur', number: '6632 4323 4343 3445' },
-      { id: 2, title: 'Гривны', value: '0', symbol: 'UAH', icon: 'i-c-uah', number: '6463 7747 7377 8484', disabled: true },
-      { id: 3, title: 'Тенге', value: '30 000', symbol: 'KZT', icon: 'i-c-kzt', number: '8994 4354 3321 1122', disabled: true }
+      { id: 0, title: 'Рубль', value: '14 000', symbol: 'RUB', icon: 'i-c-rub', number: 'RUB0099 2344 8484 3454' },
+      { id: 1, title: 'Доллар', value: '100', symbol: 'USD', icon: 'i-c-usd', number: 'USD0303 9549 7344 5455' },
+      { id: 4, title: 'Евро', value: '14 000', symbol: 'EUR', icon: 'i-c-eur', number: 'EUR6632 4323 4343 3445' },
+      { id: 2, title: 'Гривны', value: '0', symbol: 'UAH', icon: 'i-c-uah', number: 'UAH6463 7747 7377 8484', disabled: true },
+      { id: 3, title: 'Тенге', value: '0', symbol: 'KZT', icon: 'i-c-kzt', number: 'KZT8994 4354 3321 1122', disabled: true }
     ]
-  })
+  }),
+
+  created() {
+    this.init()
+  },
+
+  methods: {
+    async init () {
+      let res = await api.getWallets()
+      this.wallets.forEach(item => {
+        res.wallets.forEach(wallet => {
+          if(item.symbol == wallet.currency) {
+            item.number = wallet.number
+            item.value = wallet.balance
+          }
+        });
+      })
+    }
+  },
 }
 </script>
 

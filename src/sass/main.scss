@@ -35,7 +35,12 @@ table {
       cursor: pointer;
 
       td {
+        font-size: 15px;
         padding: 20px 30px;
+      }
+
+      &#extend {
+        background-color: #FFDB00;
       }
 
       &:nth-child(2n) {

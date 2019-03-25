@@ -47,6 +47,7 @@ export default {
       }
       let res = await api.passwordReset(data)
       if (!res.error) {
+        localStorage.setItem('way', res.way)
         this.nextStep()
       } else {
         this.code = ''

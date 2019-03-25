@@ -40,18 +40,18 @@ export default {
   data: () => ({
     inValue: {
       value: 0,
-      key: 'rub'
+      key: 'usd'
     },
     outValue: {
       value: 0,
-      key: 'usd'
+      key: 'eur'
     },
     wallets: {
       usd: 'USD 0303 9549 7344 5455',
-      uah: 'UAH 6463 7747 7377 8484',
+      // uah: 'UAH 6463 7747 7377 8484',
       eur: 'EUR 6632 4323 4343 3454',
       kzt: 'KZT 8994 4354 3321 1122',
-      rub: 'RUB 0099 2344 8484 3454'
+      // rub: 'RUB 0099 2344 8484 3454'
     },
     isCurrencyToggled: false
   }),

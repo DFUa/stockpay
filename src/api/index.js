@@ -44,7 +44,7 @@ export default {
   },
 
   async setupPassword (data) {
-    return this.execute('post', 'site/change_password', data)
+    return this.execute('post', 'code/change_password', data)
   },
 
   async changeNickname (data) {
@@ -112,6 +112,10 @@ export default {
     return this.execute('get', 'site/me')
   },
 
+  getWallets () {
+    return this.execute('get', '/site/wallets')
+  },
+
   updateProfile (data) {
     return this.execute('put', 'site/me', data)
   },
@@ -135,5 +139,10 @@ export default {
 
   getUserTransactions (filters) {
     return this.execute('get', addFilters('/admin/users_transactions', filters))
+  },
+
+  // TRANSFER MONEY
+  sendMoneyToPerson (data) {
+    return this.execute('post', '/site/send_money', data)
   }
 }

@@ -57,9 +57,9 @@ export default {
     selectedItem: null,
     currItems: [
       { id: 0, title: 'USD', key: 'usd' },
-      { id: 1, title: 'UAH', key: 'uah' },
+      // { id: 1, title: 'UAH', key: 'uah' },
       { id: 2, title: 'EUR', key: 'eur' },
-      { id: 3, title: 'KZT', key: 'kzt' },
+      // { id: 3, title: 'KZT', key: 'kzt' },
       { id: 4, title: 'RUB', key: 'rub' }
     ]
   }),

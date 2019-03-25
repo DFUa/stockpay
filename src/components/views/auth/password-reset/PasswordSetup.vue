@@ -1,13 +1,14 @@
 <template>
   <div>
     <div v-if="loaded">
-      <h1>Ведите код с почты и создайте новый пароль</h1>
+      <h1>Ведите код с <span v-if="way == 0">почты</span> <span v-if="way == 1">номера</span> и создайте новый пароль</h1>
 
       <div class="fields">
         <ui-input title="Код" v-model="code"/>
         <ui-input type="password" title="Новый пароль" v-model="password_0"/>
         <ui-input type="password" title="Подтвердите пароль" v-model="password_1"/>
       </div>
+      <a  v-if="way == 1" href="#" class="no-access" @click="noAccess">No access to the phone?</a>
 
       <div class="btns">
         <ui-button accent title="Применить" @click="resetPassword"/>
@@ -37,10 +38,15 @@ export default {
 
   data: () => ({
     code: '',
+    way: 0,
     password_0: '',
     password_1: '',
     loaded: true
   }),
+
+  created() {
+    this.way = localStorage.getItem('way')
+  },
 
   methods: {
     async resetPassword () {
@@ -59,7 +65,26 @@ export default {
         this.code = ''
         this.loaded = true
       }
+    },
+
+    async noAccess (event) {
+      event.preventDefault()
+      let data = {
+        email: localStorage.getItem('email'),
+        way: 1
+      }
+      let res = await api.passwordReset(data)
+      console.log(res);
+      this.way = res.way
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .no-access{
+    color: #000;
+    font-family: 'Montserrat';
+    font-size: 12px;
+  }
+</style>

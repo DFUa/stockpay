@@ -174,18 +174,20 @@ export default {
     async updateData () {
       if (this.$refs.profile.validate()) {
         let data = {
-          country: this.country,
-          city: this.city,
+          country: this.country.code,
+          city: this.city.toponymName,
           nickname: this.nickname,
           last_name: this.lastname,
           first_name: this.firstname
         }
         await api.updateProfile(data)
-        this.$toasted.show('Данные изменены', {
-          theme: 'toasted-primary',
-          position: 'bottom-center',
-          duration: 5000
-        })
+        if (!data.error) {
+          this.$toasted.show('Данные изменены', {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
+        }
       }
     }
   },
