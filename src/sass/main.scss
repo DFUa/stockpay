@@ -3,15 +3,15 @@
 @import "transitions";
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .toasted-container {
-    .toasted.toasted-primary {
-        text-align: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+  .toasted.toasted-primary {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
 
 table {
@@ -47,5 +47,66 @@ table {
         background-color: rgba(#E5E5E5, .5);
       }
     }
+  }
+}
+
+.ui-card {
+  .togged {
+    transform: rotate(180deg);
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Montserrat";
+    margin-bottom: 20px;
+  }
+
+  .sub-title {
+    font-size: 14px;
+    font-family: "Open Sans";
+    line-height: 1.6;
+    margin-bottom: 35px;
+  }
+
+  .inputs-wrapper {
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .inputs-wrapper {
+
+    .from,
+    .to,
+    .input-wrap {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-self: flex-start
+    }
+
+    .input-wrap {
+      margin-right: 30px;
+    }
+  }
+
+  .inputs-wrapper .wallet-label {
+    padding-top: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .inputs-wrapper .toggler {
+    cursor: pointer;
+    margin: 0 30px 30px;
+    transition: .4s;
+  }
+
+  &.inner {
+    padding: 25px 35px;
+    padding-bottom: 30px;
+    transition: .5s;
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <ui-card class="inner">
+  <ui-card class="inner ui-card">
     <div class="title">Мгновенный платеж любому человеку по номеру кошелька</div>
     <div class="sub-title">Выберите кошелёк и введите сколько хотите перевести средств, затем введите кошелек и выберите валюту для данного кошелька.</div>
 
@@ -101,55 +101,4 @@ export default {
 }
 </script>
 
-<style scoped>
-  .togged {
-    transform: rotate(180deg);
-  }
-
-  .inner {
-    padding: 25px 35px;
-    padding-bottom: 30px;
-    transition: .5s;
-  }
-
-  .title {
-    font-size: 18px;
-    font-weight: 600;
-    font-family: "Open Sans";
-    margin-bottom: 20px;
-  }
-
-  .sub-title {
-    font-size: 14px;
-    font-family: "Open Sans";
-    line-height: 1.6;
-    margin-bottom: 35px;
-  }
-
-  .inputs-wrapper {
-    margin-bottom: 50px;
-    display: flex;
-    align-items: center;
-  }
-
-  .inputs-wrapper .from,
-  .inputs-wrapper .to {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-self: flex-start
-  }
-
-  .inputs-wrapper .wallet-label {
-    padding-top: 15px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-  }
-
-  .inputs-wrapper .toggler {
-    cursor: pointer;
-    margin: 0 30px 30px;
-    transition: .4s;
-  }
-</style>
+<style scoped></style>

@@ -13,8 +13,7 @@ const router = new Router({
       name: 'redirect',
       path: '*',
       redirect: store.getters.isAdmin ? '/admin' : '/account'
-    },
-    {
+    }, {
       name: 'admin',
       path: '/admin',
       redirect: '/admin/user-table',
@@ -31,8 +30,7 @@ const router = new Router({
           component: lazyLoading('admin/view/UserInfo')
         }
       ]
-    },
-    {
+    }, {
       name: 'account',
       path: '/account',
       redirect: '/account/main',
@@ -51,8 +49,7 @@ const router = new Router({
                 default: lazyLoading('account/main/dashboard/Dashboard'),
                 sidebar: lazyLoading('account/main/dashboard/DashboardSidebar')
               }
-            },
-            {
+            }, {
               name: 'add-founds',
               path: 'add-founds',
               redirect: 'add-founds/cards',
@@ -64,8 +61,7 @@ const router = new Router({
                 { path: 'cards', component: lazyLoading('account/main/add-founds/cards/Cards') },
                 { path: 'adv', component: lazyLoading('account/main/add-founds/adv/Adv') }
               ]
-            },
-            {
+            }, {
               name: 'transfer',
               path: 'transfer',
               redirect: 'transfer/wallets',
@@ -79,6 +75,22 @@ const router = new Router({
                 { path: 'bank-card', component: lazyLoading('account/main/transfer/bank-card/BankCard') },
                 { path: 'bank-account', component: lazyLoading('account/main/transfer/bank-account/BankAccount') }
               ]
+            }, {
+              name: 'service',
+              path: 'service',
+              redirect: 'service/phone',
+              components: {
+                default: lazyLoading('account/main/service/Service'),
+                sidebar: lazyLoading('account/main/service/ServiceSidebar')
+              },
+              children: [{
+                path: 'phone',
+                component: lazyLoading('account/main/service/phone/Phone')
+              },
+              {
+                path: 'vk',
+                component: lazyLoading('account/main/service/vk/Vk')
+              }]
             }
           ]
         },
@@ -88,8 +100,7 @@ const router = new Router({
           component: lazyLoading('account/profile/Profile')
         }
       ]
-    },
-    {
+    }, {
       name: 'auth',
       path: '/auth',
       redirect: 'auth/sign-in',
