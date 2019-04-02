@@ -27,6 +27,7 @@
           title="Enter the code from the phone"
           v-model="code"
           :rules="[{ name: 'required' }]"/>
+          <a href="#" @click="noAccess" class="no-access">No access to phone?</a>
       </template>
 
     </ui-modal>
@@ -90,6 +91,28 @@ export default {
           duration: 5000
         })
         this.closeChangePhoneModal()
+      } else {
+        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
+      }
+    },
+
+    async noAccess (event) {
+      event.preventDefault()
+      let filters = {
+        way: { value: '0' }
+      }
+      let res = await api.resetPhone(filters)
+      console.log(res)
+      if (!res.error) {
+        this.$toasted.show('Check your email for code', {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
       } else {
         this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
           theme: 'toasted-primary',

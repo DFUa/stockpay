@@ -63,8 +63,8 @@ export default {
     return this.execute('post', '/site/confirm_number', data)
   },
 
-  async resetPhone () {
-    return this.execute('get', '/site/reset_number')
+  async resetPhone (data) {
+    return this.execute('get', addFilters('/site/reset_number', data))
   },
 
   async resetPhoneByCode (data) {

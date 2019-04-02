@@ -8,7 +8,7 @@
         <ui-input type="password" title="Новый пароль" v-model="password_0"/>
         <ui-input type="password" title="Подтвердите пароль" v-model="password_1"/>
       </div>
-      <a  v-if="way == 1" href="#" class="no-access" @click="noAccess">No access to the phone?</a>
+      <a v-if="way == 1" href="#" class="no-access" @click="noAccess">No access to the phone?</a>
 
       <div class="btns">
         <ui-button accent title="Применить" @click="resetPassword"/>
@@ -80,11 +80,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .no-access{
-    color: #000;
-    font-family: 'Montserrat';
-    font-size: 12px;
-  }
-</style>
