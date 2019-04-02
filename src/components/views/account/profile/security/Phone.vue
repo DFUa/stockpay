@@ -71,10 +71,20 @@ export default {
         password: this.password,
         code: this.code
       }
-      let res = await api.confirmPhone(data)
+      if (this.phone) {
+        let res = await api.resetPhoneByCode(data)
+        console.log(res)
+        this.showMessage(res, 'Телефон был изменен')
+      } else {
+        let res = await api.confirmPhone(data)
+        console.log(res)
+        this.showMessage(res, 'Телефон был привязан')
+      }
+    },
 
+    showMessage (res, errorText) {
       if (!res.error) {
-        this.$toasted.show('Телефон был изменен', {
+        this.$toasted.show(errorText, {
           theme: 'toasted-primary',
           position: 'bottom-center',
           duration: 5000
@@ -93,11 +103,6 @@ export default {
       let data = { number: this.currentPhone }
       let res = await api.setPhone(data)
       if (!res.error) {
-        this.$toasted.show('Телефон был привязан', {
-          theme: 'toasted-primary',
-          position: 'bottom-center',
-          duration: 5000
-        })
         this.showChangePhoneModal = true
       } else {
         this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
@@ -108,7 +113,9 @@ export default {
       }
     },
 
-    openChangePhoneModal () {
+    async openChangePhoneModal () {
+      let res = await api.resetPhone()
+      console.log(res)
       this.showChangePhoneModal = true
     },
 

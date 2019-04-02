@@ -75,7 +75,7 @@ export default {
         new_password: this.newpassword_0,
         password: this.currpassword
       }
-      let res = await api.setupPassword(data)
+      let res = await api.changePassword(data)
 
       if (!res.error) {
         this.$toasted.show('Пароль был изменен', {

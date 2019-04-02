@@ -85,7 +85,7 @@ export default {
     },
 
     runCourcesUpdating () {
-      setInterval(() => { this.loadCources() }, 10 * 1000)
+      setInterval(() => { this.loadCources() }, 300 * 1000)
     },
 
     openUserProfile () {

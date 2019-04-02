@@ -47,6 +47,10 @@ export default {
     return this.execute('post', 'code/change_password', data)
   },
 
+  async changePassword (data) {
+    return this.execute('post', 'site/change_password', data)
+  },
+
   async changeNickname (data) {
     return this.execute('post', '/site/change_nickname', data)
   },
@@ -57,6 +61,14 @@ export default {
 
   async confirmPhone (data) {
     return this.execute('post', '/site/confirm_number', data)
+  },
+
+  async resetPhone () {
+    return this.execute('get', '/site/reset_number')
+  },
+
+  async resetPhoneByCode (data) {
+    return this.execute('post', '/site/reset_number_confirm', data)
   },
 
   async getTransactions () {

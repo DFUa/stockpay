@@ -12,16 +12,27 @@
     <div v-if="!transactions.length" class="empty-stub">
       <h3>У вас пока не было транзакций</h3>
     </div>
+    <!-- https://jsfiddle.net/2q41d3ym/13/ -->
+    <!-- <ui-table :headers="headers">
+      <div class="row-custom-table" slot="items">
+        <div class="row-custom-table-item">
+          <div>1</div>
+          <div>3</div>
+          <div>4</div>
+          <div>3</div>
+        </div>
+      </div>
+    </ui-table> -->
     <table v-if="transactions.length" class="dashboard-table">
       <tbody>
         <tr
         v-for="(transaction, index) in transactions"
         :key="index"
         @click="getMoreInfo($event, transaction)">
-          <td>{{index}}</td>
-          <td>Дата перевода: {{transaction.date}}</td>
-          <td>Источник: Карта</td>
-          <td>Статус: Завершено</td>
+          <td width="20%">{{index + 1}}</td>
+          <td width="20%">Дата перевода: {{transaction.date}}</td>
+          <td width="20%">Источник: Карта</td>
+          <td width="20%">Статус: Завершено</td>
         </tr>
       </tbody>
     </table>
@@ -33,17 +44,28 @@ import api from '@/api'
 
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiTable from '@/components/ui/ui-table/UiTable'
 
 export default {
   name: 'DashboardTransactions',
 
   components: {
     UiCard,
-    UiButton
+    UiButton,
+    UiTable
   },
 
   data: () => ({
-    transactions: []
+    transactions: [],
+    headers: [{
+      text: '#',
+    }, {
+      text: 'date'
+    }, {
+      text: 'source'
+    }, {
+      text: 'status'
+    }]
   }),
 
   created () {
@@ -55,6 +77,22 @@ export default {
       let res = await api.getTransactions()
       this.transactions = res.transactions
       console.log(this.transactions)
+    },
+
+    fadeIn(el) {
+      el.style.opacity = 0;
+
+      var last = +new Date();
+      var tick = function() {
+        el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+        last = +new Date();
+
+        if (+el.style.opacity < 1) {
+          (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+        }
+      };
+
+      tick();
     },
 
     getMoreInfo ($event, data) {
@@ -72,6 +110,7 @@ export default {
       `
       extendTr.id = 'extend'
       extendTr.innerHTML = markup
+      this.fadeIn(extendTr)
       tr.after(extendTr)
     }
   }
