@@ -4,6 +4,10 @@
       <div class="section">
         <h2>Транзакции</h2>
       </div>
+      <button class="i-filter" @click="showFilter"></button>
+      <transition>
+        
+      </transition>
       <!-- <div class="section">
         <ui-button class="right-offset" title="Пополнение"/>
         <ui-button :accent="true" title="Перевод"/>
@@ -12,28 +16,32 @@
     <div v-if="!transactions.length" class="empty-stub">
       <h3>У вас пока не было транзакций</h3>
     </div>
-    <!-- https://jsfiddle.net/2q41d3ym/13/ -->
-    <!-- <ui-table :headers="headers">
-      <div class="row-custom-table" slot="items">
-        <div class="row-custom-table-item">
-          <div>1</div>
-          <div>3</div>
-          <div>4</div>
-          <div>3</div>
-        </div>
-      </div>
-    </ui-table> -->
     <table v-if="transactions.length" class="dashboard-table">
       <tbody>
-        <tr
-        v-for="(transaction, index) in transactions"
-        :key="index"
-        @click="getMoreInfo($event, transaction)">
-          <td width="20%">{{index + 1}}</td>
-          <td width="20%">Дата перевода: {{transaction.date}}</td>
-          <td width="20%">Источник: Карта</td>
-          <td width="20%">Статус: Завершено</td>
-        </tr>
+        <div v-for="(transaction, index) in transactions" :key="index">
+          <tr :class="{'extend-row': transaction.show_row}">
+            <td class="dashboard-amount" width="15%">{{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{transaction.currency}}</td>
+            <td width="20%">Дата перевода: {{transaction.date}}</td>
+            <td width="25%">Источник: Карта</td>
+            <td width="15%">Status: {{transaction.status}}</td>
+            <td width="5%">
+              <button class="show-extend-row" :class="{ 'rotate': transaction.show_row }" @click="getMoreInfo(index)">
+                <svg width="12" height="8" viewBox="0 0 12 8" fill="black" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M1.4 7.40002L6 2.80002L10.6 7.40002L12 6.00002L6 2.43187e-05L0 6.00002L1.4 7.40002Z"/>
+                </svg>
+              </button>
+            </td>
+          </tr>
+          <transition name="fade" mode="out-in">
+            <tr class="extend-row" v-show="transaction.show_row">
+              <td>Изначальный перевод: {{transaction.original_amount}} {{transaction.currency}}</td>
+              <td>Комиссия: {{transaction.fee_percent * 100 + '%'}} {{Math.round(transaction.fee_amount * 100) / 100}} {{transaction.currency}}</td>
+              <td>Зачислены средства на: {{transaction.wallet_to}}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </transition>
+        </div>
       </tbody>
     </table>
   </ui-card>
@@ -43,29 +51,19 @@
 import api from '@/api'
 
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
-import UiButton from '@/components/ui/ui-button/UiButton.vue'
-import UiTable from '@/components/ui/ui-table/UiTable'
+import { Datetime } from 'vue-datetime';
 
 export default {
   name: 'DashboardTransactions',
 
   components: {
     UiCard,
-    UiButton,
-    UiTable
+    Datetime
   },
 
   data: () => ({
     transactions: [],
-    headers: [{
-      text: '#',
-    }, {
-      text: 'date'
-    }, {
-      text: 'source'
-    }, {
-      text: 'status'
-    }]
+    showFilter: false
   }),
 
   created () {
@@ -75,51 +73,48 @@ export default {
   methods: {
     async init () {
       let res = await api.getTransactions()
-      this.transactions = res.transactions
+      res.transactions.map(item => {
+        item.show_row = false
+        this.transactions.push(item)
+      })
       console.log(this.transactions)
     },
 
-    fadeIn(el) {
-      el.style.opacity = 0;
-
-      var last = +new Date();
-      var tick = function() {
-        el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
-        last = +new Date();
-
-        if (+el.style.opacity < 1) {
-          (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-        }
-      };
-
-      tick();
-    },
-
-    getMoreInfo ($event, data) {
-      // el.parentNode.removeChild(el);
-      if (document.getElementById('extend')){
-        document.getElementById('extend').outerHTML = ""
-      }
-      let tr = $event.path[1]
-      let extendTr = document.createElement('tr')
-      let markup = `
-        <td>Изначальный перевод: ${data.original_amount} ${data.currency}</td>
-        <td>Комиссия: ${data.fee_percent * 100 + '%'} (${Math.round(data.fee_amount * 100) / 100} ${data.currency})</td>
-        <td>Зачислены средства на: ${data.wallet_to}</td>
-        <td></td>
-      `
-      extendTr.id = 'extend'
-      extendTr.innerHTML = markup
-      this.fadeIn(extendTr)
-      tr.after(extendTr)
+    getMoreInfo (index) {
+      this.transactions[index].show_row = !this.transactions[index].show_row
     }
   }
 }
 </script>
 
 <style scoped>
+  .dashboard-amount{
+    font-weight: 600;
+    color: #006344;
+  }
+
+  .dashboard-table tbody tr {
+    cursor: default;
+    transition: all .3s;
+  }
+
   .transactions {
     padding: 20px 0px;
+  }
+
+  .show-extend-row{
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  .show-extend-row svg{
+    transition: all .5s;
+    display: block
+  }
+
+  .show-extend-row.rotate svg{
+    transform: rotate(180deg)
   }
 
   .transactions .header {
@@ -155,5 +150,9 @@ export default {
     align-items: center;
     justify-content: center;
     background: rgba(245, 245, 245, 0.5);
+  }
+
+  .i-filter{
+    cursor: pointer;
   }
 </style>

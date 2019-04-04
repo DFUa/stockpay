@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" v-if="!$route.path.includes('/dashboard')">
     <slot></slot>
   </div>
 </template>

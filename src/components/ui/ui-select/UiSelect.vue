@@ -172,7 +172,6 @@ export default {
   .ui-select .drop-down {
     overflow: hidden;
     width: 100%;
-    z-index: 100;
     top: 50px;
     left: 0;
     padding: 7px 0;
@@ -180,6 +179,7 @@ export default {
     border-radius: 10px;
     background: #fff;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 999;
   }
 
   .ui-select .drop-down.fix-height {

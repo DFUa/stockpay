@@ -10,13 +10,16 @@
   "dependencies": {
     "axios": "^0.18.0",
     "epic-spinners": "^1.0.4",
+    "luxon": "^1.12.0",
     "v-click-outside": "^2.0.2",
     "vue": "^2.5.21",
+    "vue-datetime": "^1.0.0-beta.10",
     "vue-router": "^3.0.1",
     "vue-the-mask": "^0.11.1",
     "vue-toasted": "^1.1.26",
     "vuescroll": "^4.9.6",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "weekstart": "^1.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.3.0",

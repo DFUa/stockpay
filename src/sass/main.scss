@@ -45,12 +45,12 @@ table {
         padding: 20px 30px;
       }
 
-      &#extend {
-        background-color: #FFDB00;
-      }
-
       &:nth-child(2n) {
         background-color: rgba(#E5E5E5, .5);
+      }
+
+      &.extend-row {
+        background-color: #FFDB00;
       }
     }
   }

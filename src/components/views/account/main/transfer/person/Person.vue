@@ -5,7 +5,7 @@
 
     <div class="inputs-wrapper">
       <div class="from">
-        <ui-currency-input title="Сумма" v-model="inValue" mask="### ### ### ###"/>
+        <ui-currency-input title="Сумма" v-model="inValue" mask="############"/>
         <div class="wallet-label">{{ wallets[inValue.key] }}</div>
       </div>
       <div class="toggler" :class="{ 'i-arrow-right': true }"></div>
@@ -14,11 +14,11 @@
       </div>
     </div>
 
-    <p>Пользователь получит после перевода: {{received}}</p>
-    <p>Комиссия составит: {{commission}}</p>
+    <p class="received">Пользователь получит после перевода: <span>{{received}} {{outValue.key.toUpperCase()}}</span></p>
+    <p class="commission">Комиссия составит: <span>{{commission}} {{inValue.key.toUpperCase()}}</span></p>
 
     <div class="sub-title">Для подтверждения перевода нажмите <br>
-      на кнопку “Перевести”</div>
+      на кнопку “Отправить средства”</div>
 
     <ui-button @click="submit" :accent="true" title="Отправить средства"/>
   </ui-card>
@@ -51,6 +51,7 @@ export default {
       value: '',
       key: 'eur'
     },
+    fee: '',
     wallets: {
       usd: 'USD 0303 9549 7344 5455',
       // uah: 'UAH 6463 7747 7377 8484',
@@ -70,7 +71,13 @@ export default {
       res.wallets.forEach(wallet => {
         this.wallets[wallet.currency.toLowerCase()] = wallet.number
       });
+      let fee = await api.getFee()
+      this.fee = fee.fee
       console.log(res)
+    },
+
+    calculateCommision () {
+      console.log('object');
     },
 
     async submit () {
@@ -94,11 +101,40 @@ export default {
           theme: 'toasted-primary',
           position: 'bottom-center',
           duration: 5000
-        })
+        });
+        this.inValue.value = 0
+        this.outValue.value = 0
       }
     }
-  }
+  },
+
+  watch: {
+    inValue: {
+      handler (newValue) {
+        this.received = Math.round((newValue.value - newValue.value * this.fee) * 100) / 100
+        this.commission = Math.round(newValue.value * this.fee * 100)  / 100
+      },
+      deep: true
+    }
+  },
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.received,
+.commission{
+  font-size: 14px;
+  span{
+    font-family: 'Montserrat';
+    font-weight: 600;
+    color: #F97979;
+  }
+}
+
+.commission{
+  margin-bottom: 20px;
+  span{
+    color: #006344;
+  }
+}
+</style>

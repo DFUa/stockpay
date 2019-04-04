@@ -38,6 +38,9 @@ export default {
     display: flex;
     justify-content: space-between;
     .row-custom-table-item{
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
       padding: 0 10px;
     }
   }

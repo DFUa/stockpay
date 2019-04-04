@@ -132,6 +132,10 @@ export default {
     return this.execute('put', 'site/me', data)
   },
 
+  getFee () {
+    return this.execute('get', 'site/exchange_fee')
+  },
+
   // ADMIN
   getUserList () {
     return this.execute('get', '/admin/users')
