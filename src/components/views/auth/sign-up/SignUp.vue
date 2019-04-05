@@ -11,7 +11,7 @@
           <ui-select title="Город" field="toponymName" :options="options.cities" v-model="city" :rules="[{ name: 'required', text: 'Выберите город' }]"/>
         </div>
         <div class="col">
-          <ui-input type="text" title="Никнейм" v-model="nickname" :rules="[{ name: 'min', value: 3 }, { name: 'required' }]"/>
+          <ui-input type="text" title="Никнейм" v-model="nickname" :rules="[{ name: 'min', value: 3 }, { name: 'required' }, { name: 'pattern', value: /^[A-Za-z0-9]+$/ }]"/>
           <ui-input type="email" title="Почта" v-model="email"/>
           <ui-input type="password" title="Пароль" v-model="password_0" :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
           <ui-input type="password" title="Повторите пароль" v-model="password_1" :rules="[{ name: 'compare', value: password_0, text: 'Пароли не совпадают' }, { name: 'required' }]"/>
