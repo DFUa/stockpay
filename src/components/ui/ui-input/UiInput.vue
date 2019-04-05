@@ -158,12 +158,12 @@ export default {
           return res.result
         })
       } else if (this.type === 'email') {
-        // const testMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        // if (!(testMail.test(this.currentValue))) {
-        //   this.isValid = false
-        //   this.errorText = 'Не верный формат почты'
-        //   return false
-        // }
+        const testMail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if (!(testMail.test(this.currentValue))) {
+          this.isValid = false
+          this.errorText = 'Не верный формат почты'
+          return false
+        }
         return true
       } else {
         this.isValid = true
