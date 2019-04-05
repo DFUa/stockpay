@@ -12,27 +12,28 @@ import api from '@/api'
 export default {
   name: 'App',
 
-  async mounted () {
-    let token = localStorage.getItem('t')
-    if (token) {
-      this.$store.dispatch('setAuth', true)
-      if (this.isAdmin) {
-        this.$router.push('/admin')
-      } else {
-        this.$router.push('/account/dashboard')
-      }
-      setInterval(async () => { await api.refresh() }, 1000 * 60 * 15)
-    } else {
-      this.$store.dispatch('setAuth', false)
-      this.$store.dispatch('setAdmin', false)
-      this.$router.push('/auth')
-    }
-    this.loaded = true
+  mounted () {
+    this.init()
   },
 
   data: () => ({
     loaded: false
   }),
+
+  methods: {
+    async init () {
+      let token = localStorage.getItem('t')
+      if (token && await api.refresh()) {
+        this.$store.dispatch('setAuth', true)
+        setInterval(async () => { await api.refresh() }, 1000 * 60 * 15)
+      } else {
+        this.$store.dispatch('setAuth', false)
+        this.$store.dispatch('setAdmin', false)
+        this.$router.push('/auth')
+      }
+      this.loaded = true
+    }
+  },
 
   computed: {
     isAuth () {
@@ -46,19 +47,7 @@ export default {
 
   watch: {
     isAuth (value) {
-      if (value) {
-        this.$router.push('/account/dashboard')
-      } else {
-        this.$router.push('/auth')
-      }
-    },
-
-    isAdmin (value) {
-      if (value) {
-        this.$router.push('/admin')
-      } else {
-        this.$router.push('/auth')
-      }
+      this.$router.push(value ? (this.isAdmin ? '/admin' : '/account') : '/auth')
     }
   }
 }

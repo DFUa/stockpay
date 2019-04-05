@@ -283,14 +283,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user-info-nav{
+.user-info-nav {
   padding: 25px 40px;
   display: flex;
 }
-.user-info-tab{
+
+.user-info-tab {
   margin: 0 auto;
 }
-.back-btn{
+
+.back-btn {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -307,34 +309,38 @@ export default {
     margin-right: 20px;
   }
 }
-.user-info-content{
+
+.user-info-content {
   padding: 30px 40px;
-  h4{
+  h4 {
     font-weight: 600;
     font-family: 'Montserrat';
     margin-bottom: 25px;
   }
 }
-.btn-wrap{
+
+.btn-wrap {
   width: 100%;
   margin: 0 0 30px;
-  .button-wrapper{
+  .button-wrapper {
     width: 250px;
-    .ui-button{
+    .ui-button {
       width: 100%;
     }
   }
 }
-.input-wrap{
+
+.input-wrap {
   display: flex;
   flex-wrap: wrap;
   margin: 10px -10px 30px;
-  .user-info-input{
+  .user-info-input {
     width: 250px;
     margin: 0 10px;
   }
 }
-.empty-text{
+
+.empty-text {
   text-align: center;
   font-weight: 700;
   font-family: 'Montserrat';

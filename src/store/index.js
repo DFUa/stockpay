@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isAuth: false,
-    isAdmin: false,
+    isAdmin: (+localStorage.getItem('r') === 2),
     errors: {
       wrong_json: 'Неправильный формат запроса ',
       email_busy: 'Этот адрес электронной почты уже используется. Пожалуйста, введите другой адрес электронной почты.',

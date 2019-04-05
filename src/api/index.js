@@ -18,16 +18,50 @@ export default {
       data,
       headers: { Authorization: accessToken }
     }).then(resp => {
-      if (resp.error && resp.error === 'unauthorized') {
-        this.logout()
-      }
       return resp.data
     }).catch(resp => {
+      if (resp.response.data.error && resp.response.data.error === 'unauthorized') {
+        this.logout()
+      }
       return {
         error: true,
         message: resp.response.data ? resp.response.data.error : resp
       }
     })
+  },
+
+  async login (data) {
+    let res = await this.execute('post', 'site/login', data)
+    if (res.token) {
+      localStorage.setItem('t', res.token)
+      localStorage.setItem('r', res.role)
+      store.dispatch('setAuth', true)
+      if (res.role === 2) {
+        store.dispatch('setAdmin', true)
+      }
+      return { error: false }
+    }
+    return res
+  },
+
+  async refresh () {
+    let res = await this.execute('get', 'site/refresh')
+    if (res && res.token) {
+      localStorage.setItem('t', res.token)
+      if (+localStorage.getItem('r') === 2) {
+        store.dispatch('setAdmin', true)
+      }
+      return true
+    }
+    this.logout()
+    return false
+  },
+
+  logout () {
+    store.dispatch('setAuth', false)
+    store.dispatch('setAdmin', false)
+    localStorage.removeItem('t')
+    localStorage.removeItem('r')
   },
 
   // ACCOUNT
@@ -73,37 +107,6 @@ export default {
 
   async getTransactions () {
     return this.execute('get', 'site/transactions')
-  },
-
-  async login (data) {
-    let res = await this.execute('post', 'site/login', data)
-    if (res.token) {
-      localStorage.setItem('t', res.token)
-      store.dispatch('setAuth', true)
-      if (res.role === 2) {
-        store.dispatch('setAdmin', true)
-      }
-      return { error: false }
-    }
-    return res
-  },
-
-  async refresh () {
-    let res = await this.execute('get', 'site/refresh')
-    if (res && res.token) {
-      localStorage.setItem('t', 'StocksPay ' + res.token)
-      return true
-    }
-    localStorage.removeItem('t')
-    store.dispatch('setAuth', false)
-    store.dispatch('setAdmin', false)
-    return false
-  },
-
-  logout () {
-    store.dispatch('setAuth', false)
-    store.dispatch('setAdmin', false)
-    localStorage.removeItem('t')
   },
 
   // GEODATA
