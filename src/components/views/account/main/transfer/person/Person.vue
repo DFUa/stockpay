@@ -61,7 +61,7 @@ export default {
     }
   }),
 
-  created() {
+  created () {
     this.init()
   },
 
@@ -70,26 +70,18 @@ export default {
       let res = await api.getWallets()
       res.wallets.forEach(wallet => {
         this.wallets[wallet.currency.toLowerCase()] = wallet.number
-      });
+      })
       let fee = await api.getFee()
       this.fee = fee.fee
-      console.log(res)
-    },
-
-    calculateCommision () {
-      console.log('object');
     },
 
     async submit () {
-      // console.log(this.inValue);
       let data = {
         wallet_from: this.wallets[this.inValue.key],
         wallet_to: this.outValue.key.toUpperCase() + this.outValue.value,
         amount: this.inValue.value
       }
-      // console.log(data)
       let res = await api.sendMoneyToPerson(data)
-      console.log(res)
       if (res.error) {
         this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
           theme: 'toasted-primary',
@@ -97,11 +89,11 @@ export default {
           duration: 5000
         })
       } else {
-          this.$toasted.show('Transfer was done', {
+        this.$toasted.show('Transfer was done', {
           theme: 'toasted-primary',
           position: 'bottom-center',
           duration: 5000
-        });
+        })
         this.inValue.value = 0
         this.outValue.value = 0
       }
@@ -112,11 +104,11 @@ export default {
     inValue: {
       handler (newValue) {
         this.received = Math.round((newValue.value - newValue.value * this.fee) * 100) / 100
-        this.commission = Math.round(newValue.value * this.fee * 100)  / 100
+        this.commission = Math.round(newValue.value * this.fee * 100) / 100
       },
       deep: true
     }
-  },
+  }
 }
 </script>
 

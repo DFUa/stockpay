@@ -35,7 +35,7 @@ export default {
     ]
   }),
 
-  created() {
+  created () {
     this.init()
   },
 
@@ -44,14 +44,14 @@ export default {
       let res = await api.getWallets()
       this.wallets.forEach(item => {
         res.wallets.forEach(wallet => {
-          if(item.symbol == wallet.currency) {
+          if (item.symbol === wallet.currency) {
             item.number = wallet.number
             item.value = wallet.balance
           }
-        });
+        })
       })
     }
-  },
+  }
 }
 </script>
 

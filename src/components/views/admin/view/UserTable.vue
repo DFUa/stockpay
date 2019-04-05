@@ -51,7 +51,6 @@ export default {
     async init () {
       let res = await api.getUserList()
       this.usersData = res.users
-      console.log(this.usersData)
     },
 
     getInfo (email, nickname) {

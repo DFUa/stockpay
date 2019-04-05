@@ -6,7 +6,7 @@
       </div>
       <button class="i-filter" @click="showFilter"></button>
       <transition>
-        
+
       </transition>
       <!-- <div class="section">
         <ui-button class="right-offset" title="Пополнение"/>
@@ -51,14 +51,12 @@
 import api from '@/api'
 
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
-import { Datetime } from 'vue-datetime';
 
 export default {
   name: 'DashboardTransactions',
 
   components: {
-    UiCard,
-    Datetime
+    UiCard
   },
 
   data: () => ({
@@ -77,7 +75,6 @@ export default {
         item.show_row = false
         this.transactions.push(item)
       })
-      console.log(this.transactions)
     },
 
     getMoreInfo (index) {

@@ -45,7 +45,6 @@ export default {
         code: this.code
       }
       let res = await api.confirmEmail(data)
-      console.log(res)
       if (!res.error) {
         this.openSignIn()
       } else {

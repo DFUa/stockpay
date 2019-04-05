@@ -51,7 +51,7 @@ export default {
   },
 
   data: () => ({
-    vkId:'',
+    vkId: '',
     number: {
       value: '',
       key: 'eur'
@@ -68,21 +68,16 @@ export default {
     ]
   }),
 
-  created() {
+  created () {
     this.init()
   },
 
   methods: {
     async init () {
       let res = await api.getWallets()
-      res.wallets.forEach((wallet,index) => {
-        this.wallets.push({name: wallet.currency, value: wallet.number})
-      });
-      console.log(res)
-    },
-
-    submit(){
-      console.log('submit')
+      res.wallets.forEach((wallet, index) => {
+        this.wallets.push({ name: wallet.currency, value: wallet.number })
+      })
     }
   }
 }

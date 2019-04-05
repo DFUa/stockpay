@@ -91,12 +91,10 @@ export default {
       let res = await api.getWallets()
       res.wallets.forEach((wallet,index) => {
         this.wallets.push({name: wallet.currency, value: wallet.number})
-      });
-      console.log(res)
+      })
     },
 
     submit(){
-      console.log('submit')
     }
   }
 }

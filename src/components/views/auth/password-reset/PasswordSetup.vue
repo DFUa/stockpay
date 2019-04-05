@@ -44,7 +44,7 @@ export default {
     loaded: true
   }),
 
-  created() {
+  created () {
     this.way = localStorage.getItem('way')
   },
 
@@ -74,7 +74,6 @@ export default {
         way: 1
       }
       let res = await api.passwordReset(data)
-      console.log(res);
       this.way = res.way
     }
   }

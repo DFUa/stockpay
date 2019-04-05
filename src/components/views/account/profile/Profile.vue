@@ -121,7 +121,6 @@ export default {
   methods: {
     async loadData () {
       let res = await api.getProfile()
-      console.log(res)
       this.firstname = res.first_name
       this.lastname = res.last_name
       this.email = res.email

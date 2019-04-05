@@ -164,20 +164,18 @@ export default {
     }
     let res = await api.getUserInfo(filters)
     this.userInfo = res.users[0]
-    console.log(this.userInfo)
     this.firstname = this.userInfo.first_name
     this.lastname = this.userInfo.last_name
-    await this.loadCountries()
-      this.selectCountry(this.userInfo.country)
-    await this.loadCities()
-      this.selectCity(this.userInfo.city)
+    this.loadCountries()
+    this.selectCountry(this.userInfo.country)
+    this.loadCities()
+    this.selectCity(this.userInfo.city)
 
     let transactionsFilters = {
-      userId: {value: this.userInfo.id}
+      userId: { value: this.userInfo.id }
     }
     let transactions = await api.getUserTransactions(transactionsFilters)
     this.transactions = transactions
-    console.log(transactions)
   },
 
   methods: {

@@ -74,11 +74,9 @@ export default {
       }
       if (this.phone) {
         let res = await api.resetPhoneByCode(data)
-        console.log(res)
         this.showMessage(res, 'Телефон был изменен')
       } else {
         let res = await api.confirmPhone(data)
-        console.log(res)
         this.showMessage(res, 'Телефон был привязан')
       }
     },
@@ -106,7 +104,6 @@ export default {
         way: { value: '0' }
       }
       let res = await api.resetPhone(filters)
-      console.log(res)
       if (!res.error) {
         this.$toasted.show('Check your email for code', {
           theme: 'toasted-primary',
@@ -137,8 +134,7 @@ export default {
     },
 
     async openChangePhoneModal () {
-      let res = await api.resetPhone()
-      console.log(res)
+      await api.resetPhone()
       this.showChangePhoneModal = true
     },
 
