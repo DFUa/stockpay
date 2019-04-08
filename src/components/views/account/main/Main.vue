@@ -9,7 +9,7 @@
     </sidebar>
 
     <!-- Main router-view -->
-    <div class="main-wrapper">
+    <div class="main-wrapper" :class="{'dashboard': this.$route.name === 'dashboard'}">
       <transition name="fade" mode="out-in">
         <router-view/>
       </transition>
@@ -36,10 +36,16 @@ export default {
     padding: 0 20px;
     padding-bottom: 20px;
   }
+  .main-wrapper.dashboard {
+    margin-left: 0;
+  }
 
   @media screen and (max-width: 1680px) {
     .main-wrapper {
       margin-left: 80px;
+    }
+    .main-wrapper.dashboard {
+      margin-left: 0;
     }
   }
 </style>
