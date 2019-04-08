@@ -6,12 +6,12 @@
 
     <div class="inputs-wrapper">
       <div class="from">
-        <ui-currency-input title="Сумма" v-model="inValue" mask="### ### ### ###"/>
+        <ui-currency-input title="Сумма" v-model="inValue" mask="############"/>
         <div class="wallet-label">{{ wallets[inValue.key] }}</div>
       </div>
       <div @click="toggleCurrencys" :class="{ 'toggler i-arrows': true, 'togged': isCurrencyToggled }"></div>
       <div class="to">
-        <ui-currency-input :disabled="true" v-model="outValue" mask="### ### ### ###"/>
+        <ui-currency-input :disabled="true" v-model="outValue" mask="############"/>
         <div class="wallet-label">{{ wallets[outValue.key] }}</div>
       </div>
     </div>

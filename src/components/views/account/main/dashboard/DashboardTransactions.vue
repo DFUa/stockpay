@@ -20,7 +20,7 @@
       <tbody>
         <div v-for="(transaction, index) in transactions" :key="index">
           <tr :class="{'extend-row': transaction.show_row}">
-            <td class="dashboard-amount" width="15%">{{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{transaction.currency}}</td>
+            <td class="dashboard-amount" width="15%">{{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{ transaction.currency }}</td>
             <td width="20%">Дата перевода: {{transaction.date}}</td>
             <td width="25%">Источник: Карта</td>
             <td width="15%">Status: {{transaction.status}}</td>
@@ -34,8 +34,8 @@
           </tr>
           <transition name="fade" mode="out-in">
             <tr class="extend-row" v-show="transaction.show_row">
-              <td>Изначальный перевод: {{transaction.original_amount}} {{transaction.currency}}</td>
-              <td>Комиссия: {{transaction.fee_percent * 100 + '%'}} {{Math.round(transaction.fee_amount * 100) / 100}} {{transaction.currency}}</td>
+              <td>Изначальный перевод: {{transaction.original_amount}} {{ transaction.currency }}</td>
+              <td>Комиссия: {{transaction.fee_percent * 100 + '%'}} {{Math.round(transaction.fee_amount * 100) / 100}} {{ transaction.currency }}</td>
               <td>Зачислены средства на: {{transaction.wallet_to}}</td>
               <td></td>
               <td></td>
@@ -106,12 +106,13 @@ export default {
   }
 
   .show-extend-row svg{
+    transform: rotate(180deg);
     transition: all .5s;
     display: block
   }
 
   .show-extend-row.rotate svg{
-    transform: rotate(180deg)
+    transform: rotate(360deg)
   }
 
   .transactions .header {

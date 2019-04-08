@@ -17,7 +17,12 @@ export default {
   data: () => ({
     items: [
       { id: 0, title: 'Пополнить телефон ( Для операторов России )', icon: 'i-sr-smartphone', path: 'phone' },
-      { id: 1, title: 'Пополнить ВКонтакте', icon: 'i-sr-vk', path: 'vk' }
+      { id: 1, title: 'Пополнить ВКонтакте', icon: 'i-sr-vk', path: 'vk' },
+      { id: 2, title: 'Пополнить Интернет', icon: 'i-sr-internet', path: 'internet' },
+      { id: 3, title: 'Пополнить Телевидение', icon: 'i-sr-television', path: 'television' },
+      { id: 4, title: 'Оплатить такси', icon: 'i-sr-frontal-taxi-cab', path: 'taxi' },
+      { id: 5, title: 'Коммунальные платежи', icon: 'i-sr-house', path: 'house' },
+      { id: 6, title: 'Мастер на дом', icon: 'i-sr-support', path: 'support' }
     ]
   }),
 
