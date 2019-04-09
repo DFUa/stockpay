@@ -107,7 +107,6 @@ export default {
 
   async getTransactions (filter) {
     return this.execute('get', addFilters('site/transactions', filter))
-    // return this.execute('get', 'site/transactions')
   },
 
   // GEODATA

@@ -37,9 +37,9 @@ export default {
 
     itemLogic (key) {
       switch (key) {
-        case 'go-to-epayment':
-          window.location.replace('https://www.epayments.com/ru/')
-          break
+        // case 'go-to-epayment':
+        //   window.location.replace('https://www.epayments.com/ru/')
+        //   break
       }
     },
 

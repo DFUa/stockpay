@@ -142,6 +142,21 @@ export default {
                 this.isValid = true
               }
               break
+            case 'pattern':
+              if (this.currentValue.length > 0 && !element.value.test(this.currentValue)) {
+                result.push({
+                  result: false,
+                  text: element.text
+                    ? this.errorText = element.text
+                    : this.errorText = `Ваш никнейм содержит недопустимые символы`
+                })
+              } else {
+                result.push({
+                  result: true
+                })
+                this.isValid = true
+              }
+              break
             default:
               this.isValid = false
               this.errorText = 'чото пішло не так'

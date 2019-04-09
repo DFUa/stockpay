@@ -83,14 +83,36 @@ const router = new Router({
                 default: lazyLoading('account/main/service/Service'),
                 sidebar: lazyLoading('account/main/service/ServiceSidebar')
               },
-              children: [{
-                path: 'phone',
-                component: lazyLoading('account/main/service/phone/Phone')
-              },
-              {
-                path: 'vk',
-                component: lazyLoading('account/main/service/vk/Vk')
-              }]
+              children: [
+                {
+                  path: 'phone',
+                  component: lazyLoading('account/main/service/phone/Phone')
+                },
+                {
+                  path: 'vk',
+                  component: lazyLoading('account/main/service/vk/Vk')
+                },
+                {
+                  path: 'internet',
+                  component: lazyLoading('account/main/service/internet/Internet')
+                },
+                {
+                  path: 'television',
+                  component: lazyLoading('account/main/service/television/Television')
+                },
+                {
+                  path: 'taxi',
+                  component: lazyLoading('account/main/service/taxi/Taxi')
+                },
+                {
+                  path: 'house',
+                  component: lazyLoading('account/main/service/house/House')
+                },
+                {
+                  path: 'support',
+                  component: lazyLoading('account/main/service/support/Support')
+                }
+              ]
             }
           ]
         },
@@ -106,7 +128,7 @@ const router = new Router({
       redirect: 'auth/sign-in',
       component: lazyLoading('auth/Auth'),
       children: [
-        { path: 'sign-in', component: lazyLoading('auth/sign-in/SignIn') },
+        { name: 'auth-signin', path: 'sign-in', component: lazyLoading('auth/sign-in/SignIn') },
         { path: 'sign-up', component: lazyLoading('auth/sign-up/SignUp') },
         { path: 'email-confirm', component: lazyLoading('auth/sign-up/ActivationCode') },
         { path: 'password-reset', component: lazyLoading('auth/password-reset/PasswordReset') },
