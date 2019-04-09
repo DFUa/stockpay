@@ -29,7 +29,7 @@
       <div class="col-6">
         <div id="liqpay_checkout"></div>
         <div class="inputs-wrapper">
-          <ui-currency-input title="Сумма пополнения" mask="### ### ###" v-model="amount"/>
+          <ui-currency-input title="Сумма пополнения" :allowedCurrencies="[0]" mask="### ### ###" v-model="amount"/>
           <!-- <ui-wallet-select title="Кошелек" v-model="value" mask="### ### ###"/> -->
         </div>
       </div>

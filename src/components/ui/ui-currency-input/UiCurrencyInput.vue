@@ -9,11 +9,11 @@
     <label v-if="!disabled" :style="{ background: backgroundColor ? backgroundColor : '#fff' }">
       {{ title }}</label>
 
-    <ui-toggle-arrow class="arrow" v-model="showDropDown"/>
+    <ui-toggle-arrow class="arrow" v-model="showDropDown" v-if="allowedCurrencies === undefined || allowedCurrencies.length > 1" />
 
     <transition name="fade" mode="out-in">
       <div v-if="showDropDown" class="items-wrapper" key="items">
-        <div v-for="item in currItems" @click="selectItem(item)"
+        <div v-for="item in currencies" @click="selectItem(item)"
           :key="item.id" class="item">{{ item.title }}</div>
       </div>
       <div v-else @click="openDropDown"
@@ -44,7 +44,8 @@ export default {
     mask: String,
     backgroundColor: String,
     borderColor: String,
-    disabled: Boolean
+    disabled: Boolean,
+    allowedCurrencies: Array
   },
 
   mounted () {
@@ -71,7 +72,7 @@ export default {
     },
 
     openDropDown () {
-      this.showDropDown = true
+      this.showDropDown = this.allowedCurrencies === undefined || this.allowedCurrencies.length > 1
     },
 
     selectItem (item) {
@@ -90,7 +91,11 @@ export default {
     selectByKey (key) {
       for (let i = 0; i < this.currItems.length; i++) {
         if (this.currItems[i].key === key) {
-          this.selectedItem = this.currItems[i]
+          if (this.allowedCurrencies !== undefined) {
+            this.selectedItem = this.allowedCurrencies.indexOf(this.currItems[i].id) !== -1 ? this.currItems[i] : this.currItems[0]
+          } else {
+            this.selectedItem = this.currItems[i]
+          }
           break
         }
       }
@@ -117,6 +122,21 @@ export default {
 
     selectedItem () {
       this.onChange()
+    }
+  },
+
+  computed: {
+    currencies: function () {
+      if (!this.allowedCurrencies) return this.currItems
+      else {
+        let allowedCurrencies = []
+        this.currItems.forEach(item => {
+          if (this.allowedCurrencies.indexOf(item.id) !== -1) {
+            allowedCurrencies.push(item)
+          }
+        })
+        return allowedCurrencies
+      }
     }
   }
 }

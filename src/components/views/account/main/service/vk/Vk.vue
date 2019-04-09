@@ -13,7 +13,7 @@
           :rules="[{ name: 'required' }]"/>
       </div>
       <div class="input-wrap">
-        <ui-currency-input title="Сумма к зачислению" v-model="number" mask="#### #### #### ####"/>
+        <ui-currency-input title="Сумма к зачислению" :allowedCurrencies="[0]" v-model="number" mask="################"/>
       </div>
     </div>
 
@@ -56,7 +56,7 @@ export default {
     vkId: '',
     number: {
       value: '',
-      key: 'eur'
+      key: 'usd'
     },
     wallet: {
       value: ''
@@ -78,8 +78,14 @@ export default {
     async init () {
       let res = await api.getWallets()
       res.wallets.forEach((wallet, index) => {
-        this.wallets.push({ name: wallet.currency, value: wallet.number })
+        if (wallet.currency === 'USD') {
+          this.wallets.push({ name: wallet.currency, value: wallet.number })
+        }
       })
+    },
+
+    submit () {
+      //
     }
   }
 }
