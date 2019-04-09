@@ -16,11 +16,11 @@
       <tbody>
         <div v-for="(transaction, index) in transactions" :key="index">
           <tr :class="{'extend-row': transaction.show_row}">
-            <td class="dashboard-amount" width="15%">{{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{ transaction.currency }}</td>
+            <td class="dashboard-amount" width="20%">{{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{ transaction.currency }}</td>
             <td width="20%">Дата перевода: {{transaction.date}}</td>
-            <td width="25%">Источник: Карта</td>
-            <td width="15%">Status: {{transaction.status}}</td>
-            <td width="5%">
+            <td width="25%" class="text-center">Источник: Карта</td>
+            <td width="20%" class="text-center">Status: {{transaction.status}}</td>
+            <td width="15%" class="text-center">
               <button class="show-extend-row" :class="{ 'rotate': transaction.show_row }" @click="getMoreInfo(index)">
                 <svg width="12" height="8" viewBox="0 0 12 8" fill="black" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M1.4 7.40002L6 2.80002L10.6 7.40002L12 6.00002L6 2.43187e-05L0 6.00002L1.4 7.40002Z"/>
@@ -30,11 +30,11 @@
           </tr>
           <transition name="fade" mode="out-in">
             <tr class="extend-row" v-show="transaction.show_row">
-              <td>Изначальный перевод: {{transaction.original_amount}} {{ transaction.currency }}</td>
-              <td>Комиссия: {{transaction.fee_percent * 100 + '%'}} {{Math.round(transaction.fee_amount * 100) / 100}} {{ transaction.currency }}</td>
-              <td>Зачислены средства на: {{transaction.wallet_to}}</td>
-              <td></td>
-              <td></td>
+              <td width="20%">Изначальный перевод: {{transaction.original_amount}} {{ transaction.currency }}</td>
+              <td width="20%">Комиссия: {{transaction.fee_percent * 100 + '%'}} {{Math.round(transaction.fee_amount * 100) / 100}} {{ transaction.currency }}</td>
+              <td width="25%" class="text-center">Зачислены средства на: {{transaction.wallet_to}}</td>
+              <td width="20%"></td>
+              <td width="15%"></td>
             </tr>
           </transition>
         </div>
@@ -92,12 +92,17 @@ export default {
 </script>
 
 <style scoped>
+  .text-center {
+    text-align: center;
+  }
+
   .dashboard-amount{
     font-weight: 600;
     color: #006344;
   }
 
   .dashboard-table tbody tr {
+    display: flex;
     cursor: default;
     transition: all .3s;
   }

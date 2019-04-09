@@ -17,7 +17,7 @@ export default {
   data: () => ({
     items: [
       { id: 0, title: 'С помощью карты', icon: 'i-af-cards', path: 'cards' },
-      { id: 1, title: 'С помощью электронного кошелька Epayments', icon: 'i-af-epay', key: 'go-to-epayment', path: 'adv' },
+      { id: 1, title: 'С помощью электронного кошелька Epayments', icon: 'i-af-epay', key: 'go-to-epayment', path: 'adv', disabled: true },
       { id: 2, title: 'С помощью криптовалютного кошелька', icon: 'i-af-coin', path: 'crypto', disabled: true },
       { id: 3, title: 'С помощью кошелька Яндекс. Деньги', icon: 'i-af-yandex', path: 'crypto', disabled: true },
       { id: 4, title: 'С помощью кошелька QIWI VISA Wallet', icon: 'i-af-visa', path: 'crypto', disabled: true }
