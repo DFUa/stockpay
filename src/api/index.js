@@ -164,5 +164,9 @@ export default {
   // TRANSFER MONEY
   sendMoneyToPerson (data) {
     return this.execute('post', '/site/send_money', data)
+  },
+
+  sendMoneyByCard (data) {
+    return this.execute('post', '/liqpay/get_pay_data', data)
   }
 }
