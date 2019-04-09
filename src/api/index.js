@@ -105,8 +105,9 @@ export default {
     return this.execute('post', '/site/reset_number_confirm', data)
   },
 
-  async getTransactions () {
-    return this.execute('get', 'site/transactions')
+  async getTransactions (filter) {
+    return this.execute('get', addFilters('site/transactions', filter))
+    // return this.execute('get', 'site/transactions')
   },
 
   // GEODATA
