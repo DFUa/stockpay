@@ -4,14 +4,10 @@
       <div class="section">
         <h2>Транзакции</h2>
       </div>
-      <button class="i-filter" @click="showFilter"></button>
-      <transition>
-
+      <button class="i-filter" @click="showFilterModal"></button>
+      <transition name="fade-up" mode="out-in">
+        <ui-filter @filter="filter" v-model="showFilter"></ui-filter>
       </transition>
-      <!-- <div class="section">
-        <ui-button class="right-offset" title="Пополнение"/>
-        <ui-button :accent="true" title="Перевод"/>
-      </div> -->
     </div>
     <div v-if="!transactions.length" class="empty-stub">
       <h3>У вас пока не было транзакций</h3>
@@ -51,17 +47,21 @@
 import api from '@/api'
 
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
+import UiFilter from '@/components/ui/ui-filter/UiFilter.vue'
 
 export default {
   name: 'DashboardTransactions',
 
   components: {
-    UiCard
+    UiCard,
+    UiFilter
   },
 
   data: () => ({
     transactions: [],
-    showFilter: false
+    showFilter: false,
+    dateFrom: '',
+    dateTo: ''
   }),
 
   created () {
@@ -69,12 +69,21 @@ export default {
   },
 
   methods: {
-    async init () {
-      let res = await api.getTransactions()
-      res.transactions.map(item => {
+    async init (data) {
+      let res = await api.getTransactions(data)
+      this.transactions = res.transactions
+      this.transactions.forEach(item => {
         item.show_row = false
-        this.transactions.push(item)
       })
+      console.log(this.transactions)
+    },
+
+    showFilterModal () {
+      this.showFilter = !this.showFilter
+    },
+
+    filter (data) {
+      this.init(data)
     },
 
     getMoreInfo (index) {
@@ -97,6 +106,7 @@ export default {
 
   .transactions {
     padding: 20px 0px;
+    min-height: 470px;
   }
 
   .show-extend-row{
@@ -115,6 +125,7 @@ export default {
   }
 
   .transactions .header {
+    position: relative;
     margin: 0 30px;
     padding-bottom: 20px;
     display: flex;
@@ -151,5 +162,6 @@ export default {
 
   .i-filter{
     cursor: pointer;
+    z-index: 1;
   }
 </style>
