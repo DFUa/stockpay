@@ -1,6 +1,6 @@
 <template>
   <ui-card class="add-founds-cards">
-    <div class="title">Введите необходимую информацию для того чтобы пополнить ваш счет</div>
+    <div class="title">Введите необходимую информацию для того чтобы пополнить ваш счет </div>
     <div class="cols">
       <!-- <div class="col-6">
 
