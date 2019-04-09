@@ -74,7 +74,6 @@ export default {
         // reactivity :(
         this.$set(item, 'show_row', false)
       })
-      console.log(this.transactions)
     },
 
     showFilterModal () {
@@ -82,7 +81,6 @@ export default {
     },
 
     filter (data) {
-      console.log(data)
       this.init(data)
     },
 
