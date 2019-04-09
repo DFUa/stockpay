@@ -81,18 +81,19 @@ export default {
         wallet_to: this.outValue.key.toUpperCase() + this.outValue.value,
         amount: this.inValue.value
       }
+      if (data.amount <= 0 || this.outValue.value.length <= 0) return
       let res = await api.sendMoneyToPerson(data)
       if (res.error) {
         this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
           theme: 'toasted-primary',
           position: 'bottom-center',
-          duration: 5000
+          duration: 1000
         })
       } else {
         this.$toasted.show('Transfer was done', {
           theme: 'toasted-primary',
           position: 'bottom-center',
-          duration: 5000
+          duration: 1000
         })
         this.inValue.value = 0
         this.outValue.value = 0
