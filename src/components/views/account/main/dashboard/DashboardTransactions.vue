@@ -29,7 +29,7 @@
             </td>
           </tr>
           <transition name="fade" mode="out-in">
-            <tr class="extend-row" v-show="transaction.show_row">
+            <tr class="extend-row" v-if="transaction.show_row">
               <td>Изначальный перевод: {{transaction.original_amount}} {{transaction.currency}}</td>
               <td>Комиссия: {{transaction.fee_percent * 100 + '%'}} {{Math.round(transaction.fee_amount * 100) / 100}} {{transaction.currency}}</td>
               <td>Зачислены средства на: {{transaction.wallet_to}}</td>
@@ -59,12 +59,10 @@ export default {
 
   data: () => ({
     transactions: [],
-    showFilter: false,
-    dateFrom: '',
-    dateTo: ''
+    showFilter: false
   }),
 
-  created () {
+  mounted () {
     this.init()
   },
 
@@ -73,7 +71,8 @@ export default {
       let res = await api.getTransactions(data)
       this.transactions = res.transactions
       this.transactions.forEach(item => {
-        item.show_row = false
+        // reactivity :(
+        this.$set(item, 'show_row', false)
       })
       console.log(this.transactions)
     },
@@ -83,6 +82,7 @@ export default {
     },
 
     filter (data) {
+      console.log(data)
       this.init(data)
     },
 
@@ -162,6 +162,6 @@ export default {
 
   .i-filter{
     cursor: pointer;
-    z-index: 1;
+    z-index: 2;
   }
 </style>

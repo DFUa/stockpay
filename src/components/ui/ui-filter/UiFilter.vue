@@ -27,7 +27,11 @@
         <ui-input title="Статус" v-model="status"/>
       </div>
       <div class="col-2">
-        <ui-input title="Источник" v-model="source"/>
+        <ui-select
+          title="Источник"
+          field="type"
+          v-model="type"
+          :options="typeOptions"/>
       </div>
       <div class="col-2">
         <ui-button title="Применить" @click="filter" :accent="true"></ui-button>
@@ -39,13 +43,15 @@
 <script>
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
 
 export default {
   name: 'UiFilter',
 
   components: {
     UiInput,
-    UiButton
+    UiButton,
+    UiSelect
   },
 
   props: {
@@ -54,6 +60,12 @@ export default {
 
   data: () => ({
     showFilter: false,
+    type: { value: '' },
+    typeOptions: [
+      { name: '0', type: 'Оплата кошельком' },
+      { name: '1', type: 'Обмен валюты' },
+      { name: '2', type: 'Оплата' }
+    ],
     dateFrom: '',
     dateTo: '',
     targetWallet: '',
@@ -74,7 +86,8 @@ export default {
         afterDate: { value: this.dateFrom.split('T')[0] },
         to: { value: this.targetWallet },
         minAmount: { value: this.amountFrom },
-        maxAmount: { value: this.amountTo }
+        maxAmount: { value: this.amountTo },
+        type: { value: this.type.name }
       }
       this.$emit('filter', data)
     },
@@ -114,6 +127,7 @@ export default {
 
 <style lang="scss" scoped>
 .filter {
+  z-index: 1;
   position: absolute;
   right: -15px;
   top: -15px;
