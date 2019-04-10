@@ -25,11 +25,11 @@
           v-model="password"
           :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
         <ui-input
-          title="Enter the code from the phone"
+          :title="accessCodeTitle"
           v-model="code"
           :rules="[{ name: 'required' }]"/>
         <div class="phone-spinner-wrapper">
-          <a v-if="phone" href="#" @click="noAccess" class="no-access">No access to phone?</a>
+          <a href="#" @click="noAccess" class="no-access">No access to phone?</a>
           <ui-spinner v-if="loading" style="float:right" />
         </div>
       </template>
@@ -69,6 +69,7 @@ export default {
     password: '',
     currentPhone: '',
     code: '',
+    accessCodeTitle: 'Enter the code from the phone',
     showChangePhoneModal: false
   }),
 
@@ -115,6 +116,7 @@ export default {
         }
         let res = await api.resetPhone(filters)
         if (!res.error) {
+          this.accessCodeTitle = 'Enter the code from the email'
           this.$toasted.show('Check your email for code', {
             theme: 'toasted-primary',
             position: 'bottom-center',
@@ -132,6 +134,7 @@ export default {
     },
 
     async setPhone () {
+      this.accessCodeTitle = 'Enter the code from the phone'
       if (this.$refs.phone.validate()) {
         let data = { number: this.currentPhone }
         let res = await api.setPhone(data)
@@ -148,6 +151,7 @@ export default {
     },
 
     async openChangePhoneModal () {
+      this.accessCodeTitle = 'Enter the code from the phone'
       await api.resetPhone()
       this.showChangePhoneModal = true
     },
