@@ -31,10 +31,17 @@ export default new Vuex.Store({
       foreign_wallet: 'Данный кошелек не пренадлежит вам',
       wallet_to_not_exists: 'Даного кошелька не существует',
       currency_conflict: 'Валюта кошелька указана не верно',
-      bad_amount: 'Недопустимая сумма',
+      bad_amount: 'Сумма пополнения должна быть менее или равна 1 USD',
       no_money: 'Недостаточно средств на кошельке',
       forbidden_symbols: 'Недопустимые символы'
-    }
+    },
+    currenciesList: [
+      { id: 0, title: 'USD', key: 'usd' }
+      // { id: 1, title: 'UAH', key: 'uah' },
+      // { id: 2, title: 'EUR', key: 'eur' },
+      // { id: 3, title: 'KZT', key: 'kzt' },
+      // { id: 4, title: 'RUB', key: 'rub' }
+    ]
   },
 
   getters: {
@@ -48,6 +55,10 @@ export default new Vuex.Store({
 
     errorsList (state) {
       return state.errors
+    },
+
+    currencies (state) {
+      return state.currenciesList
     }
   },
 

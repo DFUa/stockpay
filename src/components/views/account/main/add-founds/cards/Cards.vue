@@ -29,7 +29,7 @@
       <div class="col-6" v-if="showBtn">
         <div id="liqpay_checkout"></div>
         <div class="inputs-wrapper">
-          <ui-currency-input title="Сумма пополнения" mask="### ### ###" v-model="amount"/>
+          <ui-currency-input title="Сумма пополнения" mask="MMMMMMMMM" :tokens="moneyMasks" v-model="amount"/>
           <!-- <ui-wallet-select title="Кошелек" v-model="value" mask="### ### ###"/> -->
         </div>
       </div>
@@ -69,8 +69,13 @@ export default {
     form: '',
     showBtn: true,
     amount: {
-      value: 1,
+      value: 0,
       key: 'usd'
+    },
+    moneyMasks: {
+      M: {
+        pattern: /^[0-9.]?$/
+      }
     }
     // value: {
     //   value: 13,

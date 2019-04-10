@@ -47,7 +47,7 @@
                   <div class="title">Безопасность</div>
                   <div class="fields-wrapper">
 
-                    <security-nickname :nickname="nickname"/>
+                    <security-nickname :nickname="nickname" @updates="showUpdates"/>
                     <security-password/>
 
                     <ui-input class="field" title="Почта"
@@ -55,9 +55,9 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="title">Привязать телефон</div>
+                  <div class="title">{{ phone ? 'Телефон' : 'Привязать телефон' }}</div>
                   <div class="fields-wrapper">
-                    <security-phone :phone="phone"/>
+                    <security-phone :phone="phone" @updates="showUpdates"/>
                   </div>
                 </div>
               </div>
@@ -186,8 +186,14 @@ export default {
             position: 'bottom-center',
             duration: 5000
           })
+          this.showUpdates()
         }
       }
+    },
+
+    showUpdates () {
+      this.loaded = false
+      this.loadData()
     }
   },
 

@@ -148,7 +148,7 @@ export default {
                   result: false,
                   text: element.text
                     ? this.errorText = element.text
-                    : this.errorText = `Ваш никнейм содержит недопустимые символы`
+                    : this.errorText = 'Неверный формат'
                 })
               } else {
                 result.push({
