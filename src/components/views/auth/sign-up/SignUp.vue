@@ -20,7 +20,7 @@
 
       <div class="btns">
         <ui-button accent title="Регистрация" @click="signUp"/>
-        <ui-button air title="Вход" @click="openSignIn"/>
+        <ui-button air title="Назад" @click="openSignIn"/>
       </div>
     </div>
     <div class="spinner-wrapper" v-else>
@@ -84,7 +84,7 @@ export default {
           email: this.email,
           password: this.password_0,
           nickname: this.nickname,
-          country: this.country ? this.country.toponymName : '',
+          country: this.country ? this.country.code : '',
           city: this.city ? this.city.toponymName : ''
         }
         let res = await api.registration(data)
@@ -115,6 +115,7 @@ export default {
       }
       let res = await api.getCities(filters)
       this.options.cities = res.cities
+      console.log(this.options.cities)
     }
   }
 }

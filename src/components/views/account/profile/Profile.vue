@@ -179,8 +179,8 @@ export default {
           last_name: this.lastname,
           first_name: this.firstname
         }
-        await api.updateProfile(data)
-        if (!data.error) {
+        let res = await api.updateProfile(data)
+        if (!res.error) {
           this.$toasted.show('Данные изменены', {
             theme: 'toasted-primary',
             position: 'bottom-center',

@@ -33,7 +33,8 @@ export default new Vuex.Store({
       currency_conflict: 'Валюта кошелька указана не верно',
       bad_amount: 'Сумма пополнения должна быть менее или равна 1 USD',
       no_money: 'Недостаточно средств на кошельке',
-      forbidden_symbols: 'Недопустимые символы'
+      forbidden_symbols: 'Недопустимые символы',
+      wrong_code: 'Код не верен'
     },
     currenciesList: [
       { id: 0, title: 'USD', key: 'usd' }
