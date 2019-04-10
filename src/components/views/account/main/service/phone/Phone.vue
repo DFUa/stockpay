@@ -22,7 +22,7 @@
 
     <div class="inputs-wrapper">
       <div class="input-wrap">
-        <ui-currency-input title="Сумма к зачислению" :allowedCurrencies="[0]" v-model="number" mask="#### #### #### ####"/>
+        <ui-currency-input title="Сумма к зачислению" v-model="number" mask="################"/>
       </div>
       <div class="input-wrap">
         <ui-select

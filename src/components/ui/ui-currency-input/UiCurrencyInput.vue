@@ -9,11 +9,11 @@
     <label v-if="!disabled" :style="{ background: backgroundColor ? backgroundColor : '#fff' }">
       {{ title }}</label>
 
-    <ui-toggle-arrow class="arrow" v-model="showDropDown" v-if="allowedCurrencies === undefined || allowedCurrencies.length > 1" />
+    <ui-toggle-arrow class="arrow" v-model="showDropDown" v-if="currItems.length > 1" />
 
     <transition name="fade" mode="out-in">
       <div v-if="showDropDown" class="items-wrapper" key="items">
-        <div v-for="item in currencies" @click="selectItem(item)"
+        <div v-for="item in currItems" @click="selectItem(item)"
           :key="item.id" class="item">{{ item.title }}</div>
       </div>
       <div v-else @click="openDropDown"
@@ -44,8 +44,7 @@ export default {
     mask: String,
     backgroundColor: String,
     borderColor: String,
-    disabled: Boolean,
-    allowedCurrencies: Array
+    disabled: Boolean
   },
 
   mounted () {
@@ -55,14 +54,7 @@ export default {
   data: () => ({
     currentValue: '',
     showDropDown: false,
-    selectedItem: null,
-    currItems: [
-      { id: 0, title: 'USD', key: 'usd' },
-      // { id: 1, title: 'UAH', key: 'uah' },
-      { id: 2, title: 'EUR', key: 'eur' },
-      // { id: 3, title: 'KZT', key: 'kzt' },
-      { id: 4, title: 'RUB', key: 'rub' }
-    ]
+    selectedItem: null
   }),
 
   methods: {
@@ -72,7 +64,7 @@ export default {
     },
 
     openDropDown () {
-      this.showDropDown = this.allowedCurrencies === undefined || this.allowedCurrencies.length > 1
+      this.showDropDown = this.currItems.length > 1
     },
 
     selectItem (item) {
@@ -91,11 +83,7 @@ export default {
     selectByKey (key) {
       for (let i = 0; i < this.currItems.length; i++) {
         if (this.currItems[i].key === key) {
-          if (this.allowedCurrencies !== undefined) {
-            this.selectedItem = this.allowedCurrencies.indexOf(this.currItems[i].id) !== -1 ? this.currItems[i] : this.currItems[0]
-          } else {
-            this.selectedItem = this.currItems[i]
-          }
+          this.selectedItem = this.currItems[i]
           break
         }
       }
@@ -126,17 +114,8 @@ export default {
   },
 
   computed: {
-    currencies: function () {
-      if (!this.allowedCurrencies) return this.currItems
-      else {
-        let allowedCurrencies = []
-        this.currItems.forEach(item => {
-          if (this.allowedCurrencies.indexOf(item.id) !== -1) {
-            allowedCurrencies.push(item)
-          }
-        })
-        return allowedCurrencies
-      }
+    currItems: function () {
+      return this.$store.getters.currencies
     }
   }
 }

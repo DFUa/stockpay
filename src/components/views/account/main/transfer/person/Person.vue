@@ -5,12 +5,12 @@
 
     <div class="inputs-wrapper">
       <div class="from">
-        <ui-currency-input title="Сумма" :allowedCurrencies="[0]" v-model="inValue" mask="############"/>
+        <ui-currency-input title="Сумма" v-model="inValue" mask="############"/>
         <div class="wallet-label">{{ wallets[inValue.key] }}</div>
       </div>
       <div class="toggler" :class="{ 'i-arrow-right': true }"></div>
       <div class="to">
-        <ui-currency-input title="Номер кошелька" :allowedCurrencies="[0]" v-model="outValue" mask="#### #### #### ####"/>
+        <ui-currency-input title="Номер кошелька" v-model="outValue" mask="################"/>
       </div>
     </div>
 
