@@ -55,7 +55,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="title">Привязать телефон</div>
+                  <div class="title">{{ phone ? 'Телефон' : 'Привязать телефон' }}</div>
                   <div class="fields-wrapper">
                     <security-phone :phone="phone" @updates="showUpdates"/>
                   </div>

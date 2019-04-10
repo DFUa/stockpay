@@ -28,7 +28,10 @@
           title="Enter the code from the phone"
           v-model="code"
           :rules="[{ name: 'required' }]"/>
-        <a v-if="phone" href="#" @click="noAccess" class="no-access">No access to phone?</a>
+        <div class="phone-spinner-wrapper">
+          <a v-if="phone" href="#" @click="noAccess" class="no-access">No access to phone?</a>
+          <ui-spinner v-if="loading" style="float:right" />
+        </div>
       </template>
 
     </ui-modal>
@@ -41,6 +44,7 @@ import api from '@/api'
 import UiModal from '@/components/ui/ui-modal/UiModal.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiSpinner from '@/components/ui/ui-spinner/UiSpinner.vue'
 
 export default {
   name: 'Phone',
@@ -48,6 +52,7 @@ export default {
   components: {
     UiModal,
     UiInput,
+    UiSpinner,
     UiButton
   },
 
@@ -60,6 +65,7 @@ export default {
   },
 
   data: () => ({
+    loading: false,
     password: '',
     currentPhone: '',
     code: '',
@@ -102,22 +108,26 @@ export default {
 
     async noAccess (event) {
       event.preventDefault()
-      let filters = {
-        way: { value: '0' }
-      }
-      let res = await api.resetPhone(filters)
-      if (!res.error) {
-        this.$toasted.show('Check your email for code', {
-          theme: 'toasted-primary',
-          position: 'bottom-center',
-          duration: 5000
-        })
-      } else {
-        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
-          theme: 'toasted-primary',
-          position: 'bottom-center',
-          duration: 5000
-        })
+      if (!this.loading) {
+        this.loading = true
+        let filters = {
+          way: { value: '0' }
+        }
+        let res = await api.resetPhone(filters)
+        if (!res.error) {
+          this.$toasted.show('Check your email for code', {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
+        } else {
+          this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
+        }
+        this.loading = false
       }
     },
 
@@ -148,3 +158,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .phone-spinner-wrapper {
+    width: 100;
+  }
+</style>
