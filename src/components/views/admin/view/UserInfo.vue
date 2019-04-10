@@ -176,7 +176,6 @@ export default {
     }
     let transactions = await api.getUserTransactions(transactionsFilters)
     this.transactions = transactions
-    console.log(this.transactions)
   },
 
   methods: {

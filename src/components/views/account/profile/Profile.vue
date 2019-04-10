@@ -161,10 +161,9 @@ export default {
 
     // Don't touch my perfect code!!!
     findElementInArray (array, field, value) {
-      let count = array.length
-      for (let i = 0; i < count; i++) {
-        if (array[i][field] === value) {
-          return array[i]
+      for (let item of array) {
+        if (item[field] === value) {
+          return item
         }
       }
       return null
@@ -179,8 +178,8 @@ export default {
           last_name: this.lastname,
           first_name: this.firstname
         }
-        await api.updateProfile(data)
-        if (!data.error) {
+        let res = await api.updateProfile(data)
+        if (!res.error) {
           this.$toasted.show('Данные изменены', {
             theme: 'toasted-primary',
             position: 'bottom-center',
@@ -256,17 +255,17 @@ export default {
     }
   }
 
-   @media screen and (max-width: 925px) {
-     .section .col-3 {
-        width: 100%;
-      }
+  @media screen and (max-width: 925px) {
+    .section .col-3 {
+      width: 100%;
+    }
 
-      .section .col-6 {
-        width: 100%;
-      }
+    .section .col-6 {
+      width: 100%;
+    }
 
-      .fields-wrapper {
-        width: 100%;
-      }
-   }
+    .fields-wrapper {
+      width: 100%;
+    }
+  }
 </style>
