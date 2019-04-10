@@ -3,7 +3,7 @@
     :style="{ borderColor: borderColor ? borderColor : '#E7E7E7',
     background: backgroundColor ? backgroundColor : '#fff' }">
 
-    <the-mask v-if="!disabled" :mask="mask" v-model="currentValue"/>
+    <the-mask v-if="!disabled" :mask="mask" :tokens="tokens" v-model="currentValue"/>
     <div v-else class="input-value">{{ currentValue }}</div>
 
     <label v-if="!disabled" :style="{ background: backgroundColor ? backgroundColor : '#fff' }">
@@ -44,7 +44,8 @@ export default {
     mask: String,
     backgroundColor: String,
     borderColor: String,
-    disabled: Boolean
+    disabled: Boolean,
+    tokens: Object
   },
 
   mounted () {

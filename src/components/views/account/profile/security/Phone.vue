@@ -3,7 +3,8 @@
     <ui-input
       type="phone"
       title="Phone"
-      v-model="currentPhone">
+      v-model="currentPhone"
+      :rules="[{ name: 'required' }]" ref="phone">
 
       <ui-button v-if="!phone" @click="setPhone" :accent="true" title="Привязать"/>
       <ui-button v-if="phone" @click="openChangePhoneModal" :accent="true" title="Отвязать"/>
@@ -27,7 +28,7 @@
           title="Enter the code from the phone"
           v-model="code"
           :rules="[{ name: 'required' }]"/>
-          <a href="#" @click="noAccess" class="no-access">No access to phone?</a>
+        <a v-if="phone" href="#" @click="noAccess" class="no-access">No access to phone?</a>
       </template>
 
     </ui-modal>
@@ -121,17 +122,18 @@ export default {
     },
 
     async setPhone () {
-      if (!this.currentPhone || this.currentPhone.length <= 0) return
-      let data = { number: this.currentPhone }
-      let res = await api.setPhone(data)
-      if (!res.error) {
-        this.showChangePhoneModal = true
-      } else {
-        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
-          theme: 'toasted-primary',
-          position: 'bottom-center',
-          duration: 5000
-        })
+      if (this.$refs.phone.validate()) {
+        let data = { number: this.currentPhone }
+        let res = await api.setPhone(data)
+        if (!res.error) {
+          this.showChangePhoneModal = true
+        } else {
+          this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
+        }
       }
     },
 
