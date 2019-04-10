@@ -1,6 +1,6 @@
 <template>
   <ui-card class="add-founds-cards">
-    <div class="title">Введите необходимую информацию для того чтобы пополнить ваш счет </div>
+    <div class="title">Введите необходимую информацию для того чтобы пополнить ваш счет</div>
     <div class="cols">
       <!-- <div class="col-6">
 
@@ -24,9 +24,9 @@
 
       </div> -->
       <div class="col">
-        <div id="liqpay_checkout"></div>
+        <div id="liqpay_checkout" :class="{'success': !showBtn}"></div>
       </div>
-      <div class="col-6">
+      <div class="col-6" v-if="showBtn">
         <div id="liqpay_checkout"></div>
         <div class="inputs-wrapper">
           <ui-currency-input title="Сумма пополнения" mask="### ### ###" v-model="amount"/>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="footer">
+    <div class="footer" v-if="showBtn">
       <div class="info-title">Для подтверждения пополнения нажмите <br>
         на кнопку "Пополнить"</div>
       <ui-button @click="submit" :accent="true" title="Пополнить"/>
@@ -67,6 +67,7 @@ export default {
     // cardDate: '',
     // cardCVV: '',
     form: '',
+    showBtn: true,
     amount: {
       value: 1,
       key: 'usd'
@@ -79,24 +80,34 @@ export default {
 
   methods: {
     async submit () {
+      let liqPayEl = document.getElementById('liqpay_checkout')
       let data = {
         currency: this.amount.key.toUpperCase(),
         amount: this.amount.value
       }
       let res = await api.sendMoneyByCard(data)
-      console.log(res)
       if (!res.error) {
-        window.LiqPayCheckoutCallback = function () {
+        window.LiqPayCheckoutCallback = () => {
           LiqPayCheckout.init({
             data: res.data,
             signature: res.signature,
             embedTo: '#liqpay_checkout',
-            mode: 'embed' // embed || popup,
+            mode: 'embed'
+          }).on('liqpay.ready', () => {
+            this.showBtn = false
+            console.log(liqPayEl.querySelectorAll('iframe')[0])
+          }).on("liqpay.callback", data => {
+            this.$toasted.show('Транзакция прошла успешно', {
+              theme: 'toasted-primary',
+              position: 'bottom-center',
+              duration: 5000
+            });
+            this.$router.push('/account')
           })
         }
         let script = document.createElement('script')
         script.src = '//static.liqpay.ua/libjs/checkout.js'
-        document.getElementById('liqpay_checkout').appendChild(script)
+        liqPayEl.appendChild(script)
       } else {
         this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
           theme: 'toasted-primary',
@@ -213,6 +224,11 @@ export default {
     font-size: 14px;
     font-family: "Open Sans";
     margin-bottom: 20px;
+  }
+
+  #liqpay_checkout.success {
+    height: 615px;
+    overflow: hidden;
   }
 
   @media screen and (max-width: 1110px) {

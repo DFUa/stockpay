@@ -69,6 +69,7 @@ export default {
   methods: {
     async init (data) {
       let res = await api.getTransactions(data)
+      console.log(res)
       this.transactions = res.transactions
       this.transactions.forEach(item => {
         // reactivity :(
