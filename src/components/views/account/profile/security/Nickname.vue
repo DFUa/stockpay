@@ -69,6 +69,7 @@ export default {
           position: 'bottom-center',
           duration: 5000
         })
+        this.$emit('updates')
         this.showChangeNicknameModal = false
       } else {
         this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {

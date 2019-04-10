@@ -79,6 +79,7 @@ export default {
         let res = await api.confirmPhone(data)
         this.showMessage(res, 'Телефон был привязан')
       }
+      this.$emit('updates')
     },
 
     showMessage (res, errorText) {
