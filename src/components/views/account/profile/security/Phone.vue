@@ -1,14 +1,5 @@
 <template>
   <div>
-    <ui-input
-      type="phone"
-      title="Phone"
-      v-model="currentPhone"
-      :rules="[{ name: 'required' }]" ref="phone">
-
-      <ui-button v-if="!phone" @click="setPhone" :accent="true" title="Привязать"/>
-      <ui-button v-if="phone" @click="openChangePhoneModal" :accent="true" title="Отвязать"/>
-
     <ui-phone-input
       title="Phone"
       :lock="!!phone"
@@ -66,8 +57,7 @@ export default {
     UiInput,
     UiButton,
     UiPhoneInput,
-    UiSpinner,
-    UiButton
+    UiSpinner
   },
 
   props: {
