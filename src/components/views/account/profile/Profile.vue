@@ -13,13 +13,13 @@
                   <ui-input
                     title="Имя"
                     v-model="firstname"
-                    :rules="[{ name: 'required' }, { name: 'pattern', value: /^[a-zA-Z]+$/ }]"/>
+                    :rules="[{ name: 'required' }, { name: 'pattern', value: /^[a-zA-Zа-яА-яёЁ]+$/ }]"/>
                 </div>
                 <div class="col-3">
                   <ui-input
                     title="Фамилия"
                     v-model="lastname"
-                    :rules="[{ name: 'required' }, { name: 'pattern', value: /^[a-zA-Z]+$/ }]"/>
+                    :rules="[{ name: 'required' }, { name: 'pattern', value: /^[a-zA-Zа-яА-яёЁ]+$/ }]"/>
                 </div>
                 <div class="col-3">
                   <ui-select title="Страна"

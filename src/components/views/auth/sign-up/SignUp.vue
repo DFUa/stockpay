@@ -119,3 +119,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  .auth-wrapper .ui-form.fields-col-2 .col > div {
+    margin-bottom: 40px;
+  }
+</style>
