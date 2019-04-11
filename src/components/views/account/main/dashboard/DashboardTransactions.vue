@@ -18,7 +18,7 @@
           <tr :class="{'extend-row': transaction.show_row}">
             <td class="dashboard-amount" width="20%">{{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{ transaction.currency }}</td>
             <td width="20%">Дата перевода: {{transaction.date}}</td>
-            <td width="25%" class="text-center">Источник: Карта</td>
+            <td width="25%" class="text-center">Источник: {{ getTransactionTypeName(transaction.type) }}</td>
             <td width="20%" class="text-center">Status: {{transaction.status}}</td>
             <td width="15%" class="text-center">
               <button class="show-extend-row" :class="{ 'rotate': transaction.show_row }" @click="getMoreInfo(index)">
@@ -59,7 +59,12 @@ export default {
 
   data: () => ({
     transactions: [],
-    showFilter: false
+    showFilter: false,
+    transactionTypes: [
+      { type: 0, name: 'Кошелек пользователя' },
+      { type: 1, name: 'Обмен валюты' },
+      { type: 2, name: 'Карта' }
+    ]
   }),
 
   mounted () {
@@ -69,7 +74,6 @@ export default {
   methods: {
     async init (data) {
       let res = await api.getTransactions(data)
-      console.log(res)
       this.transactions = res.transactions
       this.transactions.forEach(item => {
         // reactivity :(
@@ -87,6 +91,16 @@ export default {
 
     getMoreInfo (index) {
       this.transactions[index].show_row = !this.transactions[index].show_row
+    },
+
+    getTransactionTypeName (type) {
+      let name = ''
+      this.transactionTypes.forEach(item => {
+        if (item.type === type) {
+          name = item.name
+        }
+      })
+      return name
     }
   }
 }

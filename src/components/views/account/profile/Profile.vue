@@ -32,7 +32,7 @@
                   <ui-select
                     title="Город"
                     :options="options.cities"
-                    field="toponymName"
+                    :field="['name', 'toponymName']"
                     v-model="city"
                     :rules="[{ name: 'required', text: 'Выберите город' }]"/>
                 </div>
