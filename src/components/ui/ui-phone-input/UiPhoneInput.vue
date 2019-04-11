@@ -40,6 +40,10 @@ export default {
   }),
 
   watch: {
+    value (value) {
+      this.currentValue = value
+    },
+
     mask () {
       this.currentValue = ''
     },

@@ -86,15 +86,12 @@ export default {
       }
       if (this.phone) {
         let res = await api.resetPhoneByCode(data)
-        this.$emit('on-update')
-        this.$emit('on-remove')
-        this.showMessage(res, 'Телефон был изменен')
+        this.showMessage(res, 'Телефон был отвязан')
       } else {
         let res = await api.confirmPhone(data)
-        this.$emit('on-update')
         this.showMessage(res, 'Телефон был привязан')
       }
-      this.$emit('updates')
+      this.$emit('on-update')
     },
 
     showMessage (res, errorText) {
@@ -181,6 +178,12 @@ export default {
 
     closeChangePhoneModal () {
       this.showChangePhoneModal = false
+    }
+  },
+
+  watch: {
+    phone (value) {
+      this.currentPhone = value
     }
   }
 }

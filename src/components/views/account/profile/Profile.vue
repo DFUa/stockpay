@@ -60,7 +60,6 @@
                     <security-phone
                       :phone-code="phoneCode"
                       :phone="phone"
-                      @on-remove="removePhone"
                       @on-update="loadProfile"/>
                   </div>
                 </div>
@@ -142,17 +141,14 @@ export default {
     },
 
     async loadProfile () {
+      console.log('loadProfile')
       let res = await api.getProfile()
       this.firstname = res.first_name
       this.lastname = res.last_name
       this.email = res.email
       this.nickname = res.nickname
-      this.phone = res.number
+      this.phone = res.number ? res.number : ''
       return res
-    },
-
-    removePhone () {
-      this.phone = ''
     },
 
     async loadCountries () {
@@ -171,6 +167,13 @@ export default {
     selectCountry (name) {
       let items = this.options.countries
       this.country = this.findElementInArray(items, 'toponymName', name)
+      if (this.country) {
+        this.phoneCode = this.options.phone[this.country.code]
+      }
+      if (this.phone) {
+        let codeLen = this.phoneCode.code.length
+        this.phone = this.phone.substring(codeLen - 1, this.phone.length)
+      }
     },
 
     selectCity (name) {
@@ -220,13 +223,9 @@ export default {
       this.city = null
       this.options.cities = []
       this.loadCities()
-      // Set country phone code
-      if (this.country) {
+      // change phone country code if phone is not bind to profile
+      if (!this.phone.length && this.country) {
         this.phoneCode = this.options.phone[this.country.code]
-        if (this.phone) {
-          let codeLen = this.phoneCode.code.length
-          this.phone = this.phone.substring(codeLen - 1, this.phone.length)
-        }
       }
     }
   }
