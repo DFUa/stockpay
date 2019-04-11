@@ -1,5 +1,5 @@
 <template>
-  <div class="filter" v-if="showFilter">
+  <div class="filter">
     <p class="filter-header">Фильтр</p>
     <div class="filter-wrap">
       <div class="col-2">
@@ -54,13 +54,10 @@ export default {
     UiSelect
   },
 
-  props: {
-    value: Boolean
-  },
-
   data: () => ({
-    showFilter: false,
-    type: { value: '' },
+    type: {
+      value: ''
+    },
     typeOptions: [
       { name: '0', type: 'Кошелек пользователя' },
       // { name: '1', type: 'Обмен валюты' },
@@ -74,10 +71,6 @@ export default {
     status: '',
     source: ''
   }),
-
-  mounted () {
-    this.showFilter = this.value
-  },
 
   methods: {
     filter () {
@@ -108,18 +101,6 @@ export default {
         }
       }
       this.$emit('filter', data)
-    }
-  },
-
-  watch: {
-    value (value) {
-      this.showFilter = value
-    },
-
-    showFilter (value) {
-      if (this.value !== value) {
-        this.$emit('input', value)
-      }
     }
   }
 }

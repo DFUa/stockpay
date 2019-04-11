@@ -1,17 +1,18 @@
 <template>
   <ui-card class="transactions">
+
+    <!-- Transactions table header -->
     <div class="header">
       <div class="section">
         <h2>Транзакции</h2>
       </div>
       <button class="i-filter" @click="showFilterModal"></button>
       <transition name="fade-up" mode="out-in">
-        <ui-filter @filter="filter" v-model="showFilter"></ui-filter>
+        <ui-filter v-if="showFilter" @filter="filter"></ui-filter>
       </transition>
     </div>
-    <div v-if="!transactions.length" class="empty-stub">
-      <h3>У вас пока не было транзакций</h3>
-    </div>
+
+    <!-- Table body -->
     <table v-if="transactions.length" class="dashboard-table">
       <tbody>
         <div v-for="(transaction, index) in transactions" :key="index">
@@ -40,6 +41,11 @@
         </div>
       </tbody>
     </table>
+
+    <!-- Emty table info -->
+    <div v-if="!transactions.length" class="empty-stub">
+      <h3>У вас пока не было транзакций</h3>
+    </div>
   </ui-card>
 </template>
 
