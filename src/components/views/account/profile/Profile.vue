@@ -57,7 +57,11 @@
                 <div class="col-6">
                   <div class="title">Привязать телефон</div>
                   <div class="fields-wrapper">
-                    <security-phone :phone="phone"/>
+                    <security-phone
+                      :phone-code="phoneCode"
+                      :phone="phone"
+                      @on-remove="removePhone"
+                      @on-update="loadProfile"/>
                   </div>
                 </div>
               </div>
@@ -113,20 +117,21 @@ export default {
     phone: '',
     options: {
       countries: [],
-      cities: []
+      cities: [],
+      phone: {
+        UA: { code: '+380', mask: '## ### ####' },
+        RU: { code: '+7', mask: '### ### ####' },
+        KZ: { code: '+7', mask: '### ### ####' },
+        BY: { code: '+375', mask: '## ### ###' }
+      }
     },
+    phoneCode: null,
     loaded: false
   }),
 
   methods: {
     async loadData () {
-      let res = await api.getProfile()
-      this.firstname = res.first_name
-      this.lastname = res.last_name
-      this.email = res.email
-      this.nickname = res.nickname
-      this.phone = res.number
-
+      let res = await this.loadProfile()
       await this.loadCountries()
       this.selectCountry(res.country)
 
@@ -134,6 +139,20 @@ export default {
       this.selectCity(res.city)
 
       this.loaded = true
+    },
+
+    async loadProfile () {
+      let res = await api.getProfile()
+      this.firstname = res.first_name
+      this.lastname = res.last_name
+      this.email = res.email
+      this.nickname = res.nickname
+      this.phone = res.number
+      return res
+    },
+
+    removePhone () {
+      this.phone = ''
     },
 
     async loadCountries () {
@@ -195,6 +214,14 @@ export default {
       this.city = null
       this.options.cities = []
       this.loadCities()
+      // Set country phone code
+      if (this.country) {
+        this.phoneCode = this.options.phone[this.country.code]
+        if (this.phone) {
+          let codeLen = this.phoneCode.code.length
+          this.phone = this.phone.substring(codeLen - 1, this.phone.length)
+        }
+      }
     }
   }
 }
