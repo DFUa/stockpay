@@ -4,7 +4,7 @@
       <h1>Восстановление пароля</h1>
 
       <div class="fields">
-        <ui-input title="Почта" v-model="email"/>
+        <ui-input title="Почта" v-model="email" :rules="[{ name: 'required', text: 'Данное поле не должно быть пустым' }]" ref="pwdResInput"/>
       </div>
 
       <div class="btns">
@@ -41,17 +41,19 @@ export default {
 
   methods: {
     async passwordReset () {
-      this.loaded = false
-      let data = {
-        email: this.email
-      }
-      let res = await api.passwordReset(data)
-      if (!res.error) {
-        localStorage.setItem('way', res.way)
-        this.nextStep()
-      } else {
-        this.code = ''
-        this.loaded = true
+      if (this.$refs.pwdResInput.validate()) {
+        this.loaded = false
+        let data = {
+          email: this.email
+        }
+        let res = await api.passwordReset(data)
+        if (!res.error) {
+          localStorage.setItem('way', res.way)
+          this.nextStep()
+        } else {
+          this.code = ''
+          this.loaded = true
+        }
       }
     },
 
