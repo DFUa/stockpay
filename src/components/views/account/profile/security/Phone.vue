@@ -28,7 +28,7 @@
           :title="accessCodeTitle"
           v-model="code"
           :rules="[{ name: 'required' }]"/>
-        <div class="phone-spinner-wrapper">
+        <div v-if="phone" class="phone-spinner-wrapper">
           <a href="#" @click="noAccess" class="no-access">No access to phone?</a>
           <ui-spinner v-if="loading" style="float:right" />
         </div>
