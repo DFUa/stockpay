@@ -1,5 +1,13 @@
 <template>
   <div>
+    <ui-input
+      type="phone"
+      title="Phone"
+      v-model="currentPhone"
+      :rules="[{ name: 'required' }]" ref="phone">
+
+      <ui-button v-if="!phone" @click="setPhone" :accent="true" title="Привязать"/>
+      <ui-button v-if="phone" @click="openChangePhoneModal" :accent="true" title="Отвязать"/>
 
     <ui-phone-input
       title="Phone"
@@ -28,10 +36,13 @@
           :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
 
         <ui-input
-          title="Enter the code from the phone"
+          :title="accessCodeTitle"
           v-model="code"
           :rules="[{ name: 'required' }]"/>
+        <div v-if="phone" class="phone-spinner-wrapper">
           <a href="#" @click="noAccess" class="no-access">No access to phone?</a>
+          <ui-spinner v-if="loading" style="float:right" />
+        </div>
       </template>
 
     </ui-modal>
@@ -45,6 +56,7 @@ import UiModal from '@/components/ui/ui-modal/UiModal.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiPhoneInput from '@/components/ui/ui-phone-input/UiPhoneInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiSpinner from '@/components/ui/ui-spinner/UiSpinner.vue'
 
 export default {
   name: 'Phone',
@@ -53,7 +65,9 @@ export default {
     UiModal,
     UiInput,
     UiButton,
-    UiPhoneInput
+    UiPhoneInput,
+    UiSpinner,
+    UiButton
   },
 
   props: {
@@ -66,9 +80,11 @@ export default {
   },
 
   data: () => ({
+    loading: false,
     password: '',
     currentPhone: '',
     code: '',
+    accessCodeTitle: 'Enter the code from the phone',
     showChangePhoneModal: false
   }),
 
@@ -88,6 +104,7 @@ export default {
         this.$emit('on-update')
         this.showMessage(res, 'Телефон был привязан')
       }
+      this.$emit('updates')
     },
 
     showMessage (res, errorText) {
@@ -109,22 +126,27 @@ export default {
 
     async noAccess (event) {
       event.preventDefault()
-      let filters = {
-        way: { value: '0' }
-      }
-      let res = await api.resetPhone(filters)
-      if (!res.error) {
-        this.$toasted.show('Check your email for code', {
-          theme: 'toasted-primary',
-          position: 'bottom-center',
-          duration: 5000
-        })
-      } else {
-        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
-          theme: 'toasted-primary',
-          position: 'bottom-center',
-          duration: 5000
-        })
+      if (!this.loading) {
+        this.loading = true
+        let filters = {
+          way: { value: '0' }
+        }
+        let res = await api.resetPhone(filters)
+        if (!res.error) {
+          this.accessCodeTitle = 'Enter the code from the email'
+          this.$toasted.show('Check your email for code', {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
+        } else {
+          this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
+        }
+        this.loading = false
       }
     },
 
@@ -162,6 +184,7 @@ export default {
     },
 
     async openChangePhoneModal () {
+      this.accessCodeTitle = 'Enter the code from the phone'
       await api.resetPhone()
       this.showChangePhoneModal = true
     },
@@ -172,3 +195,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .phone-spinner-wrapper {
+    width: 100;
+  }
+</style>

@@ -3,7 +3,7 @@
     v-click-outside="closeDropDown" @click="openDropDown">
 
     <input v-if="showDropDown" v-focus type="text" v-model="searchValue">
-    <div v-else class="value">{{ selectedItem ? selectedItem[field] : '' }}</div>
+    <div v-else class="value">{{ selectedItem ? itemName(selectedItem) : '' }}</div>
 
     <span v-if="!isValid" class="error-text">{{errorText}}</span>
     <label :class="{ 'toggled': showDropDown }">{{ title }}</label>
@@ -16,7 +16,7 @@
           <div v-if="filteredItems.length">
             <div v-for="item in filteredItems" :key="item.id"
               @click="selectItem(item)" class="item">
-                {{ item[field] }}</div>
+                {{ itemName(item) }}</div>
           </div>
           <div v-else class="no-options">Нет подходящих элементов</div>
         </vue-scroll>
@@ -39,7 +39,7 @@ export default {
   name: 'UiSelect',
 
   props: {
-    field: String,
+    field: [String, Array],
     title: String,
     options: Array,
     value: Object,
@@ -128,6 +128,14 @@ export default {
       if (this.showDropDown) {
         this.showDropDown = false
       }
+    },
+
+    itemName (item) {
+      if (this.field instanceof Array) {
+        return item['toponymName']
+      } else {
+        return item[this.field]
+      }
     }
   },
 
@@ -141,9 +149,24 @@ export default {
     },
 
     searchValue (value) {
-      this.filteredItems = this.options.filter((item) => {
-        return item[this.field].toLowerCase().includes(value.toLowerCase())
-      })
+      if (this.field instanceof Array) {
+        let results = {}
+        this.field.forEach(field => {
+          results[field] = this.options.filter((item) => {
+            return item[field].toLowerCase().includes(value.toLowerCase())
+          })
+        })
+        for (let key in results) {
+          if (results[key].length > 0) {
+            this.filteredItems = results[key]
+            break
+          }
+        }
+      } else {
+        this.filteredItems = this.options.filter((item) => {
+          return item[this.field].toLowerCase().includes(value.toLowerCase())
+        })
+      }
     }
   }
 }

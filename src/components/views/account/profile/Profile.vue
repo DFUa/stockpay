@@ -32,7 +32,7 @@
                   <ui-select
                     title="Город"
                     :options="options.cities"
-                    field="toponymName"
+                    :field="['name', 'toponymName']"
                     v-model="city"
                     :rules="[{ name: 'required', text: 'Выберите город' }]"/>
                 </div>
@@ -47,7 +47,7 @@
                   <div class="title">Безопасность</div>
                   <div class="fields-wrapper">
 
-                    <security-nickname :nickname="nickname"/>
+                    <security-nickname :nickname="nickname" @updates="showUpdates"/>
                     <security-password/>
 
                     <ui-input class="field" title="Почта"
@@ -55,7 +55,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="title">Привязать телефон</div>
+                  <div class="title">{{ phone ? 'Телефон' : 'Привязать телефон' }}</div>
                   <div class="fields-wrapper">
                     <security-phone
                       :phone-code="phoneCode"
@@ -204,8 +204,14 @@ export default {
             position: 'bottom-center',
             duration: 5000
           })
+          this.showUpdates()
         }
       }
+    },
+
+    showUpdates () {
+      this.loaded = false
+      this.loadData()
     }
   },
 

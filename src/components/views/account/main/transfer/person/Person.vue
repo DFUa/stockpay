@@ -10,7 +10,7 @@
       </div>
       <div class="toggler" :class="{ 'i-arrow-right': true }"></div>
       <div class="to">
-        <ui-currency-input title="Номер кошелька" v-model="outValue" mask="#### #### #### ####"/>
+        <ui-currency-input title="Номер кошелька" v-model="outValue" mask="################"/>
       </div>
     </div>
 
@@ -49,7 +49,7 @@ export default {
     },
     outValue: {
       value: '',
-      key: 'eur'
+      key: 'usd'
     },
     fee: '',
     wallets: {

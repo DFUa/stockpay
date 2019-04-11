@@ -62,9 +62,9 @@ export default {
     showFilter: false,
     type: { value: '' },
     typeOptions: [
-      { name: '0', type: 'Оплата кошельком' },
-      { name: '1', type: 'Обмен валюты' },
-      { name: '2', type: 'Оплата' }
+      { name: '0', type: 'Кошелек пользователя' },
+      // { name: '1', type: 'Обмен валюты' },
+      { name: '2', type: 'Карта' }
     ],
     dateFrom: '',
     dateTo: '',

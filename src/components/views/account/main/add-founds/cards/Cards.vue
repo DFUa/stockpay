@@ -2,7 +2,7 @@
   <ui-card class="add-founds-cards">
     <div class="title">Введите необходимую информацию для того чтобы пополнить ваш счет</div>
     <div class="cols">
-      <div class="col-6">
+      <!-- <div class="col-6">
 
         <div class="card">
           <div class="card-front">
@@ -22,27 +22,33 @@
           </div>
         </div>
 
+      </div> -->
+      <div class="col">
+        <div id="liqpay_checkout" :class="{'success': !showBtn}"></div>
       </div>
-      <div class="col-6">
+      <div class="col-6" v-if="showBtn">
+        <div id="liqpay_checkout"></div>
         <div class="inputs-wrapper">
-          <ui-currency-input title="Сумма пополнения" mask="### ### ###" v-model="amount"/>
-          <ui-wallet-select title="Кошелек" v-model="value" mask="### ### ###"/>
+          <ui-currency-input title="Сумма пополнения" mask="MMMMMMMMM" :tokens="moneyMasks" v-model="amount"/>
+          <!-- <ui-wallet-select title="Кошелек" v-model="value" mask="### ### ###"/> -->
         </div>
       </div>
     </div>
-    <div class="footer">
+    <div class="footer" v-if="showBtn">
       <div class="info-title">Для подтверждения пополнения нажмите <br>
         на кнопку "Пополнить"</div>
-      <ui-button :accent="true" title="Пополнить"/>
+      <ui-button @click="submit" :accent="true" title="Пополнить"/>
     </div>
   </ui-card>
 </template>
 
 <script>
+import api from '@/api'
+
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
-import UiWalletSelect from '@/components/ui/ui-wallet-select/UiWalletSelect.vue'
-import UiMaskedInput from '@/components/ui/ui-masked-input/UiMaskedInput.vue'
+// import UiWalletSelect from '@/components/ui/ui-wallet-select/UiWalletSelect.vue'
+// import UiMaskedInput from '@/components/ui/ui-masked-input/UiMaskedInput.vue'
 import UiCurrencyInput from '@/components/ui/ui-currency-input/UiCurrencyInput.vue'
 
 export default {
@@ -51,24 +57,71 @@ export default {
   components: {
     UiCard,
     UiButton,
-    UiWalletSelect,
-    UiMaskedInput,
+    // UiWalletSelect,
+    // UiMaskedInput,
     UiCurrencyInput
   },
 
   data: () => ({
-    cardNumber: '',
-    cardDate: '',
-    cardCVV: '',
+    // cardNumber: '',
+    // cardDate: '',
+    // cardCVV: '',
+    form: '',
+    showBtn: true,
     amount: {
-      value: 10,
+      value: 0,
       key: 'usd'
     },
-    value: {
-      value: 13,
-      key: 'usd'
+    moneyMasks: {
+      M: {
+        pattern: /^[0-9.]?$/
+      }
     }
-  })
+    // value: {
+    //   value: 13,
+    //   key: 'usd'
+    // }
+  }),
+
+  methods: {
+    async submit () {
+      let liqPayEl = document.getElementById('liqpay_checkout')
+      let data = {
+        currency: this.amount.key.toUpperCase(),
+        amount: this.amount.value
+      }
+      let res = await api.sendMoneyByCard(data)
+      if (!res.error) {
+        window.LiqPayCheckoutCallback = () => {
+          LiqPayCheckout.init({
+            data: res.data,
+            signature: res.signature,
+            embedTo: '#liqpay_checkout',
+            mode: 'embed'
+          }).on('liqpay.ready', () => {
+            this.showBtn = false
+            console.log(liqPayEl.querySelectorAll('iframe')[0])
+          }).on("liqpay.callback", data => {
+            this.$toasted.show('Транзакция прошла успешно', {
+              theme: 'toasted-primary',
+              position: 'bottom-center',
+              duration: 5000
+            });
+            this.$router.push('/account')
+          })
+        }
+        let script = document.createElement('script')
+        script.src = '//static.liqpay.ua/libjs/checkout.js'
+        liqPayEl.appendChild(script)
+      } else {
+        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 5000
+        })
+      }
+    }
+  }
 }
 </script>
 
@@ -89,6 +142,11 @@ export default {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -15px;
+  }
+
+  .col {
+    width: 100%;
+    margin-bottom: 10px;
   }
 
   .col-6 {
@@ -171,6 +229,11 @@ export default {
     font-size: 14px;
     font-family: "Open Sans";
     margin-bottom: 20px;
+  }
+
+  #liqpay_checkout.success {
+    height: 615px;
+    overflow: hidden;
   }
 
   @media screen and (max-width: 1110px) {

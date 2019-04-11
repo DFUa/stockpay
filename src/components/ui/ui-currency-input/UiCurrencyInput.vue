@@ -3,13 +3,13 @@
     :style="{ borderColor: borderColor ? borderColor : '#E7E7E7',
     background: backgroundColor ? backgroundColor : '#fff' }">
 
-    <the-mask v-if="!disabled" :mask="mask" v-model="currentValue"/>
+    <the-mask v-if="!disabled" :mask="mask" :tokens="tokens" v-model="currentValue"/>
     <div v-else class="input-value">{{ currentValue }}</div>
 
     <label v-if="!disabled" :style="{ background: backgroundColor ? backgroundColor : '#fff' }">
       {{ title }}</label>
 
-    <ui-toggle-arrow class="arrow" v-model="showDropDown"/>
+    <ui-toggle-arrow class="arrow" v-model="showDropDown" v-if="currItems.length > 1" />
 
     <transition name="fade" mode="out-in">
       <div v-if="showDropDown" class="items-wrapper" key="items">
@@ -44,7 +44,8 @@ export default {
     mask: String,
     backgroundColor: String,
     borderColor: String,
-    disabled: Boolean
+    disabled: Boolean,
+    tokens: Object
   },
 
   mounted () {
@@ -54,14 +55,7 @@ export default {
   data: () => ({
     currentValue: '',
     showDropDown: false,
-    selectedItem: null,
-    currItems: [
-      { id: 0, title: 'USD', key: 'usd' },
-      // { id: 1, title: 'UAH', key: 'uah' },
-      { id: 2, title: 'EUR', key: 'eur' },
-      // { id: 3, title: 'KZT', key: 'kzt' },
-      { id: 4, title: 'RUB', key: 'rub' }
-    ]
+    selectedItem: null
   }),
 
   methods: {
@@ -71,7 +65,7 @@ export default {
     },
 
     openDropDown () {
-      this.showDropDown = true
+      this.showDropDown = this.currItems.length > 1
     },
 
     selectItem (item) {
@@ -117,6 +111,12 @@ export default {
 
     selectedItem () {
       this.onChange()
+    }
+  },
+
+  computed: {
+    currItems: function () {
+      return this.$store.getters.currencies
     }
   }
 }

@@ -8,10 +8,10 @@
           <ui-input type="text" title="Имя" v-model="firstname" :rules="[{ name: 'required' }]"/>
           <ui-input type="text" title="Фамилия" v-model="lastname" :rules="[{ name: 'required' }]"/>
           <ui-select title="Страна" field="toponymName" :options="options.countries" v-model="country" :rules="[{ name: 'required', text: 'Выберите страну' }]"/>
-          <ui-select title="Город" field="toponymName" :options="options.cities" v-model="city" :rules="[{ name: 'required', text: 'Выберите город' }]"/>
+          <ui-select title="Город" :field="['name', 'toponymName']" :options="options.cities" v-model="city" :rules="[{ name: 'required', text: 'Выберите город' }]"/>
         </div>
         <div class="col">
-          <ui-input type="text" title="Никнейм" v-model="nickname" :rules="[{ name: 'min', value: 3 }, { name: 'required' }, { name: 'pattern', value: /^[A-Za-z0-9_]+$/ }]"/>
+          <ui-input type="text" title="Никнейм" v-model="nickname" :rules="[{ name: 'min', value: 3 }, { name: 'required' }, { name: 'pattern', value: /^[A-Za-z0-9_]+$/, text: 'Ваш никнейм содержит недопустимые символы' }]"/>
           <ui-input type="email" title="Почта" v-model="email"/>
           <ui-input type="password" title="Пароль" v-model="password_0" :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
           <ui-input type="password" title="Повторите пароль" v-model="password_1" :rules="[{ name: 'compare', value: password_0, text: 'Пароли не совпадают' }, { name: 'required' }]"/>
@@ -20,7 +20,7 @@
 
       <div class="btns">
         <ui-button accent title="Регистрация" @click="signUp"/>
-        <ui-button air title="Вход" @click="openSignIn"/>
+        <ui-button air title="Назад" @click="openSignIn"/>
       </div>
     </div>
     <div class="spinner-wrapper" v-else>
@@ -84,7 +84,7 @@ export default {
           email: this.email,
           password: this.password_0,
           nickname: this.nickname,
-          country: this.country ? this.country.toponymName : '',
+          country: this.country ? this.country.code : '',
           city: this.city ? this.city.toponymName : ''
         }
         let res = await api.registration(data)

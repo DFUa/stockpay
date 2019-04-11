@@ -1,13 +1,22 @@
 <template>
   <div>
     <div v-if="loaded">
-      <h1>Ведите код с <span v-if="way == 0">почты</span> <span v-if="way == 1">номера</span> и создайте новый пароль</h1>
+      <h2 class="header-text" v-if="way == 1">Вам на телефон должен прийти СМС в котором будет указан код, впешите данный код в необходимое поле и создайте новый пароль</h2>
+      <h2 class="header-text" v-if="way == 0">Зайдите на почту, скопируйте код которы вам пришел в сообщении, вставьте его в необходимое поле "Код" и создайте новый пароль</h2>
 
-      <div class="fields">
+      <ui-form class="fields" form="reset-pass" ref="resetPass">
         <ui-input title="Код" v-model="code"/>
-        <ui-input type="password" title="Новый пароль" v-model="password_0"/>
-        <ui-input type="password" title="Подтвердите пароль" v-model="password_1"/>
-      </div>
+        <ui-input
+          type="password"
+          title="Новый пароль"
+          v-model="password_0"
+          :rules="[{ name: 'min', value: 8 }, { name: 'required' }]"/>
+        <ui-input
+          type="password"
+          title="Подтвердите пароль"
+          v-model="password_1"
+          :rules="[{ name: 'compare', value: password_0, text: 'Пароли не совпадают' }, { name: 'required' }]"/>
+      </ui-form>
       <a v-if="way == 1" href="#" class="no-access" @click="noAccess">No access to the phone?</a>
 
       <div class="btns">
@@ -25,6 +34,7 @@ import api from '@/api'
 
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiForm from '@/components/ui/ui-form/UiForm.vue'
 import UiSpinner from '@/components/ui/ui-spinner/UiSpinner.vue'
 
 export default {
@@ -33,7 +43,8 @@ export default {
   components: {
     UiInput,
     UiButton,
-    UiSpinner
+    UiSpinner,
+    UiForm
   },
 
   data: () => ({
@@ -50,20 +61,26 @@ export default {
 
   methods: {
     async resetPassword () {
-      this.loaded = false
       let email = localStorage.getItem('email')
       let data = {
         password: this.password_0,
         code: this.code,
         email: email
       }
-      let res = await api.setupPassword(data)
-      if (!res.error) {
-        localStorage.removeItem('email')
-        this.$router.push('/auth/sign-in')
-      } else {
-        this.code = ''
-        this.loaded = true
+      if (this.$refs.resetPass.validate()) {
+        let res = await api.setupPassword(data)
+        if (!res.error) {
+          localStorage.removeItem('email')
+          this.$router.push('/auth/sign-in')
+        } else {
+          this.code = ''
+          this.loaded = true
+          this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+            theme: 'toasted-primary',
+            position: 'bottom-center',
+            duration: 5000
+          })
+        }
       }
     },
 
@@ -79,3 +96,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .header-text {
+    margin-bottom: 30px;
+  }
+</style>
