@@ -81,7 +81,15 @@ export default {
         wallet_to: this.outValue.key.toUpperCase() + this.outValue.value,
         amount: this.inValue.value
       }
-      if (data.amount <= 0 || this.outValue.value.length <= 0) return
+      if (data.amount <= 0 || this.outValue.value.length === 0) {
+        this.$toasted.clear()
+        this.$toasted.show('Пожалуйста, заполните, все поля!', {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 2000
+        })
+        return
+      }
       if (data.wallet_from === data.wallet_to) {
         this.$toasted.clear()
         this.$toasted.show('Ваш номер кошелька совпадает с номером кошелька получателя. Введите другой кошелек получателя', {

@@ -27,13 +27,14 @@ export default new Vuex.Store({
       code_expired: 'Код устарел',
       number_busy: 'Номер уже используется',
       not_number: 'Вы используете недоступные символы',
-      wallet_from_not_exists: 'Даного кошелька не существует',
+      wallet_from_not_exists: 'Данного кошелька не существует',
       foreign_wallet: 'Данный кошелек не пренадлежит вам',
-      wallet_to_not_exists: 'Даного кошелька не существует',
+      wallet_to_not_exists: 'Данного кошелька не существует',
       currency_conflict: 'Валюта кошелька указана не верно',
       bad_amount: 'Сумма пополнения должна быть менее или равна 1 USD',
       no_money: 'Недостаточно средств на кошельке',
       forbidden_symbols: 'Недопустимые символы',
+      wrong_email: 'Пользователя с данным Email не существует',
       wrong_code: 'Код не верен'
     },
     currenciesList: [
