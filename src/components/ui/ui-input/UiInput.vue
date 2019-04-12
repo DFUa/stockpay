@@ -2,13 +2,13 @@
   <div :class="{ 'group': true, 'disabled': disabled, 'has-text' : (currentValue || currentValue === 0), 'invalid': !isValid }">
 
     <input
-    @input="onUpdate"
-    @keyup.enter="onEnter"
-    v-model="currentValue"
-    :maxlength="type === 'password' ? 35 : 100"
-    :disabled="disabled"
-    :style="{ background: background ? background : '#fff' }"
-    :type="(type && !showPassword) ? type : 'text'" required>
+      @input="onUpdate"
+      @keyup.enter="onEnter"
+      v-model="currentValue"
+      :maxlength="type === 'password' ? 35 : 100"
+      :disabled="disabled"
+      :style="{ background: background ? background : '#fff' }"
+      :type="(type && !showPassword) ? type : 'text'" required>
 
     <div v-if="disabled" class="disabled-title">
       {{ currentValue }}
@@ -245,19 +245,19 @@ export default {
     color: #000;
   }
 
-  .invalid input ~ label{
+  .invalid input ~ label {
     color: red;
   }
 
-  input:focus{
+  input:focus {
     border: 1px solid #006344;
   }
 
-  .invalid input{
+  .invalid input {
     border-color: red;
   }
 
-  .error-text{
+  .error-text {
     font-size: 11px;
     color: red;
     position: absolute;
@@ -278,7 +278,7 @@ export default {
     color: transparent;
   }
 
-  .input-desc{
+  .input-desc {
     position: absolute;
     font-weight: 600;
     font-size: 14px;

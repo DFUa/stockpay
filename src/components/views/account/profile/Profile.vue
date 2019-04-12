@@ -13,13 +13,13 @@
                   <ui-input
                     title="Имя"
                     v-model="firstname"
-                    :rules="[{ name: 'required' }]"/>
+                    :rules="[{ name: 'required' }, { name: 'pattern', value: /^[a-zA-Zа-яА-яёЁ]+$/ }]"/>
                 </div>
                 <div class="col-3">
                   <ui-input
                     title="Фамилия"
                     v-model="lastname"
-                    :rules="[{ name: 'required' }]"/>
+                    :rules="[{ name: 'required' }, { name: 'pattern', value: /^[a-zA-Zа-яА-яёЁ]+$/ }]"/>
                 </div>
                 <div class="col-3">
                   <ui-select title="Страна"
@@ -32,7 +32,7 @@
                   <ui-select
                     title="Город"
                     :options="options.cities"
-                    field="toponymName"
+                    :field="['name', 'toponymName']"
                     v-model="city"
                     :rules="[{ name: 'required', text: 'Выберите город' }]"/>
                 </div>
@@ -57,7 +57,10 @@
                 <div class="col-6">
                   <div class="title">{{ phone ? 'Телефон' : 'Привязать телефон' }}</div>
                   <div class="fields-wrapper">
-                    <security-phone :phone="phone" @updates="showUpdates"/>
+                    <security-phone
+                      :phone-code="phoneCode"
+                      :phone="phone"
+                      @on-update="loadProfile"/>
                   </div>
                 </div>
               </div>
@@ -113,20 +116,21 @@ export default {
     phone: '',
     options: {
       countries: [],
-      cities: []
+      cities: [],
+      phone: {
+        UA: { code: '+380', mask: '## ### ####' },
+        RU: { code: '+7', mask: '### ### ####' },
+        KZ: { code: '+7', mask: '### ### ####' },
+        BY: { code: '+375', mask: '## ### ###' }
+      }
     },
+    phoneCode: null,
     loaded: false
   }),
 
   methods: {
     async loadData () {
-      let res = await api.getProfile()
-      this.firstname = res.first_name
-      this.lastname = res.last_name
-      this.email = res.email
-      this.nickname = res.nickname
-      this.phone = res.number
-
+      let res = await this.loadProfile()
       await this.loadCountries()
       this.selectCountry(res.country)
 
@@ -134,6 +138,17 @@ export default {
       this.selectCity(res.city)
 
       this.loaded = true
+    },
+
+    async loadProfile () {
+      console.log('loadProfile')
+      let res = await api.getProfile()
+      this.firstname = res.first_name
+      this.lastname = res.last_name
+      this.email = res.email
+      this.nickname = res.nickname
+      this.phone = res.number ? res.number : ''
+      return res
     },
 
     async loadCountries () {
@@ -152,6 +167,13 @@ export default {
     selectCountry (name) {
       let items = this.options.countries
       this.country = this.findElementInArray(items, 'toponymName', name)
+      if (this.country) {
+        this.phoneCode = this.options.phone[this.country.code]
+      }
+      if (this.phone) {
+        let codeLen = this.phoneCode.code.length
+        this.phone = this.phone.substring(codeLen - 1, this.phone.length)
+      }
     },
 
     selectCity (name) {
@@ -161,10 +183,9 @@ export default {
 
     // Don't touch my perfect code!!!
     findElementInArray (array, field, value) {
-      let count = array.length
-      for (let i = 0; i < count; i++) {
-        if (array[i][field] === value) {
-          return array[i]
+      for (let item of array) {
+        if (item[field] === value) {
+          return item
         }
       }
       return null
@@ -202,6 +223,10 @@ export default {
       this.city = null
       this.options.cities = []
       this.loadCities()
+      // change phone country code if phone is not bind to profile
+      if (!this.phone.length && this.country) {
+        this.phoneCode = this.options.phone[this.country.code]
+      }
     }
   }
 }
@@ -262,17 +287,17 @@ export default {
     }
   }
 
-   @media screen and (max-width: 925px) {
-     .section .col-3 {
-        width: 100%;
-      }
+  @media screen and (max-width: 925px) {
+    .section .col-3 {
+      width: 100%;
+    }
 
-      .section .col-6 {
-        width: 100%;
-      }
+    .section .col-6 {
+      width: 100%;
+    }
 
-      .fields-wrapper {
-        width: 100%;
-      }
-   }
+    .fields-wrapper {
+      width: 100%;
+    }
+  }
 </style>

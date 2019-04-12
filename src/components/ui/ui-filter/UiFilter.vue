@@ -1,5 +1,5 @@
 <template>
-  <div class="filter" v-if="showFilter">
+  <div class="filter">
     <p class="filter-header">Фильтр</p>
     <div class="filter-wrap">
       <div class="col-2">
@@ -15,7 +15,12 @@
         <datetime v-model="dateTo" placeholder="Дата до" title="Дата до"></datetime>
       </div>
       <div class="col">
-        <ui-input title="Зачислены средства на" v-model="targetWallet"/>
+        <ui-select
+          title="Зачислены средства на"
+          field="value"
+          v-model="targetWallet"
+          :options="wallets"
+        />
       </div>
       <div class="col-2">
         <ui-input title="Сумма от" v-model="amountFrom"/>
@@ -24,7 +29,12 @@
         <ui-input title="Сумма до" v-model="amountTo"/>
       </div>
       <div class="col-2">
-        <ui-input title="Статус" v-model="status"/>
+        <ui-select
+          title="Статус"
+          field="name"
+          v-model="status"
+          :options="statuses"
+        />
       </div>
       <div class="col-2">
         <ui-select
@@ -41,6 +51,7 @@
 </template>
 
 <script>
+import api from '@/api'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
@@ -54,29 +65,32 @@ export default {
     UiSelect
   },
 
-  props: {
-    value: Boolean
-  },
-
   data: () => ({
-    showFilter: false,
-    type: { value: '' },
+    type: {
+      value: ''
+    },
     typeOptions: [
-      { name: '0', type: 'Оплата кошельком' },
-      { name: '1', type: 'Обмен валюты' },
-      { name: '2', type: 'Оплата' }
+      { name: '0', type: 'Кошелек пользователя' },
+      // { name: '1', type: 'Обмен валюты' },
+      { name: '2', type: 'Карта' }
+    ],
+    wallets: [],
+    statuses: [
+      { name: 'success' },
+      { name: 'failure' }
     ],
     dateFrom: '',
     dateTo: '',
-    targetWallet: '',
+    targetWallet: { value: '' },
     amountFrom: '',
     amountTo: '',
-    status: '',
+    status: { value: '' },
     source: ''
   }),
 
   mounted () {
     this.showFilter = this.value
+    this.getWallets()
   },
 
   methods: {
@@ -84,9 +98,10 @@ export default {
       let data = {
         beforeDate: { value: this.dateTo.split('T')[0] },
         afterDate: { value: this.dateFrom.split('T')[0] },
-        to: { value: this.targetWallet },
+        to: { value: this.targetWallet.value },
         minAmount: { value: this.amountFrom },
         maxAmount: { value: this.amountTo },
+        status: { value: this.status.value },
         type: { value: this.type.name }
       }
       this.$emit('filter', data)
@@ -108,18 +123,15 @@ export default {
         }
       }
       this.$emit('filter', data)
-    }
-  },
-
-  watch: {
-    value (value) {
-      this.showFilter = value
     },
 
-    showFilter (value) {
-      if (this.value !== value) {
-        this.$emit('input', value)
-      }
+    async getWallets () {
+      let res = await api.getWallets()
+      res.wallets.forEach((wallet, index) => {
+        if (wallet.currency === 'USD') {
+          this.wallets.push({ name: wallet.currency, value: wallet.number })
+        }
+      })
     }
   }
 }

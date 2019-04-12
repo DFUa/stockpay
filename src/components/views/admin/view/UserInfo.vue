@@ -44,7 +44,7 @@
           title="Город"
           class="user-info-input"
           :options="options.cities"
-          field="toponymName"
+          :field="['name', 'toponymName']"
           v-model="city"
           :rules="[{ name: 'required', text: 'Выберите город' }]"/>
       </ui-form>
@@ -167,9 +167,9 @@ export default {
     this.firstname = this.userInfo.first_name
     this.lastname = this.userInfo.last_name
     this.loadCountries()
-    this.selectCountry(this.userInfo.country)
+    // this.selectCountry(this.userInfo.country)
     this.loadCities()
-    this.selectCity(this.userInfo.city)
+    // this.selectCity(this.userInfo.city)
 
     let transactionsFilters = {
       userId: { value: this.userInfo.id }
@@ -190,6 +190,7 @@ export default {
     async loadCountries () {
       let res = await api.getCountries()
       this.options.countries = res.countries
+      this.selectCountry(this.userInfo.country)
     },
 
     async loadCities () {
@@ -198,6 +199,7 @@ export default {
       }
       let res = await api.getCities(filters)
       this.options.cities = res.cities
+      this.selectCity(this.userInfo.city)
     },
 
     selectCountry (name) {

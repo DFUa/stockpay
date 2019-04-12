@@ -8,7 +8,7 @@
           <ui-input type="text" title="Имя" v-model="firstname" :rules="[{ name: 'required' }]"/>
           <ui-input type="text" title="Фамилия" v-model="lastname" :rules="[{ name: 'required' }]"/>
           <ui-select title="Страна" field="toponymName" :options="options.countries" v-model="country" :rules="[{ name: 'required', text: 'Выберите страну' }]"/>
-          <ui-select title="Город" field="toponymName" :options="options.cities" v-model="city" :rules="[{ name: 'required', text: 'Выберите город' }]"/>
+          <ui-select title="Город" :field="['name', 'toponymName']" :options="options.cities" v-model="city" :rules="[{ name: 'required', text: 'Выберите город' }]"/>
         </div>
         <div class="col">
           <ui-input type="text" title="Никнейм" v-model="nickname" :rules="[{ name: 'min', value: 3 }, { name: 'required' }, { name: 'pattern', value: /^[A-Za-z0-9_]+$/, text: 'Ваш никнейм содержит недопустимые символы' }]"/>
@@ -115,8 +115,13 @@ export default {
       }
       let res = await api.getCities(filters)
       this.options.cities = res.cities
-      console.log(this.options.cities)
     }
   }
 }
 </script>
+
+<style>
+  .auth-wrapper .ui-form.fields-col-2 .col > div {
+    margin-bottom: 40px;
+  }
+</style>
