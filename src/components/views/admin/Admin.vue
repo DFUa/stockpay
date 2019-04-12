@@ -40,7 +40,7 @@ export default {
   .admin-wrap {
     position: relative;
     margin: 0 25px;
-    max-width: 1550px;
+    // max-width: 1550px;
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
