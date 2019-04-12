@@ -100,7 +100,6 @@ export default {
             mode: 'embed'
           }).on('liqpay.ready', () => {
             this.showBtn = false
-            console.log(liqPayEl.querySelectorAll('iframe')[0])
           }).on("liqpay.callback", data => {
             this.$toasted.show('Транзакция прошла успешно', {
               theme: 'toasted-primary',
