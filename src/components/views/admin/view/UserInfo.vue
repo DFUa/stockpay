@@ -3,6 +3,15 @@
     <div class="user-info-nav">
       <a href="#" class="back-btn" @click="routeBack">Назад</a>
       <ui-tabs @active="changeActiveTab" class="user-info-tab" :items="tabs"/>
+
+      <transition name="fade" mode="out-in">
+        <button v-if="currentTab === 1" class="i-filter" @click="showFilterModal"></button>
+      </transition>
+
+      <transition name="fade-up" mode="out-in">
+        <ui-filter v-if="showFilter" @filter="filter"></ui-filter>
+      </transition>
+
     </div>
     <div v-if="currentTab === 0" class="user-info-content">
       <h4>Личные данные</h4>
@@ -109,6 +118,7 @@ import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiTabs from '@/components/ui/ui-tabs/UiTabs.vue'
 import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiFilter from '@/components/ui/ui-filter/UiFilter.vue'
 
 export default {
   name: 'UserInfo',
@@ -118,11 +128,13 @@ export default {
     UiTabs,
     UiSelect,
     UiButton,
-    UiForm
+    UiForm,
+    UiFilter
   },
 
   data: () => ({
     userInfo: [],
+    showFilter: false,
     currentTab: 0,
     tabs: [
       { id: 0, title: 'Личные данные', icon: 'i-tab-transfer', activeTab: true },
@@ -170,12 +182,7 @@ export default {
     // this.selectCountry(this.userInfo.country)
     this.loadCities()
     // this.selectCity(this.userInfo.city)
-
-    let transactionsFilters = {
-      userId: { value: this.userInfo.id }
-    }
-    let transactions = await api.getUserTransactions(transactionsFilters)
-    this.transactions = transactions
+    this.getTransactions()
   },
 
   methods: {
@@ -193,6 +200,11 @@ export default {
       this.selectCountry(this.userInfo.country)
     },
 
+    selectCountry (name) {
+      let items = this.options.countries
+      this.country = this.findElementInArray(items, 'toponymName', name)
+    },
+
     async loadCities () {
       let filters = {
         country: { value: this.country.code }
@@ -202,24 +214,9 @@ export default {
       this.selectCity(this.userInfo.city)
     },
 
-    selectCountry (name) {
-      let items = this.options.countries
-      this.country = this.findElementInArray(items, 'toponymName', name)
-    },
-
     selectCity (name) {
       let items = this.options.cities
       this.city = this.findElementInArray(items, 'toponymName', name)
-    },
-
-    findElementInArray (array, field, value) {
-      let count = array.length
-      for (let i = 0; i < count; i++) {
-        if (array[i][field] === value) {
-          return array[i]
-        }
-      }
-      return null
     },
 
     async updateData () {
@@ -271,6 +268,31 @@ export default {
           }
         })
       }
+    },
+
+    findElementInArray (array, field, value) {
+      for (let item of array) {
+        if (item[field] === value) {
+          return item
+        }
+      }
+      return null
+    },
+
+    async getTransactions (filter) {
+      let data = {
+        userId: { value: this.userInfo.id }
+      }
+      let transactions = await api.getUserTransactions(Object.assign(data, filter))
+      this.transactions = transactions
+    },
+
+    filter (data) {
+      this.getTransactions(data)
+    },
+
+    showFilterModal () {
+      this.showFilter = !this.showFilter
     }
   },
 
@@ -288,6 +310,11 @@ export default {
 .user-info-nav {
   padding: 25px 40px;
   display: flex;
+  align-items: center;
+  .filter{
+    top: 20px;
+    right: 10px;
+  }
 }
 
 .user-info-tab {

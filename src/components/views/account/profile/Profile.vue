@@ -141,7 +141,6 @@ export default {
     },
 
     async loadProfile () {
-      console.log('loadProfile')
       let res = await api.getProfile()
       this.firstname = res.first_name
       this.lastname = res.last_name
