@@ -38,7 +38,7 @@ export default {
 <style scoped>
   .main-wrapper {
     width: 100vw;
-    padding-top: 210px;
+    padding-top: 175px;
     height: 100vh;
     background: #F6F6F6;
   }

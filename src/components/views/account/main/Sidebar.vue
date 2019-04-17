@@ -16,7 +16,7 @@ export default {
     position: fixed;
     width: 320px;
     background: #fff;
-    top: 195px;
+    top: 160px;
     padding-top: 20px;
     height: calc(100vh - 160px);
     border-top: 1px solid #F6F6F6;
