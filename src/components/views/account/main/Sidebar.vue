@@ -1,12 +1,26 @@
 <template>
   <div class="sidebar" v-if="!$route.path.includes('/dashboard')">
-    <slot></slot>
+    <vue-scroll :ops="ops">
+      <slot></slot>
+    </vue-scroll>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  data () {
+    return {
+      ops: {
+        scrollPanel: {
+          scrollingX: false
+        },
+        bar: {
+          size: 0
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -89,6 +103,21 @@ export default {
 
     .sidebar:hover .item.disabled * {
       opacity: 0.3;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .sidebar {
+      width: 60px;
+    }
+
+    .sidebar:hover {
+      width: 280px;
+    }
+
+    .sidebar .item {
+      width: 280px;
+      padding: 0 18px;
     }
   }
 </style>

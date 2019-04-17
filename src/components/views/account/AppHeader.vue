@@ -245,4 +245,14 @@ export default {
       display: none;
     }
   }
+
+  @media screen and (max-width: 360px) {
+    .top-bar {
+      padding: 0 30px;
+    }
+
+    .user-profile {
+      right: 110px;
+    }
+  }
 </style>
