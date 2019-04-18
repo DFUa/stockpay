@@ -5,16 +5,16 @@
 
     <div class="inputs-wrapper">
       <div class="from">
-        <ui-currency-input title="Сумма" v-model="inValue" mask="############"/>
+        <ui-currency-input title="Сумма" v-model="inValue" mask="MMMMMMMMM" :tokens="moneyMasks"/>
         <div class="wallet-label">{{ wallets[inValue.key] }}</div>
       </div>
       <div class="toggler" :class="{ 'i-arrow-right': true }"></div>
       <div class="to">
-        <ui-currency-input title="Номер карточки" v-model="outValue" mask="################"/>
+        <ui-input title="Номер карточки" v-model="outValue" :rules="[{ name: 'pattern', value: /^\d{16}$/ }]" ref="cardNum"/>
       </div>
     </div>
 
-    <p class="received">Пользователь получит после перевода: <span>{{received}} {{outValue.key.toUpperCase()}}</span></p>
+    <p class="received">Пользователь получит после перевода: <span>{{received}} {{inValue.key.toUpperCase()}}</span></p>
     <p class="commission">Комиссия составит: <span>{{commission}} {{inValue.key.toUpperCase()}}</span></p>
 
     <div class="sub-title">Для подтверждения перевода нажмите <br>
@@ -30,12 +30,14 @@ import api from '@/api'
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiCurrencyInput from '@/components/ui/ui-currency-input/UiCurrencyInput.vue'
+import UiInput from '@/components/ui/ui-input/UiInput.vue'
 
 export default {
   name: 'BankCard',
   components: {
     UiCard,
     UiButton,
+    UiInput,
     UiCurrencyInput
   },
   data () {
@@ -44,13 +46,15 @@ export default {
         value: 0,
         key: 'usd'
       },
-      outValue: {
-        value: '',
-        key: 'usd'
-      },
+      outValue: '',
       received: 0,
       commission: 0,
       wallets: {},
+      moneyMasks: {
+        M: {
+          pattern: /^[0-9.]?$/
+        }
+      },
       fee: ''
     }
   },
@@ -69,10 +73,10 @@ export default {
     async submit () {
       let data = {
         wallet_from: this.wallets[this.inValue.key],
-        wallet_to: this.outValue.key.toUpperCase() + this.outValue.value,
+        wallet_to: this.outValue,
         amount: this.inValue.value
       }
-      if (data.amount <= 0 || this.outValue.value.length === 0) {
+      if (data.amount <= 0 || this.outValue.length === 0) {
         this.$toasted.clear()
         this.$toasted.show('Пожалуйста, заполните, все поля!', {
           theme: 'toasted-primary',
@@ -83,13 +87,36 @@ export default {
       }
       if (data.wallet_from === data.wallet_to) {
         this.$toasted.clear()
-        this.$toasted.show('Ваш номер кошелька совпадает с номером кошелька получателя. Введите другой кошелек получателя', {
+        this.$toasted.show('Ваш номер кошелька совпадает с номером карты получателя', {
           theme: 'toasted-primary',
           position: 'bottom-center',
           duration: 2000
         })
         return
       }
+
+      if (!this.$refs.cardNum.validate()) return
+
+      if (data.amount > 1) {
+        this.$toasted.clear()
+        this.$toasted.show(this.$store.getters.errorsList['bad_amount'], {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 2000
+        })
+        return
+      }
+
+      // for test
+      this.$toasted.clear()
+      this.$toasted.show('Ошибка транзакции', {
+        theme: 'toasted-primary',
+        position: 'bottom-center',
+        duration: 2000
+      })
+      return
+      // for test
+
       let res = await api.sendMoneyToPerson(data)
       this.$toasted.clear()
       if (res.error) {
@@ -105,7 +132,7 @@ export default {
           duration: 2000
         })
         this.inValue.value = 0
-        this.outValue.value = 0
+        this.outValue = 0
       }
     }
   },
