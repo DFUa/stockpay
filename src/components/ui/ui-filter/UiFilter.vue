@@ -102,7 +102,7 @@ export default {
         to: { value: this.targetWallet.value },
         minAmount: { value: this.amountFrom },
         maxAmount: { value: this.amountTo },
-        status: { value: this.status.value },
+        status: { value: this.status.name },
         type: { value: this.type.name }
       }
       this.$emit('filter', data)
