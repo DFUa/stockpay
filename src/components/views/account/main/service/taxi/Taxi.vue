@@ -73,8 +73,8 @@ export default {
     return {
       currentTab: 0,
       tabs: [
-        { id: 0, title: 'Оплата картой', activeTab: true }
-        // { id: 1, title: 'Оплата StocksPay', activeTab: false }
+        { id: 0, title: 'Оплата картой', activeTab: true },
+        { id: 1, title: 'Оплата StocksPay', activeTab: false }
       ],
       moneyMasks: {
         M: {
