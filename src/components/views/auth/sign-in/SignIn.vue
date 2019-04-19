@@ -65,7 +65,7 @@ export default {
         await api.login(data).then(res => {
           if (!res.error) {
             if (!this.$store.getters.isAdmin) {
-              this.$router.push('/account/main/dashboard')
+              this.$router.push('/account/main')
             } else {
               this.$router.push('/admin')
             }

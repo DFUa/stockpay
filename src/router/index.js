@@ -39,7 +39,7 @@ const router = new Router({
         {
           name: 'main',
           path: 'main',
-          redirect: 'main/dashboard',
+          redirect: 'main/service',
           component: lazyLoading('account/main/Main'),
           children: [
             {

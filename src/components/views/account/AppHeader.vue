@@ -53,9 +53,9 @@ export default {
 
   data: () => ({
     tabs: [
-      { id: 0, title: 'Счета и транзакции', icon: 'i-tab-transaction', path: '/account/main/dashboard' },
-      { id: 1, title: 'Пополнить', icon: 'i-tab-add-founds', path: '/account/main/add-founds' },
-      { id: 2, title: 'Перевести', icon: 'i-tab-transfer', path: '/account/main/transfer' },
+      // { id: 0, title: 'Счета и транзакции', icon: 'i-tab-transaction', path: '/account/main/dashboard' },
+      // { id: 1, title: 'Пополнить', icon: 'i-tab-add-founds', path: '/account/main/add-founds' },
+      // { id: 2, title: 'Перевести', icon: 'i-tab-transfer', path: '/account/main/transfer' },
       { id: 3, title: 'Услуги', icon: 'i-tab-phone', path: '/account/main/service' }
     ],
     cources: {
