@@ -16,7 +16,7 @@
         </ui-form>
         <div class="tips">
           <div @click="openPasswordReset" class="item">Забыли пароль?</div>
-          <div class="item">Лицензионное соглашение</div>
+          <!-- <div class="item">Лицензионное соглашение</div> -->
         </div>
       </div>
       <div class="btns">
