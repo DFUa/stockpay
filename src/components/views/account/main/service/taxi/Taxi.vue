@@ -1,7 +1,7 @@
 <template>
   <ui-card class="inner">
     <ui-tabs @active="changeActiveTab" :items="tabs" class="taxi-tabs"/>
-    
+
     <div class="taxi-content">
       <div class="title">Оплатa такси</div>
       <div class="sub-title">Для того что бы вызвать такси позвоните по номеру +380990832640 и озвучьте адрес доставки и прибытия такси. После того как вы прибудете в место назначения или не задолго до прибытия вам необходимо будет провести оплату такси на этой же странице оплаты</div>
@@ -44,7 +44,7 @@
           </div>
         </div>
       </div>
-     
+
       <ui-button @click="submit" :accent="true" title="Оплатить"/>
     </div>
   </ui-card>
@@ -135,7 +135,7 @@ export default {
         return
       }
 
-      if (this.currentTab === 1 && !this.$refs.taxiWalletTo.validate()) return;
+      if (this.currentTab === 1 && !this.$refs.taxiWalletTo.validate()) return
 
       if (data.amount > 1) {
         this.$toasted.clear()
@@ -149,7 +149,6 @@ export default {
 
       if (this.currentTab === 0) this.cardPay(data)
       else if (this.currentTab === 1) this.stocksPay(data)
-
     },
     cardPay (data) {
       // for test
@@ -159,12 +158,9 @@ export default {
         position: 'bottom-center',
         duration: 2000
       })
-      return
       // for test
     },
     async stocksPay (data) {
-      console.log(data)
-      return
       let res = await api.sendMoneyToPerson(data)
       this.$toasted.clear()
       if (res.error) {
@@ -186,7 +182,7 @@ export default {
     },
     checkFields (fields) {
       for (let item in fields) {
-        if (fields[item].length === 0) return false  
+        if (fields[item].length === 0) return false
       }
 
       return true
