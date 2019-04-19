@@ -8,11 +8,12 @@
 
       <div v-if="currentTab === 0" class="taxi-form">
         <div class="inputs-wrapper">
-          <div class="input-wrap">
+          <div class="from">
             <ui-currency-input title="Сумма" v-model="amount" mask="MMMMMMMMM" :tokens="moneyMasks"/>
+            <div class="wallet-label">{{ wallets[amount.key] }}</div>
           </div>
           <div class="input-wrap">
-            <ui-select title="ФИО"
+            <ui-select title="Имя, Фамилия"
             :options="usernames"
             field="username"
             v-model="username"
@@ -23,11 +24,12 @@
 
       <div v-if="currentTab === 1" form="taxi-form">
         <div class="inputs-wrapper">
-          <div class="input-wrap">
+          <div class="from">
             <ui-currency-input title="Сумма" v-model="amount" mask="MMMMMMMMM" :tokens="moneyMasks"/>
+            <div class="wallet-label">{{ wallets[amount.key] }}</div>
           </div>
           <div class="input-wrap">
-            <ui-select title="ФИО"
+            <ui-select title="Имя, Фамилия"
             :options="usernames"
             field="username"
             v-model="username"
@@ -49,6 +51,7 @@
 </template>
 
 <script>
+import api from '@/api'
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
 import UiTabs from '@/components/ui/ui-tabs/UiTabs.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
@@ -79,28 +82,48 @@ export default {
         }
       },
       names: [
-        { name: 'John', surname: 'Dou' }
+        { name: 'Vlad', surname: 'Podolsky' },
+        { name: 'Dmytro', surname: 'Sychenko' }
       ],
       amount: {
         value: '',
         key: 'usd'
       },
+      wallets: {},
       wallet: '',
       username: {
         value: ''
       }
     }
   },
+  created () {
+    this.init()
+  },
   methods: {
+    async init () {
+      let res = await api.getWallets()
+      res.wallets.forEach(item => {
+        this.$set(this.wallets, item.currency.toLowerCase(), item.number)
+      })
+    },
     changeActiveTab (id) {
       this.currentTab = id
     },
     submit () {
-      let data = {
-        amount: this.amount.value,
-        username: this.username
+      let data = {}
+      if (this.currentTab === 0) {
+        data = {
+          amount: this.amount.value,
+          username: this.username
+        }
+      } else if (this.currentTab === 1) {
+        data = {
+          amount: this.amount.value,
+          wallet_from: this.wallets[this.amount.key],
+          wallet_to: this.amount.key.toUpperCase() + this.wallet,
+          username: this.username
+        }
       }
-      if (this.currentTab === 1) data.wallet = this.wallet
 
       if (!this.checkFields(data)) {
         this.$toasted.clear()
@@ -114,8 +137,21 @@ export default {
 
       if (this.currentTab === 1 && !this.$refs.taxiWalletTo.validate()) return;
 
-      console.log(data);
+      if (data.amount > 1) {
+        this.$toasted.clear()
+        this.$toasted.show(this.$store.getters.errorsList['bad_amount'], {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 2000
+        })
+        return
+      }
 
+      if (this.currentTab === 0) this.cardPay(data)
+      else if (this.currentTab === 1) this.stocksPay(data)
+
+    },
+    cardPay (data) {
       // for test
       this.$toasted.clear()
       this.$toasted.show('Ошибка транзакции', {
@@ -125,8 +161,28 @@ export default {
       })
       return
       // for test
-
-      // send request
+    },
+    async stocksPay (data) {
+      console.log(data)
+      return
+      let res = await api.sendMoneyToPerson(data)
+      this.$toasted.clear()
+      if (res.error) {
+        this.$toasted.show(`${this.$store.getters.errorsList[res.message]}`, {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 2000
+        })
+      } else {
+        this.$toasted.show('Transfer was done', {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 2000
+        })
+        this.amount.value = ''
+        this.wallet = ''
+        this.username.value = ''
+      }
     },
     checkFields (fields) {
       for (let item in fields) {
@@ -163,5 +219,8 @@ export default {
 <style lang="scss" scoped>
   .taxi-content {
     margin-top: 40px;
+  }
+  .from {
+    margin-right: 30px;
   }
 </style>
