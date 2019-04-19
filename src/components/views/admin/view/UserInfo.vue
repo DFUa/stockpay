@@ -365,7 +365,7 @@ export default {
   margin: 10px -10px 30px;
   .user-info-input {
     width: 250px;
-    margin: 0 10px;
+    margin: 0 10px 30px;
   }
 }
 
@@ -374,5 +374,11 @@ export default {
   font-weight: 700;
   font-family: 'Montserrat';
   font-size: 18px;
+}
+
+@media screen and (max-width: 535px) {
+  .back-btn {
+    font-size: 0;
+  }
 }
 </style>
