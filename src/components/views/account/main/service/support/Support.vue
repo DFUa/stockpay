@@ -1,7 +1,7 @@
 <template>
   <ui-card class="inner">
     <ui-tabs @active="changeActiveTab" :items="tabs" class="support-tabs"/>
-    
+
     <div class="support-content">
       <div class="title">Оплатa мастеру</div>
       <div class="sub-title">Для того что бы вызвать мастера на дом позвоните по номеру +380990832640 и закажите мастера. После того как мастер выполнит свою работу вам необходимо будет провести оплату мастера на этой же странице оплаты</div>
@@ -44,7 +44,7 @@
           </div>
         </div>
       </div>
-     
+
       <ui-button @click="submit" :accent="true" title="Оплатить"/>
     </div>
   </ui-card>
@@ -135,7 +135,7 @@ export default {
         return
       }
 
-      if (this.currentTab === 1 && !this.$refs.supportWalletTo.validate()) return;
+      if (this.currentTab === 1 && !this.$refs.supportWalletTo.validate()) return
 
       if (data.amount > 1) {
         this.$toasted.clear()
@@ -149,7 +149,6 @@ export default {
 
       if (this.currentTab === 0) this.cardPay(data)
       else if (this.currentTab === 1) this.stocksPay(data)
-
     },
     cardPay (data) {
       // for test
@@ -159,7 +158,6 @@ export default {
         position: 'bottom-center',
         duration: 2000
       })
-      return
       // for test
     },
     async stocksPay (data) {
@@ -184,7 +182,7 @@ export default {
     },
     checkFields (fields) {
       for (let item in fields) {
-        if (fields[item].length === 0) return false  
+        if (fields[item].length === 0) return false
       }
 
       return true
@@ -213,7 +211,7 @@ export default {
       display: none;
     }
   }
-  
+
   @media screen and (max-width: 360px) {
     .support-tabs .items-wrapper .item .title {
       display: block;

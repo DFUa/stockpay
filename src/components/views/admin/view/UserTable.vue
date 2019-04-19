@@ -1,20 +1,22 @@
 <template>
-  <table>
-    <thead>
-      <tr>
-        <td v-for="header in headers" :key="header.id">{{ header.text }}</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(user, index) in usersData" :key="index" @click="getInfo(user.email, user.nickname)">
-        <td>{{index}}</td>
-        <td>{{user.nickname}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.country}}</td>
-        <td>{{user.first_name}} {{user.last_name}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <vue-scroll :ops="ops">
+    <table>
+      <thead>
+        <tr>
+          <td v-for="header in headers" :key="header.id">{{ header.text }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(user, index) in usersData" :key="index" @click="getInfo(user.email, user.nickname)">
+          <td>{{index}}</td>
+          <td>{{user.nickname}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.country}}</td>
+          <td>{{user.first_name}} {{user.last_name}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </vue-scroll>
 </template>
 
 <script>
@@ -40,7 +42,13 @@ export default {
       id: 4,
       text: 'Имя Фамилия'
     }],
-    usersData: []
+    usersData: [],
+    ops: {
+      bar: {
+        background: '#006344',
+        opacity: 0.8
+      }
+    }
   }),
 
   mounted () {
