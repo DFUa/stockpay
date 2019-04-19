@@ -13,7 +13,7 @@
             <div class="wallet-label">{{ wallets[amount.key] }}</div>
           </div>
           <div class="input-wrap">
-            <ui-select title="Имя, Фамилия"
+            <ui-select title="Имя, фамилия сотрудника"
             :options="usernames"
             field="username"
             v-model="username"
@@ -29,7 +29,7 @@
             <div class="wallet-label">{{ wallets[amount.key] }}</div>
           </div>
           <div class="input-wrap">
-            <ui-select title="Имя, Фамилия"
+            <ui-select title="Имя, фамилия сотрудника"
             :options="usernames"
             field="username"
             v-model="username"
@@ -82,8 +82,8 @@ export default {
         }
       },
       names: [
-        { name: 'Vlad', surname: 'Podolsky' },
-        { name: 'Dmytro', surname: 'Sychenko' }
+        { name: 'Владислав', surname: 'Подольский' },
+        { name: 'Дмитрий', surname: 'Сыченко' }
       ],
       amount: {
         value: '',
@@ -213,6 +213,12 @@ export default {
 
     .item span {
       display: none;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .taxi-tabs .items-wrapper .item .title {
+      display: block;
     }
   }
 </style>
