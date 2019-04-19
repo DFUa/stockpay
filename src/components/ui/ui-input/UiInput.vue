@@ -8,7 +8,7 @@
       :maxlength="type === 'password' ? 35 : 100"
       :disabled="disabled"
       :style="{ background: background ? background : '#fff' }"
-      :type="(type && !showPassword) ? type : 'text'" required>
+      :type="(type && !showPassword) ? type : 'text'">
 
     <div v-if="disabled" class="disabled-title">
       {{ currentValue }}

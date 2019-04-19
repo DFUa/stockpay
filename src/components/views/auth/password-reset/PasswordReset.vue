@@ -3,9 +3,9 @@
     <div v-if="loaded">
       <h1>Восстановление пароля</h1>
 
-      <div class="fields">
-        <ui-input title="Почта" v-model="email" :rules="[{ name: 'required', text: 'Данное поле не должно быть пустым' }]" ref="pwdResInput"/>
-      </div>
+      <ui-form class="fields" ref="resetPass">
+        <ui-input type="email" title="Почта" v-model="email"/>
+      </ui-form>
 
       <div class="btns">
         <ui-button air title="Назад" @click="goBack"/>
@@ -21,6 +21,7 @@
 <script>
 import api from '@/api'
 
+import UiForm from '@/components/ui/ui-form/UiForm.vue'
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSpinner from '@/components/ui/ui-spinner/UiSpinner.vue'
@@ -29,6 +30,7 @@ export default {
   name: 'PasswordReset',
 
   components: {
+    UiForm,
     UiInput,
     UiButton,
     UiSpinner
@@ -41,7 +43,7 @@ export default {
 
   methods: {
     async passwordReset () {
-      if (this.$refs.pwdResInput.validate()) {
+      if (this.$refs.resetPass.validate()) {
         this.loaded = false
         let data = {
           email: this.email
