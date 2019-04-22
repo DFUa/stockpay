@@ -144,30 +144,30 @@ export default {
       }
 
       this.loading = true
-      // let response = await api.sendPayoutRequest(reqeustData)
-      // this.loading = false
+      let response = await api.sendPayoutRequest(reqeustData)
+      this.loading = false
 
-      // this.$toasted.clear()
+      this.$toasted.clear()
 
-      // if (response.error) {
-      //   this.$toasted.show(`${this.$store.getters.errorsList[response.message]}`, {
-      //     theme: 'toasted-primary',
-      //     position: 'bottom-center',
-      //     duration: 4000
-      //   })
-      //   if (response.message === 'wrong_password') return
-      // } else {
-      //   this.$toasted.show('Transfer was done', {
-      //     theme: 'toasted-primary',
-      //     position: 'bottom-center',
-      //     duration: 3000
-      //   })
+      if (response.error) {
+        this.$toasted.show(`${this.$store.getters.errorsList[response.message]}`, {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 4000
+        })
+        if (response.message === 'wrong_password') return
+      } else {
+        this.$toasted.show('Transfer was done', {
+          theme: 'toasted-primary',
+          position: 'bottom-center',
+          duration: 3000
+        })
 
-      //   this.inValue.value = 0
-      //   this.card = ''
-      // }
+        this.inValue.value = 0
+        this.card = ''
+      }
 
-      // this.closePasswordModal()
+      this.closePasswordModal()
     },
     openPasswordModal () {
       this.showPasswordModal = true
