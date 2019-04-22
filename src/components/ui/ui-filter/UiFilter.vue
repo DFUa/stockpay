@@ -52,6 +52,7 @@
 
 <script>
 import api from '@/api'
+
 import UiInput from '@/components/ui/ui-input/UiInput.vue'
 import UiButton from '@/components/ui/ui-button/UiButton.vue'
 import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
@@ -101,7 +102,7 @@ export default {
         to: { value: this.targetWallet.value },
         minAmount: { value: this.amountFrom },
         maxAmount: { value: this.amountTo },
-        status: { value: this.status.value },
+        status: { value: this.status.name },
         type: { value: this.type.name }
       }
       this.$emit('filter', data)

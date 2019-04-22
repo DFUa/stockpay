@@ -51,7 +51,7 @@ export default {
   }
 
   .items-wrapper {
-    padding: 0 80px;
+    /* padding: 0 80px; */
     display: flex;
     justify-content: space-between;
   }
@@ -99,6 +99,28 @@ export default {
 
     .items-wrapper .item span {
       margin: 0;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .items-wrapper {
+      padding: 0 4px;
+    }
+  }
+
+  @media screen and (min-width: 425px) {
+    .items-wrapper {
+      padding: 0 30px;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .items-wrapper .item .title {
+      display: none;
+    }
+
+    .items-wrapper .item span {
+      display: inline-block;
     }
   }
 </style>

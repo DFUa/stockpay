@@ -1,7 +1,6 @@
 <template>
   <ui-card class="inner">
-    <h1>Находится в разработке</h1>
-    <!-- <div class="title">Пополнить телефон</div>
+    <div class="title">Пополнить телефон</div>
     <div class="sub-title">Выберите оператора и введите телефон для пополнения, затем выберите сумму и счет с которого необходимо списать средства. После подтвердите операцию</div>
 
     <div class="inputs-wrapper" style="margin-bottom: 0">
@@ -35,28 +34,28 @@
       </div>
     </div>
 
-    <ui-button @click="submit" :accent="true" title="Подтвердить"/> -->
+    <ui-button @click="submit" :accent="true" title="Подтвердить"/>
   </ui-card>
 </template>
 
 <script>
-// import api from '@/api'
+import api from '@/api'
 
 import UiCard from '@/components/ui/ui-card/UiCard.vue'
-// import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
-// import UiInput from '@/components/ui/ui-input/UiInput.vue'
-// import UiCurrencyInput from '@/components/ui/ui-currency-input/UiCurrencyInput.vue'
-// import UiButton from '@/components/ui/ui-button/UiButton.vue'
+import UiSelect from '@/components/ui/ui-select/UiSelect.vue'
+import UiInput from '@/components/ui/ui-input/UiInput.vue'
+import UiCurrencyInput from '@/components/ui/ui-currency-input/UiCurrencyInput.vue'
+import UiButton from '@/components/ui/ui-button/UiButton.vue'
 
 export default {
   name: 'Phone',
 
   components: {
-    UiCard
-    // UiSelect,
-    // UiInput,
-    // UiCurrencyInput,
-    // UiButton
+    UiCard,
+    UiSelect,
+    UiInput,
+    UiCurrencyInput,
+    UiButton
   },
 
   data: () => ({
@@ -84,17 +83,17 @@ export default {
   }),
 
   created () {
-    // this.init()
+    this.init()
   },
 
   methods: {
     async init () {
-      // let res = await api.getWallets()
-      // res.wallets.forEach((wallet, index) => {
-      //   if (wallet.currency === 'USD') {
-      //     this.wallets.push({ name: wallet.currency, value: wallet.number })
-      //   }
-      // })
+      let res = await api.getWallets()
+      res.wallets.forEach((wallet, index) => {
+        if (wallet.currency === 'USD') {
+          this.wallets.push({ name: wallet.currency, value: wallet.number })
+        }
+      })
     },
 
     submit () {

@@ -184,9 +184,4 @@ export default {
     justify-content: center;
     background: rgba(245, 245, 245, 0.5);
   }
-
-  .i-filter{
-    cursor: pointer;
-    z-index: 2;
-  }
 </style>

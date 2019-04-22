@@ -1,9 +1,9 @@
 <template>
   <div class="app-header">
 
-    <div class="dev-alert">
+    <!-- <div class="dev-alert">
       <p>сервис находится в разработке</p>
-    </div>
+    </div> -->
 
     <div class="top-bar">
       <div class="logo">StocksPay</div>
@@ -189,7 +189,7 @@ export default {
     box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.03);
   }
 
-  .dev-alert {
+  /* .dev-alert {
     height: 35px;
     width: 100%;
     color: #fff;
@@ -198,7 +198,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+  } */
 
   @media screen and (max-width: 1650px) {
     .user-profile .name {
@@ -243,6 +243,16 @@ export default {
   @media screen and (max-width: 985px) {
     .info {
       display: none;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    .top-bar {
+      padding: 0 30px;
+    }
+
+    .user-profile {
+      right: 110px;
     }
   }
 </style>

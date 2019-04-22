@@ -78,7 +78,7 @@ const router = new Router({
             }, {
               name: 'service',
               path: 'service',
-              redirect: 'service/phone',
+              redirect: 'service/support',
               components: {
                 default: lazyLoading('account/main/service/Service'),
                 sidebar: lazyLoading('account/main/service/ServiceSidebar')

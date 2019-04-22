@@ -17,8 +17,8 @@ export default {
   data: () => ({
     items: [
       { id: 0, title: 'Другому человеку', icon: 'i-tr-person', path: 'person' },
-      { id: 1, title: 'Между своими счетами', icon: 'i-tr-cards', path: 'wallets', disabled: true },
-      { id: 2, title: 'На банковскую карту', icon: 'i-tr-bank', path: 'bank-card', disabled: true },
+      { id: 1, title: 'На банковскую карту', icon: 'i-tr-bank', path: 'bank-card' },
+      { id: 2, title: 'Между своими счетами', icon: 'i-tr-cards', path: 'wallets', disabled: true },
       { id: 3, title: 'На банковский счет', icon: 'i-tr-building', path: 'bank-account', disabled: true },
       { id: 4, title: 'На криптовалютный кошелек', icon: 'i-tr-coins', path: 'crypto', disabled: true },
       { id: 5, title: 'На кошелек Яндекс Деньги', icon: 'i-tr-yandex', path: 'crypto', disabled: true }

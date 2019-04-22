@@ -16,7 +16,7 @@
         </ui-form>
         <div class="tips">
           <div @click="openPasswordReset" class="item">Забыли пароль?</div>
-          <div class="item">Лицензионное соглашение</div>
+          <!-- <div class="item">Лицензионное соглашение</div> -->
         </div>
       </div>
       <div class="btns">
@@ -65,7 +65,7 @@ export default {
         await api.login(data).then(res => {
           if (!res.error) {
             if (!this.$store.getters.isAdmin) {
-              this.$router.push('/account/main/dashboard')
+              this.$router.push('/account/main')
             } else {
               this.$router.push('/admin')
             }
