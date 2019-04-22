@@ -69,7 +69,8 @@ export default {
     transactionTypes: [
       { type: 0, name: 'Кошелек пользователя' },
       { type: 1, name: 'Обмен валюты' },
-      { type: 2, name: 'Карта' }
+      { type: 2, name: 'Карта зачисление' },
+      { type: 3, name: 'Карта вывод' },
     ]
   }),
 

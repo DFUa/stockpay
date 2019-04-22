@@ -73,7 +73,8 @@ export default {
     typeOptions: [
       { name: '0', type: 'Кошелек пользователя' },
       // { name: '1', type: 'Обмен валюты' },
-      { name: '2', type: 'Карта' }
+      { name: '2', type: 'Карта зачисление' },
+      { name: '3', type: 'Карта вывод' },
     ],
     wallets: [],
     statuses: [
