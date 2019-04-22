@@ -11,7 +11,7 @@
         <transition name="slide-right" mode="out-in">
           <router-view/>
         </transition>
-        
+
       </div>
     </div>
   </ui-view-preloader>
@@ -30,7 +30,7 @@ export default {
     loaded: false
   }),
 
-  created() {
+  created () {
     this.loaded = true
   },
 

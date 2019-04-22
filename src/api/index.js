@@ -165,6 +165,10 @@ export default {
     return this.execute('post', '/site/send_money', data)
   },
 
+  sendPayoutRequest (data) {
+    return this.execute('post', 'site/payout', data)
+  },
+
   sendMoneyByCard (data) {
     return this.execute('post', '/liqpay/get_pay_data', data)
   }
