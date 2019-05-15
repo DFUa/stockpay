@@ -14,11 +14,13 @@
       </div>
     </div>
 
-    <p class="received">Пользователь получит после перевода: <span>{{received}} {{inValue.key.toUpperCase()}}</span></p>
     <p class="commission">Комиссия составит: <span>{{commission}} {{inValue.key.toUpperCase()}}</span></p>
+    <p class="received">Пользователь получит после перевода: <span>{{received}} {{inValue.key.toUpperCase()}}</span></p>
 
     <div class="sub-title">Для подтверждения перевода нажмите <br>
       на кнопку “Отправить средства”</div>
+
+    <div class="received"><span>Средства будут зачислены в течении 5 рабочих дней</span></div>
 
     <ui-button @click="checkInputFields" :accent="true" title="Отправить средства"/>
 
@@ -196,14 +198,14 @@ export default {
   span{
     font-family: 'Montserrat';
     font-weight: 600;
-    color: #F97979;
+    color: #006344;
   }
 }
 
-.commission{
+.received{
   margin-bottom: 20px;
   span{
-    color: #006344;
+    color: #F97979;
   }
 }
 
