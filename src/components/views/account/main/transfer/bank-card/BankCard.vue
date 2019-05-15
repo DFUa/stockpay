@@ -14,6 +14,16 @@
       </div>
     </div>
 
+    <div class="title">Введите имя и фамилию получателя на английском языке</div>
+    <div class="inputs-wrapper">
+      <div class="input-wrap">
+        <ui-input title="Имя" v-model="firstName" :rules="[{ name: 'pattern', value: /^[A-Za-z]*$/, text: 'Введите имя и фамилию получателя на английском языке' }]" ref="testFirstName"/>
+      </div>
+      <div class="input-wrap">
+        <ui-input title="Фамилия" v-model="lastName" :rules="[{ name: 'pattern', value: /^[A-Za-z]*$/, text: 'Введите имя и фамилию получателя на английском языке' }]" ref="testLastName"/>
+      </div>
+    </div>
+
     <p class="commission">Комиссия составит: <span>{{commission}} {{inValue.key.toUpperCase()}}</span></p>
     <p class="received">Пользователь получит после перевода: <span>{{received}} {{inValue.key.toUpperCase()}}</span></p>
 
@@ -83,6 +93,8 @@ export default {
           pattern: /^[0-9.]?$/
         }
       },
+      firstName: '',
+      lastName: '',
       fee: '',
       showPasswordModal: false,
       loading: false
@@ -124,6 +136,8 @@ export default {
       }
 
       if (!this.$refs.cardNum.validate()) return
+      if (!this.$refs.testFirstName.validate()) return
+      if (!this.$refs.testLastName.validate()) return
 
       if (this.inValue.value > 1) {
         this.$toasted.clear()
@@ -137,12 +151,14 @@ export default {
 
       this.openPasswordModal()
     },
+
     async submit () {
       let reqeustData = {
         wallet_from: this.wallets[this.inValue.key],
         card: this.card,
         amount: this.inValue.value,
-        password: this.password
+        password: this.password,
+        card_owner: `${this.firstName} ${this.lastName}`
       }
 
       this.loading = true
