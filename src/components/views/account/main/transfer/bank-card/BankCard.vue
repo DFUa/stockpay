@@ -17,10 +17,18 @@
     <div class="title">Введите имя и фамилию получателя на английском языке</div>
     <div class="inputs-wrapper">
       <div class="input-wrap">
-        <ui-input title="Имя" v-model="firstName" :rules="[{ name: 'pattern', value: /^[A-Za-z]*$/, text: 'Введите имя и фамилию получателя на английском языке' }]" ref="testFirstName"/>
+        <ui-input
+          title="Имя"
+          v-model="firstName"
+          :rules="[{ name: 'pattern', value: /^[A-Za-z]*$/, text: 'Введите имя и фамилию получателя на английском языке' }, { name: 'required' }]"
+          ref="testFirstName"/>
       </div>
       <div class="input-wrap">
-        <ui-input title="Фамилия" v-model="lastName" :rules="[{ name: 'pattern', value: /^[A-Za-z]*$/, text: 'Введите имя и фамилию получателя на английском языке' }]" ref="testLastName"/>
+        <ui-input
+        title="Фамилия"
+        v-model="lastName"
+        :rules="[{ name: 'pattern', value: /^[A-Za-z]*$/,text: 'Введите имя и фамилию получателя на английском языке' }, { name: 'required' }]"
+        ref="testLastName"/>
       </div>
     </div>
 
@@ -139,9 +147,9 @@ export default {
       if (!this.$refs.testFirstName.validate()) return
       if (!this.$refs.testLastName.validate()) return
 
-      if (this.inValue.value > 1) {
+      if (this.inValue.value > 16 || this.inValue.value < 9 ) {
         this.$toasted.clear()
-        this.$toasted.show(this.$store.getters.errorsList['bad_amount'], {
+        this.$toasted.show('Сумма пополнения должна быть от 10 к 15 USD', {
           theme: 'toasted-primary',
           position: 'bottom-center',
           duration: 2000
