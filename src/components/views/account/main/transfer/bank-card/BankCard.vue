@@ -147,9 +147,9 @@ export default {
       if (!this.$refs.testFirstName.validate()) return
       if (!this.$refs.testLastName.validate()) return
 
-      if (this.inValue.value > 15 || this.inValue.value < 10 ) {
+      if (this.inValue.value > 15 || this.inValue.value < 11 ) {
         this.$toasted.clear()
-        this.$toasted.show('Сумма пополнения должна быть от 10 к 15 USD', {
+        this.$toasted.show('Сумма пополнения должна быть от 11 к 15 USD', {
           theme: 'toasted-primary',
           position: 'bottom-center',
           duration: 2000
