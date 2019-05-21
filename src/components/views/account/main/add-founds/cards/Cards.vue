@@ -230,11 +230,6 @@ export default {
     margin-bottom: 20px;
   }
 
-  #liqpay_checkout.success {
-    height: 615px;
-    overflow: hidden;
-  }
-
   @media screen and (max-width: 1110px) {
     .col-6 {
       width: 100%;
