@@ -17,7 +17,14 @@
       <tbody>
         <div v-for="(transaction, index) in transactions" :key="index">
           <tr :class="{'extend-row': transaction.show_row}">
-            <td class="dashboard-amount" width="20%">{{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{ transaction.currency }}</td>
+            <td
+              class="dashboard-amount"
+              :class="{
+                'red': transaction.status === 'failure'
+              }"
+              width="20%">
+              {{ transaction.original_amount > 0 ? transaction.received_amount : '-' + transaction.received_amount }} {{ transaction.currency }}
+            </td>
             <td width="20%">Дата перевода: {{transaction.date}}</td>
             <td width="25%" class="text-center">Источник: {{ getTransactionTypeName(transaction.type) }}</td>
             <td width="20%" class="text-center">Status: {{transaction.status}}</td>
@@ -121,6 +128,10 @@ export default {
   .dashboard-amount{
     font-weight: 600;
     color: #006344;
+  }
+
+  .dashboard-amount.red {
+    color: red;
   }
 
   .dashboard-table tbody tr {
