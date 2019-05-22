@@ -104,6 +104,13 @@
             <td>{{transaction.original_amount > 0 ? '+' + transaction.original_amount : transaction.original_amount}}</td>
             <td>{{transaction.date}}</td>
             <td>{{transaction.wallet_from}}</td>
+            <td
+              :class="{
+                'failure': transaction.status === 'failure',
+                'success': transaction.status === 'success'
+              }">
+              {{transaction.status}}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -166,6 +173,9 @@ export default {
     }, {
       id: 4,
       text: 'Источник транзакции'
+    }, {
+      id: 5,
+      text: 'Статус'
     }]
   }),
 
@@ -345,6 +355,18 @@ export default {
     font-weight: 600;
     font-family: 'Montserrat';
     margin-bottom: 25px;
+  }
+  table {
+    tbody {
+      tr {
+        .success {
+          color: green;
+        }
+        .failure {
+          color: red;
+        }
+      }
+    }
   }
 }
 
