@@ -16,14 +16,20 @@
         </tr>
       </tbody>
     </table>
+    <ui-pagination :length="paginationLength" @changePage="init"></ui-pagination>
   </vue-scroll>
 </template>
 
 <script>
 import api from '@/api'
+import UiPagination from '@/components/ui/ui-pagination/UiPagination.vue'
 
 export default {
   name: 'UserTable',
+
+  components: {
+    UiPagination
+  },
 
   data: () => ({
     headers: [{
@@ -42,6 +48,7 @@ export default {
       id: 4,
       text: 'Имя Фамилия'
     }],
+    paginationLength: 0,
     usersData: [],
     ops: {
       bar: {
@@ -52,12 +59,17 @@ export default {
   }),
 
   mounted () {
-    this.init()
+    this.init(1)
   },
 
   methods: {
-    async init () {
-      let res = await api.getUserList()
+    async init (page) {
+      let filters = {
+          page: { value: page }
+        }
+      let res = await api.getUserInfo(filters)
+      console.log(res)
+      this.paginationLength = res.count
       this.usersData = res.users
     },
 

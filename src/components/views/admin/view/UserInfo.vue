@@ -182,7 +182,8 @@ export default {
   async created () {
     let filters = {
       email: { value: this.$route.params.email },
-      nickname: { value: this.$route.params.nickname }
+      nickname: { value: this.$route.params.nickname },
+      page: {value: 1}
     }
     let res = await api.getUserInfo(filters)
     this.userInfo = res.users[0]
